@@ -16,6 +16,7 @@
 		3D07A2A91ED1B1B600BFCE3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D07A2A81ED1B1B600BFCE3A /* Assets.xcassets */; };
 		3D07A2AC1ED1B1B600BFCE3A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D07A2AA1ED1B1B600BFCE3A /* LaunchScreen.storyboard */; };
 		3D07A2B71ED1B1B700BFCE3A /* HotdogSlingerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07A2B61ED1B1B700BFCE3A /* HotdogSlingerTests.swift */; };
+		3D07A2C51ED1B2F000BFCE3A /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07A2C41ED1B2F000BFCE3A /* MenuViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		3D07A2B21ED1B1B600BFCE3A /* HotdogSlingerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HotdogSlingerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D07A2B61ED1B1B700BFCE3A /* HotdogSlingerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotdogSlingerTests.swift; sourceTree = "<group>"; };
 		3D07A2B81ED1B1B700BFCE3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3D07A2C41ED1B2F000BFCE3A /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,15 +85,14 @@
 		3D07A29A1ED1B1B600BFCE3A /* HotdogSlinger */ = {
 			isa = PBXGroup;
 			children = (
+				3D07A2C31ED1B2A300BFCE3A /* Controller */,
+				3D07A2C21ED1B2A000BFCE3A /* View */,
+				3D07A2C11ED1B29700BFCE3A /* Model */,
 				3D07A29B1ED1B1B600BFCE3A /* AppDelegate.swift */,
 				3D07A29D1ED1B1B600BFCE3A /* GameScene.sks */,
 				3D07A29F1ED1B1B600BFCE3A /* Actions.sks */,
-				3D07A2A11ED1B1B600BFCE3A /* GameScene.swift */,
-				3D07A2A31ED1B1B600BFCE3A /* GameViewController.swift */,
-				3D07A2A51ED1B1B600BFCE3A /* Main.storyboard */,
-				3D07A2A81ED1B1B600BFCE3A /* Assets.xcassets */,
-				3D07A2AA1ED1B1B600BFCE3A /* LaunchScreen.storyboard */,
 				3D07A2AD1ED1B1B600BFCE3A /* Info.plist */,
+				3D07A2A81ED1B1B600BFCE3A /* Assets.xcassets */,
 			);
 			path = HotdogSlinger;
 			sourceTree = "<group>";
@@ -103,6 +104,32 @@
 				3D07A2B81ED1B1B700BFCE3A /* Info.plist */,
 			);
 			path = HotdogSlingerTests;
+			sourceTree = "<group>";
+		};
+		3D07A2C11ED1B29700BFCE3A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		3D07A2C21ED1B2A000BFCE3A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3D07A2A51ED1B1B600BFCE3A /* Main.storyboard */,
+				3D07A2AA1ED1B1B600BFCE3A /* LaunchScreen.storyboard */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		3D07A2C31ED1B2A300BFCE3A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				3D07A2C41ED1B2F000BFCE3A /* MenuViewController.swift */,
+				3D07A2A31ED1B1B600BFCE3A /* GameViewController.swift */,
+				3D07A2A11ED1B1B600BFCE3A /* GameScene.swift */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,6 +242,7 @@
 				3D07A2A21ED1B1B600BFCE3A /* GameScene.swift in Sources */,
 				3D07A2A41ED1B1B600BFCE3A /* GameViewController.swift in Sources */,
 				3D07A29C1ED1B1B600BFCE3A /* AppDelegate.swift in Sources */,
+				3D07A2C51ED1B2F000BFCE3A /* MenuViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

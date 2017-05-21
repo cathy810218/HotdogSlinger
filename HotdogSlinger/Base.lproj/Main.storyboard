@@ -1,14 +1,21 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Q7m-vQ-pb3">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Game View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController id="BV1-FR-VrT" customClass="GameViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BV1-FR-VrT" customClass="GameViewController" customModule="HotdogSlinger" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8aa-yV-Osq"/>
                         <viewControllerLayoutGuide type="bottom" id="qHh-Mt-9TT"/>
@@ -21,6 +28,94 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="532" y="177"/>
+        </scene>
+        <!--Menu View Controller-->
+        <scene sceneID="Mj3-jp-4iu">
+            <objects>
+                <viewController id="Q7m-vQ-pb3" customClass="MenuViewController" customModule="HotdogSlinger" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="gCY-sh-gdV"/>
+                        <viewControllerLayoutGuide type="bottom" id="dJB-Pl-XNM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="O0S-20-wCx">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="menu_background" translatesAutoresizingMaskIntoConstraints="NO" id="LJW-un-upD">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="eeR-vP-ZZb">
+                                <rect key="frame" x="26" y="20" width="323" height="194"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="eeR-vP-ZZb" secondAttribute="height" multiplier="2:1.2" id="hzu-LR-HOi"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="menu_hotdog" translatesAutoresizingMaskIntoConstraints="NO" id="kN2-fj-xah">
+                                <rect key="frame" x="66" y="164" width="243" height="434"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="kN2-fj-xah" secondAttribute="height" multiplier="280:500" id="FT5-Vf-kva"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3L4-61-j4p">
+                                <rect key="frame" x="20" y="558" width="90" height="40"/>
+                                <state key="normal" image="helpButton"/>
+                                <connections>
+                                    <action selector="helpButtonPressed:" destination="Q7m-vQ-pb3" eventType="touchUpInside" id="leS-UN-7rS"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GjO-8e-t0C">
+                                <rect key="frame" x="142" y="598" width="90" height="41"/>
+                                <state key="normal" image="startButton"/>
+                                <connections>
+                                    <action selector="startButtonPressed:" destination="Q7m-vQ-pb3" eventType="touchUpInside" id="7Xd-iz-hst"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5aM-Km-bwc">
+                                <rect key="frame" x="265" y="557" width="90" height="41"/>
+                                <state key="normal" image="settingsButton"/>
+                                <connections>
+                                    <action selector="settingsButtonPressed:" destination="Q7m-vQ-pb3" eventType="touchUpInside" id="czS-KZ-fYp"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="LJW-un-upD" firstAttribute="leading" secondItem="O0S-20-wCx" secondAttribute="leading" id="41e-Wc-iP7"/>
+                            <constraint firstItem="GjO-8e-t0C" firstAttribute="centerX" secondItem="O0S-20-wCx" secondAttribute="centerX" id="5kX-NE-nAC"/>
+                            <constraint firstAttribute="trailing" secondItem="LJW-un-upD" secondAttribute="trailing" id="5lf-Jh-BW8"/>
+                            <constraint firstItem="eeR-vP-ZZb" firstAttribute="top" secondItem="gCY-sh-gdV" secondAttribute="bottom" id="6f6-LP-28Z"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="eeR-vP-ZZb" secondAttribute="trailing" constant="10" id="AIh-fA-W2h"/>
+                            <constraint firstItem="LJW-un-upD" firstAttribute="top" secondItem="O0S-20-wCx" secondAttribute="top" id="F9t-lw-MwN"/>
+                            <constraint firstItem="dJB-Pl-XNM" firstAttribute="top" secondItem="LJW-un-upD" secondAttribute="bottom" id="KPL-0b-da1"/>
+                            <constraint firstItem="3L4-61-j4p" firstAttribute="leading" secondItem="O0S-20-wCx" secondAttribute="leading" constant="20" id="QX6-ID-QYv"/>
+                            <constraint firstItem="GjO-8e-t0C" firstAttribute="top" secondItem="5aM-Km-bwc" secondAttribute="bottom" id="QiO-1a-oJJ"/>
+                            <constraint firstItem="kN2-fj-xah" firstAttribute="height" secondItem="LJW-un-upD" secondAttribute="height" multiplier="0.65" id="UhI-xZ-RGW"/>
+                            <constraint firstItem="GjO-8e-t0C" firstAttribute="top" secondItem="kN2-fj-xah" secondAttribute="bottom" id="Xqg-js-NqV"/>
+                            <constraint firstItem="kN2-fj-xah" firstAttribute="top" secondItem="eeR-vP-ZZb" secondAttribute="bottom" constant="-50" id="YDa-S9-lGr"/>
+                            <constraint firstItem="eeR-vP-ZZb" firstAttribute="leading" secondItem="O0S-20-wCx" secondAttribute="leadingMargin" constant="10" id="Zih-nB-yad"/>
+                            <constraint firstAttribute="trailing" secondItem="5aM-Km-bwc" secondAttribute="trailing" constant="20" id="o56-8I-CE4"/>
+                            <constraint firstItem="GjO-8e-t0C" firstAttribute="top" secondItem="3L4-61-j4p" secondAttribute="bottom" id="uvg-2x-PcE"/>
+                            <constraint firstItem="kN2-fj-xah" firstAttribute="centerX" secondItem="O0S-20-wCx" secondAttribute="centerX" id="ze3-mH-bKb"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="helpButton" destination="3L4-61-j4p" id="UKo-Ng-rNX"/>
+                        <outlet property="settingsButton" destination="5aM-Km-bwc" id="F6Z-ME-QTE"/>
+                        <outlet property="startButton" destination="GjO-8e-t0C" id="QMB-3S-EyJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pLc-qB-BhO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-255.19999999999999" y="176.76161919040482"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="helpButton" width="90" height="40"/>
+        <image name="logo" width="600" height="349"/>
+        <image name="menu_background" width="640" height="1136"/>
+        <image name="menu_hotdog" width="280" height="498"/>
+        <image name="settingsButton" width="90" height="41"/>
+        <image name="startButton" width="90" height="41"/>
+    </resources>
 </document>
