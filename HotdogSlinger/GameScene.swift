@@ -30,13 +30,15 @@ class GameScene: SKScene {
         
         for i in 0 ... 1 {
             let background = SKSpriteNode(texture: backgroundTexture)
+            let backgroundRatio = backgroundTexture.size().height / backgroundTexture.size().width
             background.zPosition = -30
-            background.size = CGSize(width: backgroundTexture.size().width, height: self.frame.size.height)
-            background.position = CGPoint(x: (backgroundTexture.size().width * CGFloat(i)) - CGFloat(1 * i), y: 0)
+            background.anchorPoint = CGPoint.zero
+            background.size = CGSize(width: self.frame.size.height / backgroundRatio, height: self.frame.size.height)
+            background.position = CGPoint(x: ((self.frame.size.height / backgroundRatio) * CGFloat(i)) - CGFloat(1 * i), y: 0)
             addChild(background)
             
-            let moveLeft = SKAction.moveBy(x: -backgroundTexture.size().width, y: 0, duration: 15)
-            let moveReset = SKAction.moveBy(x: backgroundTexture.size().width, y: 0, duration: 0)
+            let moveLeft = SKAction.moveBy(x: -(self.frame.size.height / backgroundRatio), y: 0, duration: 15)
+            let moveReset = SKAction.moveBy(x: (self.frame.size.height / backgroundRatio), y: 0, duration: 0)
             let moveLoop = SKAction.sequence([moveLeft, moveReset])
             let moveForever = SKAction.repeatForever(moveLoop)
             
@@ -82,7 +84,7 @@ class GameScene: SKScene {
         hotdog.run(runForever)
     }
     
-    override func sceneDidLoad() { 
+    override func sceneDidLoad() {
 //        self.lastUpdateTime = 0
         
         // Get label node from scene and store it for use later
@@ -131,25 +133,25 @@ class GameScene: SKScene {
 //        }
 //    }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 //        if let label = self.label {
 //            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
 //        }
 //        
 //        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+//    }
+//    
+//    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
 //        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+//    }
+//    
+//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
 //        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+//    }
+//    
+//    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
 //        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
+//    }
     
 //    
 //    override func update(_ currentTime: TimeInterval) {
