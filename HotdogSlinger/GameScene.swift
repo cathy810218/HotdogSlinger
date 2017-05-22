@@ -17,9 +17,51 @@ class GameScene: SKScene {
     private var lastUpdateTime : TimeInterval = 0
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
+
+    
+    override func didMove(to view: SKView) {
+        createBackground()
+        createCactus()
+    }
+    
+    func createBackground() {
+        let backgroundTexture = SKTexture(imageNamed: "game_scene_background")
+        
+        for i in 0 ... 1 {
+            let background = SKSpriteNode(texture: backgroundTexture)
+            background.zPosition = -30
+            background.size = CGSize(width: backgroundTexture.size().width, height: self.frame.size.height)
+            background.position = CGPoint(x: (backgroundTexture.size().width * CGFloat(i)) - CGFloat(1 * i), y: 0)
+            addChild(background)
+            
+            let moveLeft = SKAction.moveBy(x: -backgroundTexture.size().width, y: 0, duration: 15)
+            let moveReset = SKAction.moveBy(x: backgroundTexture.size().width, y: 0, duration: 0)
+            let moveLoop = SKAction.sequence([moveLeft, moveReset])
+            let moveForever = SKAction.repeatForever(moveLoop)
+            
+            background.run(moveForever)
+        }
+    }
+    
+    func createCactus() {
+        let cactusTexture = SKTexture(imageNamed: "cactus")
+        for i in 0 ... 2 {
+            let ground = SKSpriteNode(texture: cactusTexture)
+            ground.zPosition = -10
+            ground.position = CGPoint(x: (cactusTexture.size().width * CGFloat(i)) - CGFloat(1 * i),
+                                      y: 0)
+            addChild(ground)
+
+            let moveLeft = SKAction.moveBy(x: -cactusTexture.size().width, y: 0, duration: 10)
+            let moveReset = SKAction.moveBy(x: cactusTexture.size().width, y: 0, duration: 0)
+            let moveLoop = SKAction.sequence([moveLeft, moveReset])
+            let moveForever = SKAction.repeatForever(moveLoop)
+
+            ground.run(moveForever)
+        }
+    }
     
     override func sceneDidLoad() {
-
         self.lastUpdateTime = 0
         
         // Get label node from scene and store it for use later

@@ -69,6 +69,7 @@
                                 <state key="normal" image="startButton"/>
                                 <connections>
                                     <action selector="startButtonPressed:" destination="Q7m-vQ-pb3" eventType="touchUpInside" id="7Xd-iz-hst"/>
+                                    <segue destination="BV1-FR-VrT" kind="show" id="wIi-fu-Y4N"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5aM-Km-bwc">
@@ -76,6 +77,7 @@
                                 <state key="normal" image="settingsButton"/>
                                 <connections>
                                     <action selector="settingsButtonPressed:" destination="Q7m-vQ-pb3" eventType="touchUpInside" id="czS-KZ-fYp"/>
+                                    <segue destination="Kkk-0O-w15" kind="show" id="sBE-iw-0GN"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -109,8 +111,85 @@
             </objects>
             <point key="canvasLocation" x="-255.19999999999999" y="176.76161919040482"/>
         </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="v3G-TU-TDo">
+            <objects>
+                <viewController id="Kkk-0O-w15" customClass="SettingsViewController" customModule="HotdogSlinger" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="g0A-II-I75"/>
+                        <viewControllerLayoutGuide type="bottom" id="HSl-rO-Wkz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2gc-vB-JQF">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="menu_background" translatesAutoresizingMaskIntoConstraints="NO" id="TIL-fk-tKE">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DUS-VR-VCR">
+                                <rect key="frame" x="30" y="30" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="DUS-VR-VCR" secondAttribute="height" multiplier="1:1" id="Akv-W6-VKO"/>
+                                    <constraint firstAttribute="height" constant="30" id="gdV-XA-dgg"/>
+                                </constraints>
+                                <state key="normal" image="backButton"/>
+                                <connections>
+                                    <action selector="settingsButtonPressed:" destination="Kkk-0O-w15" eventType="touchUpInside" id="n7Y-Tq-E4U"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sound Effect" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VlK-fx-66O">
+                                <rect key="frame" x="138" y="363" width="99" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Iqk-6B-MQi">
+                                <rect key="frame" x="54" y="414" width="267" height="31"/>
+                                <connections>
+                                    <action selector="soundEffectSlider:" destination="Kkk-0O-w15" eventType="valueChanged" id="8aG-2Q-GDg"/>
+                                </connections>
+                            </slider>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="URR-k4-zWu">
+                                <rect key="frame" x="55" y="249" width="266" height="31"/>
+                                <connections>
+                                    <action selector="backgroundMusicSlider:" destination="Kkk-0O-w15" eventType="valueChanged" id="G4i-cG-s2M"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Background Music" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CGa-eW-J9G">
+                                <rect key="frame" x="117" y="198" width="142" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Iqk-6B-MQi" firstAttribute="top" secondItem="VlK-fx-66O" secondAttribute="bottom" constant="30" id="8VY-3q-7N5"/>
+                            <constraint firstItem="URR-k4-zWu" firstAttribute="width" secondItem="TIL-fk-tKE" secondAttribute="width" multiplier="0.7" id="ABw-XY-ppO"/>
+                            <constraint firstItem="TIL-fk-tKE" firstAttribute="leading" secondItem="2gc-vB-JQF" secondAttribute="leading" id="Fv8-jg-zF0"/>
+                            <constraint firstItem="URR-k4-zWu" firstAttribute="centerX" secondItem="2gc-vB-JQF" secondAttribute="centerX" id="IkK-U3-UuA"/>
+                            <constraint firstItem="DUS-VR-VCR" firstAttribute="leading" secondItem="2gc-vB-JQF" secondAttribute="leading" constant="30" id="TOy-ct-J6c"/>
+                            <constraint firstItem="URR-k4-zWu" firstAttribute="centerY" secondItem="2gc-vB-JQF" secondAttribute="centerY" constant="-70" id="TZr-uB-4Ah"/>
+                            <constraint firstItem="CGa-eW-J9G" firstAttribute="centerX" secondItem="2gc-vB-JQF" secondAttribute="centerX" id="U7j-3T-rqd"/>
+                            <constraint firstItem="Iqk-6B-MQi" firstAttribute="width" secondItem="TIL-fk-tKE" secondAttribute="width" multiplier="0.7" id="Wix-WR-Fe8"/>
+                            <constraint firstItem="Iqk-6B-MQi" firstAttribute="centerX" secondItem="2gc-vB-JQF" secondAttribute="centerX" id="WjD-h1-ik2"/>
+                            <constraint firstItem="DUS-VR-VCR" firstAttribute="top" secondItem="g0A-II-I75" secondAttribute="bottom" constant="10" id="ahE-XO-LzT"/>
+                            <constraint firstItem="URR-k4-zWu" firstAttribute="top" secondItem="CGa-eW-J9G" secondAttribute="bottom" constant="30" id="bLc-Xx-KE3"/>
+                            <constraint firstItem="VlK-fx-66O" firstAttribute="centerX" secondItem="2gc-vB-JQF" secondAttribute="centerX" id="bPD-Ow-ylK"/>
+                            <constraint firstAttribute="trailing" secondItem="TIL-fk-tKE" secondAttribute="trailing" id="dbZ-Vh-uia"/>
+                            <constraint firstItem="VlK-fx-66O" firstAttribute="centerY" secondItem="2gc-vB-JQF" secondAttribute="centerY" constant="40" id="fOe-Ln-rYL"/>
+                            <constraint firstItem="HSl-rO-Wkz" firstAttribute="top" secondItem="TIL-fk-tKE" secondAttribute="bottom" id="gO6-tx-QSb"/>
+                            <constraint firstItem="TIL-fk-tKE" firstAttribute="top" secondItem="2gc-vB-JQF" secondAttribute="top" id="qcE-8i-aKQ"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="69D-j7-QUW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-255.19999999999999" y="906.29685157421295"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="backButton" width="40" height="40"/>
         <image name="helpButton" width="90" height="40"/>
         <image name="logo" width="600" height="349"/>
         <image name="menu_background" width="640" height="1136"/>
