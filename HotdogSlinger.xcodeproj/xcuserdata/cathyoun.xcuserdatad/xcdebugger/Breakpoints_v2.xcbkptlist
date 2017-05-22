@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HotdogSlinger/GameScene.swift"
-            timestampString = "517123875.616401"
+            timestampString = "517125034.095725"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
             landmarkName = "sceneDidLoad()"
             landmarkType = "7">
          </BreakpointContent>

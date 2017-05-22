@@ -33,7 +33,8 @@ class GameScene: SKScene {
             let backgroundRatio = backgroundTexture.size().height / backgroundTexture.size().width
             background.zPosition = -30
             background.anchorPoint = CGPoint.zero
-            background.size = CGSize(width: self.frame.size.height / backgroundRatio, height: self.frame.size.height)
+            background.size = CGSize(width: self.frame.size.height / backgroundRatio,
+                                     height: self.frame.size.height)
             background.position = CGPoint(x: ((self.frame.size.height / backgroundRatio) * CGFloat(i)) - CGFloat(1 * i), y: 0)
             addChild(background)
             
@@ -48,14 +49,15 @@ class GameScene: SKScene {
     
     func createCactus() {
         let cactusTexture = SKTexture(imageNamed: "cactus")
-        for i in 0 ... 2 {
+        for i in 0 ... 1 {
             let ground = SKSpriteNode(texture: cactusTexture)
+            ground.anchorPoint = CGPoint.zero
             ground.zPosition = -10
             ground.position = CGPoint(x: (cactusTexture.size().width * CGFloat(i)) - CGFloat(1 * i),
-                                      y: 0)
+                                      y: -20)
             addChild(ground)
 
-            let moveLeft = SKAction.moveBy(x: -cactusTexture.size().width, y: 0, duration: 10)
+            let moveLeft = SKAction.moveBy(x: -cactusTexture.size().width, y: 0, duration: 15)
             let moveReset = SKAction.moveBy(x: cactusTexture.size().width, y: 0, duration: 0)
             let moveLoop = SKAction.sequence([moveLeft, moveReset])
             let moveForever = SKAction.repeatForever(moveLoop)
@@ -73,7 +75,9 @@ class GameScene: SKScene {
         let hotdogTexture6 = SKTexture(imageNamed: "6")
         
         let hotdog = SKSpriteNode(texture: hotdogTexture1)
-        hotdog.position = CGPoint(x: 0, y: 0)
+        let hotdogRatio = hotdogTexture1.size().height / hotdogTexture1.size().width
+        hotdog.size = CGSize(width: self.frame.size.height / 5 / hotdogRatio, height: self.frame.size.height / 5)
+        hotdog.position = CGPoint(x: self.frame.size.width / 2, y: self.frame.size.height / 2)
         hotdog.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         hotdog.physicsBody = SKPhysicsBody(circleOfRadius: hotdog.size.width / 2)
         hotdog.physicsBody?.affectedByGravity = false
