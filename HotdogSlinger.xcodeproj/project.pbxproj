@@ -452,6 +452,7 @@
 				3D07A2BD1ED1B1B700BFCE3A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3D07A2BE1ED1B1B700BFCE3A /* Build configuration list for PBXNativeTarget "HotdogSlingerTests" */ = {
 			isa = XCConfigurationList;
@@ -460,6 +461,7 @@
 				3D07A2C01ED1B1B700BFCE3A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
