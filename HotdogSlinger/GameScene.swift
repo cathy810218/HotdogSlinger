@@ -17,6 +17,8 @@ class GameScene: SKScene {
 //    private var lastUpdateTime : TimeInterval = 0
 //    private var label : SKLabelNode?
 //    private var spinnyNode : SKShapeNode?
+    let hotdogCategory : UInt32 = 0x1 << 0;
+    let cactusCategory : UInt32 = 0x1 << 1;
 
     
     override func didMove(to view: SKView) {
@@ -49,20 +51,25 @@ class GameScene: SKScene {
     
     func createCactus() {
         let cactusTexture = SKTexture(imageNamed: "cactus")
-        for i in 0 ... 1 {
-            let ground = SKSpriteNode(texture: cactusTexture)
-            ground.anchorPoint = CGPoint.zero
-            ground.zPosition = -10
-            ground.position = CGPoint(x: (cactusTexture.size().width * CGFloat(i)) - CGFloat(1 * i),
-                                      y: -20)
-            addChild(ground)
+        var cactus: SKSpriteNode
 
+        
+        for i in 0 ... 1 {
+            cactus = SKSpriteNode(texture: cactusTexture)
+            cactus.anchorPoint = CGPoint.zero
+            cactus.zPosition = -10
+            cactus.position = CGPoint(x: (cactusTexture.size().width * CGFloat(i)) - CGFloat(1 * i),
+                                      y: -20)
+            addChild(cactus)
             let moveLeft = SKAction.moveBy(x: -cactusTexture.size().width, y: 0, duration: 15)
             let moveReset = SKAction.moveBy(x: cactusTexture.size().width, y: 0, duration: 0)
             let moveLoop = SKAction.sequence([moveLeft, moveReset])
             let moveForever = SKAction.repeatForever(moveLoop)
-
-            ground.run(moveForever)
+            cactus.run(moveForever)
+            cactus.physicsBody?.categoryBitMask = cactusCategory
+            cactus.physicsBody?.contactTestBitMask = hotdogCategory
+            cactus.physicsBody?.isDynamic = false
+            cactus.physicsBody?.affectedByGravity = false
         }
     }
     
@@ -81,6 +88,8 @@ class GameScene: SKScene {
         hotdog.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         hotdog.physicsBody = SKPhysicsBody(circleOfRadius: hotdog.size.width / 2)
         hotdog.physicsBody?.affectedByGravity = false
+        hotdog.physicsBody?.categoryBitMask = hotdogCategory
+        hotdog.physicsBody?.contactTestBitMask = cactusCategory
         
         let run = SKAction.animate(with: [hotdogTexture1, hotdogTexture2, hotdogTexture3, hotdogTexture4, hotdogTexture5, hotdogTexture6], timePerFrame: 0.12)
         self.addChild(hotdog)
