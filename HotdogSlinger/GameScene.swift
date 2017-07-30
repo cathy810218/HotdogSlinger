@@ -82,15 +82,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for i in 0 ... 1 {
             let background = SKSpriteNode(texture: backgroundTexture)
             let backgroundRatio = backgroundTexture.size().height / backgroundTexture.size().width
+//            let normalizedHeight = self.frame.size.width * backgroundRatio
+            
             background.zPosition = -30
             background.anchorPoint = CGPoint.zero
-            background.size = CGSize(width: self.frame.size.height / backgroundRatio,
+            background.size = CGSize(width: self.frame.size.width,
                                      height: self.frame.size.height)
-            background.position = CGPoint(x: ((self.frame.size.height / backgroundRatio) * CGFloat(i)) - CGFloat(1 * i), y: 0)
+            background.position = CGPoint(x: 0, y: background.size.height * CGFloat(i))
             addChild(background)
-            let moveLeft = SKAction.moveBy(x: -(self.frame.size.height / backgroundRatio), y: 0, duration: 15)
-            let moveReset = SKAction.moveBy(x: (self.frame.size.height / backgroundRatio), y: 0, duration: 0)
-            let moveLoop = SKAction.sequence([moveLeft, moveReset])
+            let moveDown = SKAction.moveBy(x: 0, y: -background.size.height, duration: 12)
+            let moveReset = SKAction.moveBy(x: 0, y: background.size.height, duration: 0)
+            let moveLoop = SKAction.sequence([moveDown, moveReset])
             let moveForever = SKAction.repeatForever(moveLoop)
             
             background.run(moveForever)
