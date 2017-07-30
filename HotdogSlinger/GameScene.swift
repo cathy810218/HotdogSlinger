@@ -23,7 +23,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var scoreLabelNode = SKLabelNode(text: "0")
     var timer = Timer()
-    var countTime = 120
+    var timeCounter = 120
+    var isLanded = true
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
@@ -32,6 +33,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         createHotdog()
         createBackground()
 //        createCactus()
+        generatePaths()
         setupCounterLabel()
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(springJump(longPress:)))
@@ -50,10 +52,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case .ended:
             print("end")
             timer.invalidate()
-            
-            let diff = CGVector(dx: 0, dy: countTime > 220 ? 220 : countTime)
-            hotdog.physicsBody?.applyImpulse(diff)
-            countTime = 120
+            let diff = CGVector(dx: 0, dy: timeCounter > 220 ? 220 : timeCounter)
+            if isLanded {
+                hotdog.physicsBody?.applyImpulse(diff)
+            }
+            isLanded = false
+            timeCounter = 120
             break
         default:
             break
@@ -61,13 +65,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     @objc func incrementTimer() {
-        countTime += 30
-        print(countTime)
+        timeCounter += 30
+        print(timeCounter)
     }
     
     @objc func tapJump() {
         let diff = CGVector(dx: 0, dy: 120)
-        hotdog.physicsBody?.applyImpulse(diff)
+        if isLanded {
+            hotdog.physicsBody?.applyImpulse(diff)
+        }
+        isLanded = false
     }
     
     func createBackground() {
@@ -167,19 +174,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(scoreLabelNode)
     }
     
+    func generatePaths() {
+        
+    }
+    
     //MARK: Collision Detection
     func didBegin(_ contact: SKPhysicsContact) {
         let bodyA = contact.bodyA
         let bodyB = contact.bodyB
         
-        if bodyA.categoryBitMask == cactusCategory || bodyB.categoryBitMask == cactusCategory {
-            // show dead hotdog
-            let deadHotdogTexture = SKTexture(imageNamed: "deadHotdog")
-            let deadAction = SKAction.animate(with: [deadHotdogTexture], timePerFrame: 1, resize: true, restore: true)
-            hotdog.size = CGSize(width: 100, height: 85)
-            hotdog.run(SKAction.repeat(deadAction, count: 1))
-            gameover()
-        }
+//        if bodyA.categoryBitMask == cactusCategory || bodyB.categoryBitMask == cactusCategory {
+//            // show dead hotdog
+//            let deadHotdogTexture = SKTexture(imageNamed: "deadHotdog")
+//            let deadAction = SKAction.animate(with: [deadHotdogTexture], timePerFrame: 1, resize: true, restore: true)
+//            hotdog.size = CGSize(width: 100, height: 85)
+//            hotdog.run(SKAction.repeat(deadAction, count: 1))
+//            gameover()
+//        }
         
         if bodyA.categoryBitMask == leftBoundCatrgory || bodyB.categoryBitMask == leftBoundCatrgory {
             print("turn back")
@@ -195,6 +206,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let moveForever = SKAction.repeatForever(moveLeft)
             hotdog.run(moveForever, withKey: "moveLeft")
         }
+        isLanded = true
     }
     
     func gameover() {
