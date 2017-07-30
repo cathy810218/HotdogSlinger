@@ -19,25 +19,45 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let cactusCategory: UInt32 = 0x1 << 1;
     let sideboundsCategory: UInt32 = 0x1 << 2;
     
+    var counterLabelNode = SKLabelNode(text: "0")
+    
+    
     override func didMove(to view: SKView) {
         super.didMove(to: view)
         self.physicsWorld.contactDelegate = self
         self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -5.0)
-        createBackground()
-        createCactus()
         createHotdog()
+        createBackground()
+//        createCactus()
+        setupCounterLabel()
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(fall))
-        self.view?.addGestureRecognizer(tap)
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(springJump(longPress:)))
+        self.view?.addGestureRecognizer(longPress)
+//        self.view?.addGestureRecognizer(tap)
     }
     
-    func fall() {
+    @objc func springJump(longPress: UILongPressGestureRecognizer) {
+        switch longPress.state {
+        case .began:
+            print("begin")
+            break
+        case .ended:
+            print("end")
+            break
+        default:
+            break
+        }
+    }
+    
+    @objc func fall() {
         self.hotdog.physicsBody?.affectedByGravity = true
+        let diff = CGVector(dx: 0, dy: 100)
+        hotdog.physicsBody?.applyImpulse(diff)
     }
     
     func createBackground() {
         let backgroundTexture = SKTexture(imageNamed: "game_scene_background")
-        
         for i in 0 ... 1 {
             let background = SKSpriteNode(texture: backgroundTexture)
             let backgroundRatio = backgroundTexture.size().height / backgroundTexture.size().width
@@ -47,7 +67,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                                      height: self.frame.size.height)
             background.position = CGPoint(x: ((self.frame.size.height / backgroundRatio) * CGFloat(i)) - CGFloat(1 * i), y: 0)
             addChild(background)
-            
             let moveLeft = SKAction.moveBy(x: -(self.frame.size.height / backgroundRatio), y: 0, duration: 15)
             let moveReset = SKAction.moveBy(x: (self.frame.size.height / backgroundRatio), y: 0, duration: 0)
             let moveLoop = SKAction.sequence([moveLeft, moveReset])
@@ -57,9 +76,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         // Add boundries physics body
-        self.physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(x: -300, y: 0, width: self.size.width + 310, height: self.size.height))
+        self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
         self.physicsBody?.categoryBitMask = sideboundsCategory
-        
+        self.physicsBody?.contactTestBitMask = hotdogCategory
     }
     
     func createCactus() {
@@ -71,6 +90,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             cactus.zPosition = -10 // so it won't block hotdog
             cactus.position = CGPoint(x: (cactusTexture.size().width * CGFloat(i)) - CGFloat(1 * i),
                                       y: -20)
+            
             let moveLeft = SKAction.moveBy(x: -cactusTexture.size().width, y: 0, duration: 15)
             let moveReset = SKAction.moveBy(x: cactusTexture.size().width, y: 0, duration: 0)
             let moveLoop = SKAction.sequence([moveLeft, moveReset])
@@ -95,20 +115,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         hotdog = SKSpriteNode(texture: hotdogTexture1)
         let hotdogRatio = hotdogTexture1.size().height / hotdogTexture1.size().width
-        hotdog.size = CGSize(width: self.frame.size.height / 5 / hotdogRatio, height: self.frame.size.height / 5)
-        hotdog.position = CGPoint(x: self.frame.size.width / 2, y: self.frame.size.height / 2)
+        hotdog.size = CGSize(width: self.frame.size.height / 7 / hotdogRatio, height: self.frame.size.height / 7)
+        hotdog.position = CGPoint(x: 25, y: 50)
         hotdog.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        hotdog.physicsBody = SKPhysicsBody(circleOfRadius: hotdog.size.width / 2)
+        hotdog.physicsBody = SKPhysicsBody(rectangleOf: hotdog.size)
         hotdog.physicsBody?.affectedByGravity = false
         hotdog.physicsBody?.categoryBitMask = hotdogCategory
-        hotdog.physicsBody?.contactTestBitMask = cactusCategory
-        hotdog.physicsBody?.collisionBitMask = sideboundsCategory
+//        hotdog.physicsBody?.contactTestBitMask = cactusCategory
+        
+//        hotdog.physicsBody?.collisionBitMask = sideboundsCategory
         let run = SKAction.animate(with: [hotdogTexture1, hotdogTexture2, hotdogTexture3, hotdogTexture4, hotdogTexture5, hotdogTexture6], timePerFrame: 0.12)
         let runForever = SKAction.repeatForever(run)
+        let moveRight = SKAction.moveBy(x: 50, y: 0, duration: 1)
+        let moveForever = SKAction.repeatForever(moveRight)
+        hotdog.run(moveForever, withKey: "moveRight")
         hotdog.run(runForever)
         self.addChild(hotdog)
     }
     
+    func setupCounterLabel() {
+        counterLabelNode.position = CGPoint(x: self.frame.size.width/2, y: self.frame.size.height - 80)
+        counterLabelNode.zPosition = 100
+        counterLabelNode.fontSize = 50
+        counterLabelNode.fontName = "MarkerFelt-Wide"
+        addChild(counterLabelNode)
+    }
     
     //MARK: Collision Detection
     func didBegin(_ contact: SKPhysicsContact) {
@@ -122,6 +153,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             hotdog.size = CGSize(width: 100, height: 85)
             hotdog.run(SKAction.repeat(deadAction, count: 1))
             gameover()
+        }
+        if bodyA.categoryBitMask == sideboundsCategory || bodyB.categoryBitMask == sideboundsCategory {
+            print("turn back")
+            hotdog.xScale *= -1
+            if hotdog.xScale == 1 {
+                hotdog.removeAction(forKey: "moveLeft")
+                let moveRight = SKAction.moveBy(x: 50, y: 0, duration: 1)
+                let moveForever = SKAction.repeatForever(moveRight)
+                hotdog.run(moveForever, withKey: "moveRight")
+            } else {
+                hotdog.removeAction(forKey: "moveRight")
+                let moveLeft = SKAction.moveBy(x: -50, y: 0, duration: 1)
+                let moveForever = SKAction.repeatForever(moveLeft)
+                hotdog.run(moveForever, withKey: "moveLeft")
+            }
         }
     }
     
