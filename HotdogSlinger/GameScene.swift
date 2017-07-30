@@ -18,41 +18,55 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let hotdogCategory: UInt32 = 0x1 << 0;
     let cactusCategory: UInt32 = 0x1 << 1;
     let sideboundsCategory: UInt32 = 0x1 << 2;
+    let leftBoundCatrgory: UInt32 = 0x1 << 3;
+    let rightBoundCategory: UInt32 = 0x1 << 4;
     
-    var counterLabelNode = SKLabelNode(text: "0")
-    
+    var scoreLabelNode = SKLabelNode(text: "0")
+    var timer = Timer()
+    var countTime = 120
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
         self.physicsWorld.contactDelegate = self
-        self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -5.0)
+        self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -8.5)
         createHotdog()
         createBackground()
 //        createCactus()
         setupCounterLabel()
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(fall))
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(springJump(longPress:)))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapJump))
+        self.view?.addGestureRecognizer(tap)
         self.view?.addGestureRecognizer(longPress)
-//        self.view?.addGestureRecognizer(tap)
+        
     }
     
     @objc func springJump(longPress: UILongPressGestureRecognizer) {
         switch longPress.state {
         case .began:
+            timer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(incrementTimer), userInfo: nil, repeats: true)
             print("begin")
             break
         case .ended:
             print("end")
+            timer.invalidate()
+            
+            let diff = CGVector(dx: 0, dy: countTime > 220 ? 220 : countTime)
+            hotdog.physicsBody?.applyImpulse(diff)
+            countTime = 120
             break
         default:
             break
         }
     }
     
-    @objc func fall() {
-        self.hotdog.physicsBody?.affectedByGravity = true
-        let diff = CGVector(dx: 0, dy: 100)
+    @objc func incrementTimer() {
+        countTime += 30
+        print(countTime)
+    }
+    
+    @objc func tapJump() {
+        let diff = CGVector(dx: 0, dy: 120)
         hotdog.physicsBody?.applyImpulse(diff)
     }
     
@@ -79,6 +93,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
         self.physicsBody?.categoryBitMask = sideboundsCategory
         self.physicsBody?.contactTestBitMask = hotdogCategory
+        
+        let leftNode = SKSpriteNode()
+        addChild(leftNode)
+        leftNode.physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: 0, y: self.frame.size.height), to: CGPoint(x: 0, y: 0))
+        leftNode.physicsBody?.categoryBitMask = leftBoundCatrgory
+        leftNode.physicsBody?.contactTestBitMask = hotdogCategory
+        
+        let rightNode = SKSpriteNode()
+        addChild(rightNode)
+        rightNode.physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: self.frame.size.width, y: self.frame.size.height), to: CGPoint(x: self.frame.size.width, y: 0))
+        rightNode.physicsBody?.categoryBitMask = rightBoundCategory
+        rightNode.physicsBody?.contactTestBitMask = hotdogCategory
     }
     
     func createCactus() {
@@ -119,7 +145,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hotdog.position = CGPoint(x: 25, y: 50)
         hotdog.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         hotdog.physicsBody = SKPhysicsBody(rectangleOf: hotdog.size)
-        hotdog.physicsBody?.affectedByGravity = false
+        hotdog.physicsBody?.affectedByGravity = true
         hotdog.physicsBody?.categoryBitMask = hotdogCategory
 //        hotdog.physicsBody?.contactTestBitMask = cactusCategory
         
@@ -134,11 +160,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func setupCounterLabel() {
-        counterLabelNode.position = CGPoint(x: self.frame.size.width/2, y: self.frame.size.height - 80)
-        counterLabelNode.zPosition = 100
-        counterLabelNode.fontSize = 50
-        counterLabelNode.fontName = "MarkerFelt-Wide"
-        addChild(counterLabelNode)
+        scoreLabelNode.position = CGPoint(x: self.frame.size.width/2, y: self.frame.size.height - 80)
+        scoreLabelNode.zPosition = 100
+        scoreLabelNode.fontSize = 50
+        scoreLabelNode.fontName = "MarkerFelt-Wide"
+        addChild(scoreLabelNode)
     }
     
     //MARK: Collision Detection
@@ -154,20 +180,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             hotdog.run(SKAction.repeat(deadAction, count: 1))
             gameover()
         }
-        if bodyA.categoryBitMask == sideboundsCategory || bodyB.categoryBitMask == sideboundsCategory {
+        
+        if bodyA.categoryBitMask == leftBoundCatrgory || bodyB.categoryBitMask == leftBoundCatrgory {
             print("turn back")
-            hotdog.xScale *= -1
-            if hotdog.xScale == 1 {
-                hotdog.removeAction(forKey: "moveLeft")
-                let moveRight = SKAction.moveBy(x: 50, y: 0, duration: 1)
-                let moveForever = SKAction.repeatForever(moveRight)
-                hotdog.run(moveForever, withKey: "moveRight")
-            } else {
-                hotdog.removeAction(forKey: "moveRight")
-                let moveLeft = SKAction.moveBy(x: -50, y: 0, duration: 1)
-                let moveForever = SKAction.repeatForever(moveLeft)
-                hotdog.run(moveForever, withKey: "moveLeft")
-            }
+            hotdog.xScale = 1
+            hotdog.removeAction(forKey: "moveLeft")
+            let moveRight = SKAction.moveBy(x: 50, y: 0, duration: 1)
+            let moveForever = SKAction.repeatForever(moveRight)
+            hotdog.run(moveForever, withKey: "moveRight")
+        } else if bodyA.categoryBitMask == rightBoundCategory || bodyB.categoryBitMask == rightBoundCategory {
+            hotdog.xScale = -1
+            hotdog.removeAction(forKey: "moveRight")
+            let moveLeft = SKAction.moveBy(x: -50, y: 0, duration: 1)
+            let moveForever = SKAction.repeatForever(moveLeft)
+            hotdog.run(moveForever, withKey: "moveLeft")
         }
     }
     
