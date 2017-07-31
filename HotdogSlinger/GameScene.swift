@@ -22,6 +22,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let rightBoundCategory: UInt32 = 0x1 << 4;
     let pathCategory: UInt32 = 0x1 << 5;
     
+    var background = SKSpriteNode()
     var scoreLabelNode = SKLabelNode(text: "0")
     var timer = Timer()
     var timeCounter = 120
@@ -81,7 +82,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func createBackground() {
         let backgroundTexture = SKTexture(imageNamed: "game_scene_background")
         for i in 0 ... 1 {
-            let background = SKSpriteNode(texture: backgroundTexture)
+            background = SKSpriteNode(texture: backgroundTexture)
 //            let backgroundRatio = backgroundTexture.size().height / backgroundTexture.size().width
 //            let normalizedHeight = self.frame.size.width * backgroundRatio
             
@@ -176,15 +177,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func setupPaths() {
-        let path = generatePath()
-        addChild(path)
+        let delay = SKAction.wait(forDuration: 2)
+        let generate = SKAction.run {
+            for _ in 0...5 {
+                let path = self.generatePath()
+                self.addChild(path)
+            }
+        }
+        let initial = SKAction.sequence([generate, delay])
+        let regenerate = SKAction.repeatForever(initial)
+        run(regenerate)
     }
     
     func generatePath() -> SKSpriteNode {
-        let path = SKSpriteNode(imageNamed: "pickle")
+        
+        let pathTexture = SKTexture(imageNamed: "pickle")
+        let path = SKSpriteNode(texture: pathTexture)
         path.zPosition = -20
-        path.position = CGPoint(x: 100, y: 150) // random num
-        path.physicsBody = SKPhysicsBody(rectangleOf: path.size)
+        path.position = p_randomPoint(min: <#T##UInt32#>, max: <#T##UInt32#>) // random num
+        path.physicsBody = SKPhysicsBody(texture: pathTexture, size: pathTexture.size())
         path.physicsBody?.allowsRotation = false
         path.physicsBody?.affectedByGravity = false
         path.physicsBody?.isDynamic = false
@@ -192,6 +203,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         path.physicsBody?.contactTestBitMask = hotdogCategory
         path.physicsBody?.collisionBitMask = hotdogCategory
         return path
+    }
+    
+    private func p_randomPoint(min: UInt32, max: UInt32) -> CGPoint {
+        let upperBoundX: UInt32 = 300
+        let upperBoundY: UInt32 = 300
+        let randX = Int(arc4random_uniform(upperBoundX) + 50)
+        let randY = Int(arc4random_uniform(upperBoundY) + 200)
+        print("x: \(randX) y: \(randY)")
+        return CGPoint(x: randX, y: randY)
     }
     
     //MARK: Collision Detection
