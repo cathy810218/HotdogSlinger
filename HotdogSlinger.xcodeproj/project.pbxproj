@@ -16,6 +16,7 @@
 		3D07A2B71ED1B1B700BFCE3A /* HotdogSlingerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07A2B61ED1B1B700BFCE3A /* HotdogSlingerTests.swift */; };
 		3D07A2C51ED1B2F000BFCE3A /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07A2C41ED1B2F000BFCE3A /* MenuViewController.swift */; };
 		3D07A2C81ED27A7B00BFCE3A /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07A2C71ED27A7B00BFCE3A /* SettingsViewController.swift */; };
+		3D857D791F2F2466001C8E28 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D857D781F2F2466001C8E28 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		3D07A2B81ED1B1B700BFCE3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D07A2C41ED1B2F000BFCE3A /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		3D07A2C71ED27A7B00BFCE3A /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		3D857D781F2F2466001C8E28 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 				3D07A2C71ED27A7B00BFCE3A /* SettingsViewController.swift */,
 				3D07A2A31ED1B1B600BFCE3A /* GameViewController.swift */,
 				3D07A2A11ED1B1B600BFCE3A /* GameScene.swift */,
+				3D857D781F2F2466001C8E28 /* Constants.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -241,6 +244,7 @@
 				3D07A29C1ED1B1B600BFCE3A /* AppDelegate.swift in Sources */,
 				3D07A2C81ED27A7B00BFCE3A /* SettingsViewController.swift in Sources */,
 				3D07A2C51ED1B2F000BFCE3A /* MenuViewController.swift in Sources */,
+				3D857D791F2F2466001C8E28 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
