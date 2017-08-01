@@ -54,7 +54,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case .ended:
             print("end")
             timer.invalidate()
-            let diff = CGVector(dx: 0, dy: timeCounter > kMaxJumpHeight ? kMaxJumpHeight : timeCounter)
+            let diff = CGVector(dx: 10, dy: timeCounter > kMaxJumpHeight ? kMaxJumpHeight : timeCounter)
             if isLanded {
                 hotdog.physicsBody?.applyImpulse(diff)
             }
@@ -72,7 +72,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     @objc func tapJump() {
-        let diff = CGVector(dx: 0, dy: kMinJumpHeight)
+        let diff = CGVector(dx: 10, dy: kMinJumpHeight)
         if isLanded {
             hotdog.physicsBody?.applyImpulse(diff)
         }
@@ -161,7 +161,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hotdog.position = CGPoint(x: hotdog.size.width/2.0 + 5, y: hotdog.size.height/2.0)
         hotdog.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         hotdog.physicsBody = SKPhysicsBody(rectangleOf: hotdog.size)
-        hotdog.physicsBody?.affectedByGravity = false
+        hotdog.physicsBody?.affectedByGravity = true
         hotdog.physicsBody?.categoryBitMask = hotdogCategory
         let run = SKAction.animate(with: [hotdogTexture1, hotdogTexture2, hotdogTexture3, hotdogTexture4, hotdogTexture5, hotdogTexture6], timePerFrame: 0.12)
         let runForever = SKAction.repeatForever(run)
@@ -181,17 +181,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabelNode.fontName = "MarkerFelt-Wide"
         addChild(scoreLabelNode)
     }
-    
+    override func update(_ currentTime: TimeInterval) {
+        print(hotdog.physicsBody?.velocity.dy)
+        if let body = hotdog.physicsBody {
+            let dy = body.velocity.dy
+            if dy > 0 {
+                // Prevent collisions if the hero is jumping
+                body.collisionBitMask = 0
+                print("going through")
+            } else if dy < 0 {
+                // Allow collisions if the hero is falling
+                body.collisionBitMask = sideboundsCategory | pathCategory
+                body.contactTestBitMask = pathCategory
+                print("falling")
+            }
+        }
+    }
     func setupPaths() {
-        for _ in 0...3 {
+//        for _ in 0...3 {
             let path = self.generatePath()
-//            self.addChild(path)
+            self.addChild(path)
 //            let moveDown = SKAction.moveBy(x: 0, y: -background.size.height, duration: 12)
 //            let moveReset = SKAction.moveBy(x: 0, y: background.size.height, duration: 0)
 //            let moveLoop = SKAction.sequence([moveDown, moveReset])
 //            let moveForever = SKAction.repeatForever(moveLoop)
 //            path.run(moveForever)
-        }
+//        }
 //        let delay = SKAction.wait(forDuration: 2)
 //        let generate = SKAction.run {
 //            
@@ -206,10 +221,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let pathTexture = SKTexture(imageNamed: "pickle")
         let path = SKSpriteNode(texture: pathTexture)
         path.zPosition = -20
-        
-        let x = p_randomPoint(min: 1, max: 10) // random num
-        let y = p_randomPoint(min: 0, max: 0)
-        path.position = CGPoint(x: x, y: y)
+//        path.anchorPoint = CGPoint(x: 0, y: 0)
+        let x = p_randomPoint(min: Int(path.size.width / 2.0), max: Int(self.frame.size.width - path.size.width)) // random num
+        let y = p_randomPoint(min: Int(hotdog.size.height) + 20, max: Int(self.frame.size.height) - kMaxJumpHeight)
+        print("x: \(x) y: \(y)")
+        path.position = CGPoint(x: 180, y: 200)
         path.physicsBody = SKPhysicsBody(texture: pathTexture, size: pathTexture.size())
         path.physicsBody?.allowsRotation = false
         path.physicsBody?.affectedByGravity = false
@@ -220,8 +236,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return path
     }
     
-    private func p_randomPoint(min: Int, max: UInt32) -> Int {
-        let rand = Int(arc4random_uniform(max)) + min
+    private func p_randomPoint(min: Int, max: Int) -> Int {
+        let rand = Int(arc4random_uniform(UInt32(max))) + min
         return rand
     }
     
@@ -253,7 +269,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let moveForever = SKAction.repeatForever(moveLeft)
             hotdog.run(moveForever, withKey: "moveLeft")
         } else if bodyA.categoryBitMask == pathCategory || bodyB.categoryBitMask == pathCategory {
-            print("hit it!")
+            
         }
         isLanded = true
     }
