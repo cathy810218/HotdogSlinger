@@ -89,23 +89,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func createBackground() {
-        let backgroundTexture = SKTexture(imageNamed: "game_scene_background")
+        let backgroundTexture = SKTexture(imageNamed: "background")
         for i in 0 ... 1 {
             background = SKSpriteNode(texture: backgroundTexture)
-//            let backgroundRatio = backgroundTexture.size().height / backgroundTexture.size().width
-//            let normalizedHeight = self.frame.size.width * backgroundRatio
-            
             background.zPosition = -30
             background.anchorPoint = CGPoint.zero
             background.size = CGSize(width: self.frame.size.width,
                                      height: self.frame.size.height)
             background.position = CGPoint(x: 0, y: background.size.height * CGFloat(i))
             addChild(background)
-//            let moveDown = SKAction.moveBy(x: 0, y: -background.size.height, duration: 12)
-//            let moveReset = SKAction.moveBy(x: 0, y: background.size.height, duration: 0)
-//            let moveLoop = SKAction.sequence([moveDown, moveReset])
-//            let moveForever = SKAction.repeatForever(moveLoop)
-//            background.run(moveForever)
+            let moveDown = SKAction.moveBy(x: 0, y: -background.size.height, duration: 12)
+            let moveReset = SKAction.moveBy(x: 0, y: background.size.height, duration: 0)
+            let moveLoop = SKAction.sequence([moveDown, moveReset])
+            let moveForever = SKAction.repeatForever(moveLoop)
+            background.run(moveForever)
         }
         
         // Add boundries physics body
@@ -163,6 +160,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let hotdogTexture4 = SKTexture(imageNamed: "4")
         let hotdogTexture5 = SKTexture(imageNamed: "5")
         let hotdogTexture6 = SKTexture(imageNamed: "6")
+        let hotdogTexture7 = SKTexture(imageNamed: "7")
+        let hotdogTexture8 = SKTexture(imageNamed: "8")
         
         hotdog = SKSpriteNode(texture: hotdogTexture1)
         hotdog.xScale = 0.3
@@ -175,8 +174,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hotdog.physicsBody?.collisionBitMask = 0
         hotdog.physicsBody?.categoryBitMask = hotdogCategory
         hotdog.physicsBody?.collisionBitMask = sideboundsCategory
-
-        let run = SKAction.animate(with: [hotdogTexture1, hotdogTexture2, hotdogTexture3, hotdogTexture4, hotdogTexture5, hotdogTexture6], timePerFrame: 0.12)
+        
+        let run = SKAction.animate(with: [hotdogTexture1, hotdogTexture2, hotdogTexture3, hotdogTexture4, hotdogTexture5, hotdogTexture6, hotdogTexture7, hotdogTexture8], timePerFrame: 0.2)
         let runForever = SKAction.repeatForever(run)
         hotdog.physicsBody?.allowsRotation = false
         hotdog.physicsBody?.restitution = 0.0
@@ -205,10 +204,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //                body.contactTestBitMask = pathCategory
 //            }
         }
+//        if hotdog.position.y > self.frame.size.height / 2 {
+//            let moveDown = SKAction.moveBy(x: 0, y: -background.size.height, duration: 12)
+//            let moveReset = SKAction.moveBy(x: 0, y: background.size.height, duration: 0)
+//            let moveLoop = SKAction.sequence([moveDown, moveReset])
+//            let moveForever = SKAction.repeatForever(moveLoop)
+//            background.run(moveForever)
+//        }
     }
     func setupPaths() {
         generatePaths()
         for path in paths {
+            path.physicsBody?.categoryBitMask = pathCategory
+            path.physicsBody?.contactTestBitMask = hotdogCategory
+            path.physicsBody?.collisionBitMask = hotdogCategory
             addChild(path)
         }
 //            self.addChild(path)
@@ -228,40 +237,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func generatePaths() {
-        
-        let pathTexture = SKTexture(imageNamed: "pickle")
-        var prevPath = SKSpriteNode(texture: pathTexture)
-        prevPath.position = CGPoint(x: 80, y: 120)
-        prevPath.physicsBody = SKPhysicsBody(texture: pathTexture, size: pathTexture.size())
-        prevPath.physicsBody?.allowsRotation = false
-        prevPath.physicsBody?.affectedByGravity = false
-        prevPath.physicsBody?.isDynamic = false
-        prevPath.physicsBody?.restitution = 0.0
-        prevPath.physicsBody?.categoryBitMask = pathCategory
-        prevPath.physicsBody?.contactTestBitMask = hotdogCategory
-        prevPath.physicsBody?.collisionBitMask = hotdogCategory
-        paths.append(prevPath)
+        var firstPath = Path(position: CGPoint(x: 80, y: 130))
+        paths.append(firstPath)
         for _ in 0 ... 5 {
-            let path = SKSpriteNode(texture: pathTexture)
-            path.zPosition = -20
-            let width = path.size.width
-//            let height = path.size.height
-            prevPath = paths.last!
-            let x = p_randomPoint(min: Int(width / 2.0), max: Int(self.frame.size.width - (width / 2.0) - 100))
-            let y = Int(prevPath.frame.origin.y) + kMinJumpHeight
+            firstPath = paths.last as! Path
+            let x = p_randomPoint(min: Int(firstPath.size.width / 2.0), max: Int(self.frame.size.width - (firstPath.size.width / 2.0) - 100))
+            let y = Int(firstPath.frame.origin.y) + kMinJumpHeight
+            let path = Path(position: CGPoint(x: x, y: y))
             print("view width \(self.frame.size.width)")
             print("x: \(x) y: \(y)")
             print("hotdog size: \(hotdog.size)")
-            path.position = CGPoint(x: x, y: y)
-            path.physicsBody = SKPhysicsBody(texture: pathTexture, size: pathTexture.size())
-            path.physicsBody?.allowsRotation = false
-            path.physicsBody?.affectedByGravity = false
-            path.physicsBody?.isDynamic = false
-            path.physicsBody?.restitution = 0.0
-            path.physicsBody?.categoryBitMask = pathCategory
-            path.physicsBody?.contactTestBitMask = hotdogCategory
-            path.physicsBody?.collisionBitMask = hotdogCategory
-            
             paths.append(path)
         }
     }
@@ -299,7 +284,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let moveForever = SKAction.repeatForever(moveLeft)
             hotdog.run(moveForever, withKey: "moveLeft")
         } else if bodyA.categoryBitMask == pathCategory || bodyB.categoryBitMask == pathCategory {
-            let currPath = bodyB.categoryBitMask == pathCategory ? bodyB.node as! SKSpriteNode : bodyA.node as! SKSpriteNode
+            let currPath = bodyB.categoryBitMask == pathCategory ? bodyB.node as! SKSpriteNode : bodyA.node as! Path
             print("hit path")
             let dy = hotdog.physicsBody!.velocity.dy
             if dy > 0 {
@@ -309,6 +294,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 // if current hotdog position is greater than current path
                 if (hotdog.position.y - hotdog.size.height / 2 >= currPath.position.y + currPath.size.height / 2 - 20) {
                     print("about to land!")
+                    hotdog.physicsBody?.contactTestBitMask = pathCategory
                     hotdog.physicsBody?.collisionBitMask = sideboundsCategory | pathCategory
                 }
             }
