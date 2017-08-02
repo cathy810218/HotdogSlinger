@@ -20,10 +20,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let sideboundsCategory: UInt32 = 0x1 << 2;
     let leftBoundCatrgory: UInt32 = 0x1 << 3;
     let rightBoundCategory: UInt32 = 0x1 << 4;
+    let pathCategory: UInt32 = 0x1 << 5;
     
+    var background = SKSpriteNode()
     var scoreLabelNode = SKLabelNode(text: "0")
     var timer = Timer()
-    var countTime = 120
+    var timeCounter = kMinJumpHeight
+    var isLanded = true
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
@@ -32,6 +35,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         createHotdog()
         createBackground()
 //        createCactus()
+        setupPaths()
         setupCounterLabel()
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(springJump(longPress:)))
@@ -50,10 +54,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case .ended:
             print("end")
             timer.invalidate()
-            
-            let diff = CGVector(dx: 0, dy: countTime > 220 ? 220 : countTime)
-            hotdog.physicsBody?.applyImpulse(diff)
-            countTime = 120
+            let diff = CGVector(dx: 10, dy: timeCounter > kMaxJumpHeight ? kMaxJumpHeight : timeCounter)
+            if isLanded {
+                hotdog.physicsBody?.applyImpulse(diff)
+            }
+            isLanded = false
+            timeCounter = kMinJumpHeight
             break
         default:
             break
@@ -61,32 +67,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     @objc func incrementTimer() {
-        countTime += 30
-        print(countTime)
+        timeCounter += kJumpIntensity
+        print(timeCounter)
     }
     
     @objc func tapJump() {
-        let diff = CGVector(dx: 0, dy: 120)
-        hotdog.physicsBody?.applyImpulse(diff)
+        let diff = CGVector(dx: 10, dy: kMinJumpHeight)
+        if isLanded {
+            hotdog.physicsBody?.applyImpulse(diff)
+        }
+        isLanded = false
     }
     
     func createBackground() {
         let backgroundTexture = SKTexture(imageNamed: "game_scene_background")
         for i in 0 ... 1 {
-            let background = SKSpriteNode(texture: backgroundTexture)
-            let backgroundRatio = backgroundTexture.size().height / backgroundTexture.size().width
+            background = SKSpriteNode(texture: backgroundTexture)
+//            let backgroundRatio = backgroundTexture.size().height / backgroundTexture.size().width
+//            let normalizedHeight = self.frame.size.width * backgroundRatio
+            
             background.zPosition = -30
             background.anchorPoint = CGPoint.zero
-            background.size = CGSize(width: self.frame.size.height / backgroundRatio,
+            background.size = CGSize(width: self.frame.size.width,
                                      height: self.frame.size.height)
-            background.position = CGPoint(x: ((self.frame.size.height / backgroundRatio) * CGFloat(i)) - CGFloat(1 * i), y: 0)
+            background.position = CGPoint(x: 0, y: background.size.height * CGFloat(i))
             addChild(background)
-            let moveLeft = SKAction.moveBy(x: -(self.frame.size.height / backgroundRatio), y: 0, duration: 15)
-            let moveReset = SKAction.moveBy(x: (self.frame.size.height / backgroundRatio), y: 0, duration: 0)
-            let moveLoop = SKAction.sequence([moveLeft, moveReset])
-            let moveForever = SKAction.repeatForever(moveLoop)
-            
-            background.run(moveForever)
+//            let moveDown = SKAction.moveBy(x: 0, y: -background.size.height, duration: 12)
+//            let moveReset = SKAction.moveBy(x: 0, y: background.size.height, duration: 0)
+//            let moveLoop = SKAction.sequence([moveDown, moveReset])
+//            let moveForever = SKAction.repeatForever(moveLoop)
+//            background.run(moveForever)
         }
         
         // Add boundries physics body
@@ -105,31 +115,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         rightNode.physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: self.frame.size.width, y: self.frame.size.height), to: CGPoint(x: self.frame.size.width, y: 0))
         rightNode.physicsBody?.categoryBitMask = rightBoundCategory
         rightNode.physicsBody?.contactTestBitMask = hotdogCategory
+        
+//        let bottomNode = SKSpriteNode()
+//        addChild(bottomNode)
+//        bottomNode.physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: 0, y: 0), to: CGPoint(x: self.frame.size.width, y: self.frame.size.height))
+//        bottomNode.physicsBody?.categoryBitMask = bottomCategory
+//        bottomNode.physicsBody?.contactTestBitMask = hotdogCategory
     }
     
-    func createCactus() {
-        let cactusTexture = SKTexture(imageNamed: "cactus")
-        
-        for i in 0 ... 1 {
-            let cactus = SKSpriteNode(texture: cactusTexture)
-            cactus.anchorPoint = CGPoint.zero
-            cactus.zPosition = -10 // so it won't block hotdog
-            cactus.position = CGPoint(x: (cactusTexture.size().width * CGFloat(i)) - CGFloat(1 * i),
-                                      y: -20)
-            
-            let moveLeft = SKAction.moveBy(x: -cactusTexture.size().width, y: 0, duration: 15)
-            let moveReset = SKAction.moveBy(x: cactusTexture.size().width, y: 0, duration: 0)
-            let moveLoop = SKAction.sequence([moveLeft, moveReset])
-            let moveForever = SKAction.repeatForever(moveLoop)
-            cactus.run(moveForever)
-            cactus.physicsBody = SKPhysicsBody(rectangleOf: cactus.size, center: CGPoint(x: size.width / 2.0,y: cactus.size.height / 2.0 - 30.0))
-            cactus.physicsBody?.categoryBitMask = cactusCategory
-            cactus.physicsBody?.contactTestBitMask = hotdogCategory
-            cactus.physicsBody?.isDynamic = false
-            cactus.physicsBody?.affectedByGravity = false
-            addChild(cactus)
-        }
-    }
+//    func createCactus() {
+//        let cactusTexture = SKTexture(imageNamed: "cactus")
+//
+//        for i in 0 ... 1 {
+//            let cactus = SKSpriteNode(texture: cactusTexture)
+//            cactus.anchorPoint = CGPoint.zero
+//            cactus.zPosition = -10 // so it won't block hotdog
+//            cactus.position = CGPoint(x: (cactusTexture.size().width * CGFloat(i)) - CGFloat(1 * i),
+//                                      y: -20)
+//
+//            let moveLeft = SKAction.moveBy(x: -cactusTexture.size().width, y: 0, duration: 15)
+//            let moveReset = SKAction.moveBy(x: cactusTexture.size().width, y: 0, duration: 0)
+//            let moveLoop = SKAction.sequence([moveLeft, moveReset])
+//            let moveForever = SKAction.repeatForever(moveLoop)
+//            cactus.run(moveForever)
+//            cactus.physicsBody = SKPhysicsBody(rectangleOf: cactus.size, center: CGPoint(x: size.width / 2.0,y: cactus.size.height / 2.0 - 30.0))
+//            cactus.physicsBody?.categoryBitMask = cactusCategory
+//            cactus.physicsBody?.contactTestBitMask = hotdogCategory
+//            cactus.physicsBody?.isDynamic = false
+//            cactus.physicsBody?.affectedByGravity = false
+//            addChild(cactus)
+//        }
+//    }
     
     func createHotdog() {
         let hotdogTexture1 = SKTexture(imageNamed: "1")
@@ -140,20 +156,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let hotdogTexture6 = SKTexture(imageNamed: "6")
         
         hotdog = SKSpriteNode(texture: hotdogTexture1)
-        let hotdogRatio = hotdogTexture1.size().height / hotdogTexture1.size().width
-        hotdog.size = CGSize(width: self.frame.size.height / 7 / hotdogRatio, height: self.frame.size.height / 7)
-        hotdog.position = CGPoint(x: 25, y: 50)
+        hotdog.xScale = 0.3
+        hotdog.yScale = 0.3
+        hotdog.position = CGPoint(x: hotdog.size.width/2.0 + 5, y: hotdog.size.height/2.0)
         hotdog.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         hotdog.physicsBody = SKPhysicsBody(rectangleOf: hotdog.size)
         hotdog.physicsBody?.affectedByGravity = true
         hotdog.physicsBody?.categoryBitMask = hotdogCategory
-//        hotdog.physicsBody?.contactTestBitMask = cactusCategory
-        
-//        hotdog.physicsBody?.collisionBitMask = sideboundsCategory
         let run = SKAction.animate(with: [hotdogTexture1, hotdogTexture2, hotdogTexture3, hotdogTexture4, hotdogTexture5, hotdogTexture6], timePerFrame: 0.12)
         let runForever = SKAction.repeatForever(run)
-        let moveRight = SKAction.moveBy(x: 50, y: 0, duration: 1)
+        let moveRight = SKAction.moveBy(x: kHotdogMoveVelocity, y: 0, duration: 1)
         let moveForever = SKAction.repeatForever(moveRight)
+        hotdog.physicsBody?.allowsRotation = false
+        hotdog.physicsBody?.restitution = 0.0
         hotdog.run(moveForever, withKey: "moveRight")
         hotdog.run(runForever)
         self.addChild(hotdog)
@@ -166,35 +181,97 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabelNode.fontName = "MarkerFelt-Wide"
         addChild(scoreLabelNode)
     }
+    override func update(_ currentTime: TimeInterval) {
+        print(hotdog.physicsBody?.velocity.dy)
+        if let body = hotdog.physicsBody {
+            let dy = body.velocity.dy
+            if dy > 0 {
+                // Prevent collisions if the hero is jumping
+                body.collisionBitMask = 0
+                print("going through")
+            } else if dy < 0 {
+                // Allow collisions if the hero is falling
+                body.collisionBitMask = sideboundsCategory | pathCategory
+                body.contactTestBitMask = pathCategory
+                print("falling")
+            }
+        }
+    }
+    func setupPaths() {
+//        for _ in 0...3 {
+            let path = self.generatePath()
+            self.addChild(path)
+//            let moveDown = SKAction.moveBy(x: 0, y: -background.size.height, duration: 12)
+//            let moveReset = SKAction.moveBy(x: 0, y: background.size.height, duration: 0)
+//            let moveLoop = SKAction.sequence([moveDown, moveReset])
+//            let moveForever = SKAction.repeatForever(moveLoop)
+//            path.run(moveForever)
+//        }
+//        let delay = SKAction.wait(forDuration: 2)
+//        let generate = SKAction.run {
+//            
+//        }
+//        let initial = SKAction.sequence([generate, delay])
+//        let regenerate = SKAction.repeatForever(initial)
+//        run(regenerate)
+    }
+    
+    func generatePath() -> SKSpriteNode {
+        
+        let pathTexture = SKTexture(imageNamed: "pickle")
+        let path = SKSpriteNode(texture: pathTexture)
+        path.zPosition = -20
+//        path.anchorPoint = CGPoint(x: 0, y: 0)
+        let x = p_randomPoint(min: Int(path.size.width / 2.0), max: Int(self.frame.size.width - path.size.width)) // random num
+        let y = p_randomPoint(min: Int(hotdog.size.height) + 20, max: Int(self.frame.size.height) - kMaxJumpHeight)
+        print("x: \(x) y: \(y)")
+        path.position = CGPoint(x: 180, y: 200)
+        path.physicsBody = SKPhysicsBody(texture: pathTexture, size: pathTexture.size())
+        path.physicsBody?.allowsRotation = false
+        path.physicsBody?.affectedByGravity = false
+        path.physicsBody?.isDynamic = false
+        path.physicsBody?.categoryBitMask = pathCategory
+        path.physicsBody?.contactTestBitMask = hotdogCategory
+        path.physicsBody?.collisionBitMask = hotdogCategory
+        return path
+    }
+    
+    private func p_randomPoint(min: Int, max: Int) -> Int {
+        let rand = Int(arc4random_uniform(UInt32(max))) + min
+        return rand
+    }
     
     //MARK: Collision Detection
     func didBegin(_ contact: SKPhysicsContact) {
         let bodyA = contact.bodyA
         let bodyB = contact.bodyB
         
-        if bodyA.categoryBitMask == cactusCategory || bodyB.categoryBitMask == cactusCategory {
-            // show dead hotdog
-            let deadHotdogTexture = SKTexture(imageNamed: "deadHotdog")
-            let deadAction = SKAction.animate(with: [deadHotdogTexture], timePerFrame: 1, resize: true, restore: true)
-            hotdog.size = CGSize(width: 100, height: 85)
-            hotdog.run(SKAction.repeat(deadAction, count: 1))
-            gameover()
-        }
+//        if bodyA.categoryBitMask == cactusCategory || bodyB.categoryBitMask == cactusCategory {
+//            // show dead hotdog
+//            let deadHotdogTexture = SKTexture(imageNamed: "deadHotdog")
+//            let deadAction = SKAction.animate(with: [deadHotdogTexture], timePerFrame: 1, resize: true, restore: true)
+//            hotdog.size = CGSize(width: 100, height: 85)
+//            hotdog.run(SKAction.repeat(deadAction, count: 1))
+//            gameover()
+//        }
         
         if bodyA.categoryBitMask == leftBoundCatrgory || bodyB.categoryBitMask == leftBoundCatrgory {
             print("turn back")
-            hotdog.xScale = 1
+            hotdog.xScale *= -1
             hotdog.removeAction(forKey: "moveLeft")
-            let moveRight = SKAction.moveBy(x: 50, y: 0, duration: 1)
+            let moveRight = SKAction.moveBy(x: kHotdogMoveVelocity, y: 0, duration: 1)
             let moveForever = SKAction.repeatForever(moveRight)
             hotdog.run(moveForever, withKey: "moveRight")
         } else if bodyA.categoryBitMask == rightBoundCategory || bodyB.categoryBitMask == rightBoundCategory {
-            hotdog.xScale = -1
+            hotdog.xScale *= -1
             hotdog.removeAction(forKey: "moveRight")
-            let moveLeft = SKAction.moveBy(x: -50, y: 0, duration: 1)
+            let moveLeft = SKAction.moveBy(x: -kHotdogMoveVelocity, y: 0, duration: 1)
             let moveForever = SKAction.repeatForever(moveLeft)
             hotdog.run(moveForever, withKey: "moveLeft")
+        } else if bodyA.categoryBitMask == pathCategory || bodyB.categoryBitMask == pathCategory {
+            
         }
+        isLanded = true
     }
     
     func gameover() {
