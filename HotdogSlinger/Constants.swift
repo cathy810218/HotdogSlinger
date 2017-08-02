@@ -8,7 +8,7 @@
 
 import UIKit
 
-let kMinJumpHeight: Int = 120
+let kMinJumpHeight: Int = 160
 let kMaxJumpHeight: Int = 200
 let kJumpIntensity: Int = 30
 let kHotdogMoveVelocity: CGFloat = 60.0

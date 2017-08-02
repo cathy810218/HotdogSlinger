@@ -40,45 +40,45 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupPaths()
         setupCounterLabel()
         
-        let longPress = UILongPressGestureRecognizer(target: self,
-                                                     action: #selector(springJump(longPress:)))
+//        let longPress = UILongPressGestureRecognizer(target: self,
+//                                                     action: #selector(springJump(longPress:)))
         let tap = UITapGestureRecognizer(target: self,
                                          action: #selector(tapJump))
         self.view?.addGestureRecognizer(tap)
-        self.view?.addGestureRecognizer(longPress)
+//        self.view?.addGestureRecognizer(longPress)
         
     }
     
-    @objc func springJump(longPress: UILongPressGestureRecognizer) {
-        switch longPress.state {
-        case .began:
-            timer = Timer.scheduledTimer(timeInterval: 0.2,
-                                         target: self,
-                                         selector: #selector(incrementTimer),
-                                         userInfo: nil,
-                                         repeats: true)
-            print("begin")
-            break
-        case .ended:
-            print("end")
-            timer.invalidate()
-            let diff = CGVector(dx: hotdog.xScale > 0.0 ? 20 : -20,
-                                dy: timeCounter > kMaxJumpHeight ? kMaxJumpHeight : timeCounter)
-            if isLanded {
-                hotdog.physicsBody?.applyImpulse(diff)
-            }
-            isLanded = false
-            timeCounter = kMinJumpHeight
-            break
-        default:
-            break
-        }
-    }
-    
-    @objc func incrementTimer() {
-        timeCounter += kJumpIntensity
-        print(timeCounter)
-    }
+//    @objc func springJump(longPress: UILongPressGestureRecognizer) {
+//        switch longPress.state {
+//        case .began:
+//            timer = Timer.scheduledTimer(timeInterval: 0.2,
+//                                         target: self,
+//                                         selector: #selector(incrementTimer),
+//                                         userInfo: nil,
+//                                         repeats: true)
+//            print("begin")
+//            break
+//        case .ended:
+//            print("end")
+//            timer.invalidate()
+//            let diff = CGVector(dx: hotdog.xScale > 0.0 ? 20 : -20,
+//                                dy: timeCounter > kMaxJumpHeight ? kMaxJumpHeight : timeCounter)
+//            if isLanded {
+//                hotdog.physicsBody?.applyImpulse(diff)
+//            }
+//            isLanded = false
+//            timeCounter = kMinJumpHeight
+//            break
+//        default:
+//            break
+//        }
+//    }
+        
+//    @objc func incrementTimer() {
+//        timeCounter += kJumpIntensity
+//        print(timeCounter)
+//    }
     
     @objc func tapJump() {
         let diff = CGVector(dx: hotdog.xScale > 0.0 ? 20 : -20, dy: kMinJumpHeight)
@@ -167,19 +167,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hotdog = SKSpriteNode(texture: hotdogTexture1)
         hotdog.xScale = 0.3
         hotdog.yScale = 0.3
+        hotdog.zPosition = 30
         hotdog.position = CGPoint(x: hotdog.size.width/2.0 + 5, y: hotdog.size.height/2.0)
         hotdog.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         hotdog.physicsBody = SKPhysicsBody(rectangleOf: hotdog.size)
         hotdog.physicsBody?.affectedByGravity = true
         hotdog.physicsBody?.collisionBitMask = 0
         hotdog.physicsBody?.categoryBitMask = hotdogCategory
+        hotdog.physicsBody?.collisionBitMask = sideboundsCategory
+
         let run = SKAction.animate(with: [hotdogTexture1, hotdogTexture2, hotdogTexture3, hotdogTexture4, hotdogTexture5, hotdogTexture6], timePerFrame: 0.12)
         let runForever = SKAction.repeatForever(run)
-        let moveRight = SKAction.moveBy(x: kHotdogMoveVelocity, y: 0, duration: 1)
-        let moveForever = SKAction.repeatForever(moveRight)
         hotdog.physicsBody?.allowsRotation = false
         hotdog.physicsBody?.restitution = 0.0
-        hotdog.run(moveForever, withKey: "moveRight")
         hotdog.run(runForever)
         self.addChild(hotdog)
     }
@@ -191,19 +191,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabelNode.fontName = "MarkerFelt-Wide"
         addChild(scoreLabelNode)
     }
+    
     override func update(_ currentTime: TimeInterval) {
         if let body = hotdog.physicsBody {
             let dy = body.velocity.dy
             if dy > 0 {
                 // Prevent collisions if the hero is jumping
-                body.collisionBitMask = 0
-                print("going through")
-            } else if dy < 0 {
-                // Allow collisions if the hero is falling
-                body.collisionBitMask = sideboundsCategory | pathCategory
-                body.contactTestBitMask = pathCategory
-                print("falling")
+                body.collisionBitMask = sideboundsCategory
             }
+//            } else if dy < 0 {
+//                // Allow collisions if the hero is falling
+//                body.collisionBitMask = sideboundsCategory | pathCategory
+//                body.contactTestBitMask = pathCategory
+//            }
         }
     }
     func setupPaths() {
@@ -236,6 +236,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         prevPath.physicsBody?.allowsRotation = false
         prevPath.physicsBody?.affectedByGravity = false
         prevPath.physicsBody?.isDynamic = false
+        prevPath.physicsBody?.restitution = 0.0
         prevPath.physicsBody?.categoryBitMask = pathCategory
         prevPath.physicsBody?.contactTestBitMask = hotdogCategory
         prevPath.physicsBody?.collisionBitMask = hotdogCategory
@@ -244,17 +245,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let path = SKSpriteNode(texture: pathTexture)
             path.zPosition = -20
             let width = path.size.width
-            let height = path.size.height
+//            let height = path.size.height
             prevPath = paths.last!
-            let x = p_randomPoint(min: Int(width / 2.0), max: Int(self.frame.size.width - (width / 2.0)))
-            let y = p_randomPoint(min: Int(path.size.height + prevPath.frame.origin.y), max: Int(self.frame.size.height) - kMaxJumpHeight)
+            let x = p_randomPoint(min: Int(width / 2.0), max: Int(self.frame.size.width - (width / 2.0) - 100))
+            let y = Int(prevPath.frame.origin.y) + kMinJumpHeight
+            print("view width \(self.frame.size.width)")
             print("x: \(x) y: \(y)")
             print("hotdog size: \(hotdog.size)")
-            path.position = CGPoint(x: 326, y: 515)
+            path.position = CGPoint(x: x, y: y)
             path.physicsBody = SKPhysicsBody(texture: pathTexture, size: pathTexture.size())
             path.physicsBody?.allowsRotation = false
             path.physicsBody?.affectedByGravity = false
             path.physicsBody?.isDynamic = false
+            path.physicsBody?.restitution = 0.0
             path.physicsBody?.categoryBitMask = pathCategory
             path.physicsBody?.contactTestBitMask = hotdogCategory
             path.physicsBody?.collisionBitMask = hotdogCategory
@@ -295,6 +298,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let moveLeft = SKAction.moveBy(x: -kHotdogMoveVelocity, y: 0, duration: 1)
             let moveForever = SKAction.repeatForever(moveLeft)
             hotdog.run(moveForever, withKey: "moveLeft")
+        } else if bodyA.categoryBitMask == pathCategory || bodyB.categoryBitMask == pathCategory {
+            let currPath = bodyB.categoryBitMask == pathCategory ? bodyB.node as! SKSpriteNode : bodyA.node as! SKSpriteNode
+            print("hit path")
+            let dy = hotdog.physicsBody!.velocity.dy
+            if dy > 0 {
+                // go up
+                hotdog.physicsBody?.collisionBitMask = sideboundsCategory
+            } else if dy < 0 {
+                // if current hotdog position is greater than current path
+                if (hotdog.position.y - hotdog.size.height / 2 >= currPath.position.y + currPath.size.height / 2 - 20) {
+                    print("about to land!")
+                    hotdog.physicsBody?.collisionBitMask = sideboundsCategory | pathCategory
+                }
+            }
         }
         isLanded = true
     }
