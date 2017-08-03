@@ -17,6 +17,7 @@
 		3D07A2C51ED1B2F000BFCE3A /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07A2C41ED1B2F000BFCE3A /* MenuViewController.swift */; };
 		3D07A2C81ED27A7B00BFCE3A /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07A2C71ED27A7B00BFCE3A /* SettingsViewController.swift */; };
 		3D857D791F2F2466001C8E28 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D857D781F2F2466001C8E28 /* Constants.swift */; };
+		3DEF5CCC1F31C1A900BFA806 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEF5CCB1F31C1A900BFA806 /* Path.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		3D07A2C41ED1B2F000BFCE3A /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		3D07A2C71ED27A7B00BFCE3A /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		3D857D781F2F2466001C8E28 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		3DEF5CCB1F31C1A900BFA806 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +129,7 @@
 				3D07A2C71ED27A7B00BFCE3A /* SettingsViewController.swift */,
 				3D07A2A31ED1B1B600BFCE3A /* GameViewController.swift */,
 				3D07A2A11ED1B1B600BFCE3A /* GameScene.swift */,
+				3DEF5CCB1F31C1A900BFA806 /* Path.swift */,
 				3D857D781F2F2466001C8E28 /* Constants.swift */,
 			);
 			name = Controller;
@@ -240,6 +243,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D07A2A21ED1B1B600BFCE3A /* GameScene.swift in Sources */,
+				3DEF5CCC1F31C1A900BFA806 /* Path.swift in Sources */,
 				3D07A2A41ED1B1B600BFCE3A /* GameViewController.swift in Sources */,
 				3D07A29C1ED1B1B600BFCE3A /* AppDelegate.swift in Sources */,
 				3D07A2C81ED27A7B00BFCE3A /* SettingsViewController.swift in Sources */,
