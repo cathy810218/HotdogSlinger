@@ -46,19 +46,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //                                         action: #selector(tapJump))
 //        self.view?.addGestureRecognizer(tap)
 //        self.view?.addGestureRecognizer(longPress)
-        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(swipeToJump(swipe:)))
-        swipeUp.direction = UISwipeGestureRecognizerDirection.up
-        self.view?.addGestureRecognizer(swipeUp)
-    }
-    @objc func swipeToJump(swipe: UISwipeGestureRecognizer) {
-        if swipe.direction == UISwipeGestureRecognizerDirection.up {
-            print("Swipe up")
-            let diff = CGVector(dx: 0, dy: kMinJumpHeight)
-            if isLanded {
-                hotdog.physicsBody?.applyImpulse(diff)
-            }
-            isLanded = false
-        }
     }
 //    @objc func springJump(longPress: UILongPressGestureRecognizer) {
 //        switch longPress.state {
@@ -141,6 +128,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //        bottomNode.physicsBody?.contactTestBitMask = hotdogCategory
     }
     
+    
 //    func createCactus() {
 //        let cactusTexture = SKTexture(imageNamed: "cactus")
 //
@@ -187,7 +175,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hotdog.physicsBody?.categoryBitMask = hotdogCategory
         hotdog.physicsBody?.collisionBitMask = sideboundsCategory
         
-        let run = SKAction.animate(with: [hotdogTexture1, hotdogTexture2, hotdogTexture3, hotdogTexture4, hotdogTexture5, hotdogTexture6, hotdogTexture7, hotdogTexture8], timePerFrame: 0.2)
+        let run = SKAction.animate(with: [hotdogTexture1, hotdogTexture2, hotdogTexture3, hotdogTexture4, hotdogTexture5, hotdogTexture6, hotdogTexture7], timePerFrame: 0.2)
         hotdogRunForever = SKAction.repeatForever(run)
         hotdog.physicsBody?.allowsRotation = false
         hotdog.physicsBody?.restitution = 0.0
@@ -255,7 +243,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             firstPath = paths.last as! Path
             let x = p_randomPoint(min: Int(firstPath.size.width / 2.0),
                                   max: Int(self.frame.size.width - (firstPath.size.width / 2.0) - 100))
-            let y = Int(firstPath.frame.origin.y) + kMinJumpHeight
+            let y = Int(firstPath.frame.origin.y) + kMinJumpHeight + 30
             let path = Path(position: CGPoint(x: x, y: y))
             print("view width \(self.frame.size.width)")
             print("x: \(x) y: \(y)")
@@ -283,19 +271,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //            gameover()
 //        }
         
-//        if bodyA.categoryBitMask == leftBoundCatrgory || bodyB.categoryBitMask == leftBoundCatrgory {
-//            print("turn back")
+        if bodyA.categoryBitMask == leftBoundCatrgory || bodyB.categoryBitMask == leftBoundCatrgory {
+            print("turn back")
+            hotdog.removeAllActions()
+            hotdog.texture = SKTexture(imageNamed: "8")
+            
 //            hotdog.xScale *= -1
 //            hotdog.removeAction(forKey: "moveLeft")
 //            let moveRight = SKAction.moveBy(x: kHotdogMoveVelocity, y: 0, duration: 1)
 //            let moveForever = SKAction.repeatForever(moveRight)
 //            hotdog.run(moveForever, withKey: "moveRight")
-//        } else if bodyA.categoryBitMask == rightBoundCategory || bodyB.categoryBitMask == rightBoundCategory {
+        } else if bodyA.categoryBitMask == rightBoundCategory || bodyB.categoryBitMask == rightBoundCategory {
+            hotdog.removeAllActions()
+            hotdog.texture = SKTexture(imageNamed: "8")
 //            hotdog.xScale *= -1
 //            hotdog.removeAction(forKey: "moveRight")
 //            let moveLeft = SKAction.moveBy(x: -kHotdogMoveVelocity, y: 0, duration: 1)
 //            let moveForever = SKAction.repeatForever(moveLeft)
 //            hotdog.run(moveForever, withKey: "moveLeft")
+        }
 //        } else
         if bodyA.categoryBitMask == pathCategory || bodyB.categoryBitMask == pathCategory {
             let currPath = bodyB.categoryBitMask == pathCategory ? bodyB.node as! Path : bodyA.node as! Path
@@ -304,6 +298,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if dy > 0 {
                 // go up
                 hotdog.physicsBody?.collisionBitMask = sideboundsCategory
+//                isLanded = false
             } else if dy < 0 {
                 // if current hotdog position is greater than current path
                 if (hotdog.position.y - hotdog.size.height / 2 >= currPath.position.y + currPath.size.height / 2 - 20) {
@@ -315,6 +310,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         score += 1
                         currPath.isVisited = true
                     }
+                    
                 }
             }
         }
@@ -357,20 +353,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //            self.addChild(n)
 //        }
         print(pos)
-        if pos.x < self.frame.size.width / 2.0 {
+        if pos.x < self.frame.size.width / 4.0 {
             print("tap left")
             hotdog.xScale *= hotdog.xScale > 0 ? -1 : 1
             hotdog.removeAction(forKey: "moveRight")
             let moveLeft = SKAction.moveBy(x: -kHotdogMoveVelocity, y: 0, duration: 1)
             let moveForever = SKAction.repeatForever(moveLeft)
             hotdog.run(moveForever, withKey: "moveLeft")
-        } else {
+        } else if pos.x > 3 * self.frame.size.width / 4.0 {
             print("tap right")
             hotdog.xScale *= hotdog.xScale > 0 ? 1 : -1
             hotdog.removeAction(forKey: "moveLeft")
             let moveRight = SKAction.moveBy(x: kHotdogMoveVelocity, y: 0, duration: 1)
             let moveForever = SKAction.repeatForever(moveRight)
             hotdog.run(moveForever, withKey: "moveRight")
+        } else {
+            // middle
+            let diff = CGVector(dx: 0, dy: kMinJumpHeight)
+            if isLanded {
+                hotdog.physicsBody?.applyImpulse(diff)
+            }
+            isLanded = false
         }
         
         //        if bodyA.categoryBitMask == leftBoundCatrgory || bodyB.categoryBitMask == leftBoundCatrgory {
@@ -426,14 +429,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        hotdog.removeAllActions()
-        hotdog.run(hotdogRunForever)
         for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         hotdog.removeAllActions()
-        hotdog.run(hotdogRunForever)
+        hotdog.texture = SKTexture(imageNamed: "8")
         for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
     
