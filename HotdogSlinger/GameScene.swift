@@ -11,10 +11,9 @@ import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
-    var entities = [GKEntity]()
-    var graphs = [String : GKGraph]()
     var hotdog = SKSpriteNode()
-
+    var hotdogRunForever = SKAction()
+    
     let hotdogCategory: UInt32 = 0x1 << 0;
     let cactusCategory: UInt32 = 0x1 << 1;
     let sideboundsCategory: UInt32 = 0x1 << 2;
@@ -41,14 +40,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupCounterLabel()
         
 //        let longPress = UILongPressGestureRecognizer(target: self,
-//                                                     action: #selector(springJump(longPress:)))
-        let tap = UITapGestureRecognizer(target: self,
-                                         action: #selector(tapJump))
-        self.view?.addGestureRecognizer(tap)
+//                                                     action: #selector(moveDirection(longPress:)))
+//        let tap = UITapGestureRecognizer(target: self,
+//                                         action: #selector(tapJump))
+//        self.view?.addGestureRecognizer(tap)
 //        self.view?.addGestureRecognizer(longPress)
-        
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(swipeToJump(swipe:)))
+        swipeUp.direction = UISwipeGestureRecognizerDirection.up
+        self.view?.addGestureRecognizer(swipeUp)
     }
-    
+    @objc func swipeToJump(swipe: UISwipeGestureRecognizer) {
+        if swipe.direction == UISwipeGestureRecognizerDirection.up {
+            print("Swipe up")
+            let diff = CGVector(dx: 0, dy: kMinJumpHeight)
+            if isLanded {
+                hotdog.physicsBody?.applyImpulse(diff)
+            }
+            isLanded = false
+        }
+    }
 //    @objc func springJump(longPress: UILongPressGestureRecognizer) {
 //        switch longPress.state {
 //        case .began:
@@ -81,7 +91,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //    }
     
     @objc func tapJump() {
-        let diff = CGVector(dx: hotdog.xScale > 0.0 ? 20 : -20, dy: kMinJumpHeight)
+//        let diff = CGVector(dx: hotdog.xScale > 0.0 ? 20 : -20, dy: kMinJumpHeight)
+        let diff = CGVector(dx: 0, dy: kMinJumpHeight)
         if isLanded {
             hotdog.physicsBody?.applyImpulse(diff)
         }
@@ -163,11 +174,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let hotdogTexture7 = SKTexture(imageNamed: "7")
         let hotdogTexture8 = SKTexture(imageNamed: "8")
         
-        hotdog = SKSpriteNode(texture: hotdogTexture1)
-        hotdog.xScale = 0.3
-        hotdog.yScale = 0.3
+        hotdog = SKSpriteNode(texture: hotdogTexture8)
+//        hotdog.xScale = 0.3
+//        hotdog.yScale = 0.3
         hotdog.zPosition = 30
-        hotdog.position = CGPoint(x: hotdog.size.width/2.0 + 5, y: hotdog.size.height/2.0)
+        hotdog.position = CGPoint(x: self.frame.size.width/2.0, y: hotdog.size.height/2.0)
         hotdog.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         hotdog.physicsBody = SKPhysicsBody(rectangleOf: hotdog.size)
         hotdog.physicsBody?.affectedByGravity = true
@@ -176,10 +187,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hotdog.physicsBody?.collisionBitMask = sideboundsCategory
         
         let run = SKAction.animate(with: [hotdogTexture1, hotdogTexture2, hotdogTexture3, hotdogTexture4, hotdogTexture5, hotdogTexture6, hotdogTexture7, hotdogTexture8], timePerFrame: 0.2)
-        let runForever = SKAction.repeatForever(run)
+        hotdogRunForever = SKAction.repeatForever(run)
         hotdog.physicsBody?.allowsRotation = false
         hotdog.physicsBody?.restitution = 0.0
-        hotdog.run(runForever)
         self.addChild(hotdog)
     }
     
@@ -241,7 +251,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         paths.append(firstPath)
         for _ in 0 ... 5 {
             firstPath = paths.last as! Path
-            let x = p_randomPoint(min: Int(firstPath.size.width / 2.0), max: Int(self.frame.size.width - (firstPath.size.width / 2.0) - 100))
+            let x = p_randomPoint(min: Int(firstPath.size.width / 2.0),
+                                  max: Int(self.frame.size.width - (firstPath.size.width / 2.0) - 100))
             let y = Int(firstPath.frame.origin.y) + kMinJumpHeight
             let path = Path(position: CGPoint(x: x, y: y))
             print("view width \(self.frame.size.width)")
@@ -270,20 +281,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //            gameover()
 //        }
         
-        if bodyA.categoryBitMask == leftBoundCatrgory || bodyB.categoryBitMask == leftBoundCatrgory {
-            print("turn back")
-            hotdog.xScale *= -1
-            hotdog.removeAction(forKey: "moveLeft")
-            let moveRight = SKAction.moveBy(x: kHotdogMoveVelocity, y: 0, duration: 1)
-            let moveForever = SKAction.repeatForever(moveRight)
-            hotdog.run(moveForever, withKey: "moveRight")
-        } else if bodyA.categoryBitMask == rightBoundCategory || bodyB.categoryBitMask == rightBoundCategory {
-            hotdog.xScale *= -1
-            hotdog.removeAction(forKey: "moveRight")
-            let moveLeft = SKAction.moveBy(x: -kHotdogMoveVelocity, y: 0, duration: 1)
-            let moveForever = SKAction.repeatForever(moveLeft)
-            hotdog.run(moveForever, withKey: "moveLeft")
-        } else if bodyA.categoryBitMask == pathCategory || bodyB.categoryBitMask == pathCategory {
+//        if bodyA.categoryBitMask == leftBoundCatrgory || bodyB.categoryBitMask == leftBoundCatrgory {
+//            print("turn back")
+//            hotdog.xScale *= -1
+//            hotdog.removeAction(forKey: "moveLeft")
+//            let moveRight = SKAction.moveBy(x: kHotdogMoveVelocity, y: 0, duration: 1)
+//            let moveForever = SKAction.repeatForever(moveRight)
+//            hotdog.run(moveForever, withKey: "moveRight")
+//        } else if bodyA.categoryBitMask == rightBoundCategory || bodyB.categoryBitMask == rightBoundCategory {
+//            hotdog.xScale *= -1
+//            hotdog.removeAction(forKey: "moveRight")
+//            let moveLeft = SKAction.moveBy(x: -kHotdogMoveVelocity, y: 0, duration: 1)
+//            let moveForever = SKAction.repeatForever(moveLeft)
+//            hotdog.run(moveForever, withKey: "moveLeft")
+//        } else
+        if bodyA.categoryBitMask == pathCategory || bodyB.categoryBitMask == pathCategory {
             let currPath = bodyB.categoryBitMask == pathCategory ? bodyB.node as! SKSpriteNode : bodyA.node as! Path
             print("hit path")
             let dy = hotdog.physicsBody!.velocity.dy
@@ -331,67 +343,110 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     
-//    func touchDown(atPoint pos : CGPoint) {
+    func touchDown(atPoint pos : CGPoint) {
 //        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
 //            n.position = pos
 //            n.strokeColor = SKColor.green
 //            self.addChild(n)
 //        }
-//    }
-//    
-//    func touchMoved(toPoint pos : CGPoint) {
+        print(pos)
+        if pos.x < self.frame.size.width / 2.0 {
+            print("tap left")
+            hotdog.xScale *= hotdog.xScale > 0 ? -1 : 1
+            hotdog.removeAction(forKey: "moveRight")
+            let moveLeft = SKAction.moveBy(x: -kHotdogMoveVelocity, y: 0, duration: 1)
+            let moveForever = SKAction.repeatForever(moveLeft)
+            hotdog.run(moveForever, withKey: "moveLeft")
+        } else {
+            print("tap right")
+            hotdog.xScale *= hotdog.xScale > 0 ? 1 : -1
+            hotdog.removeAction(forKey: "moveLeft")
+            let moveRight = SKAction.moveBy(x: kHotdogMoveVelocity, y: 0, duration: 1)
+            let moveForever = SKAction.repeatForever(moveRight)
+            hotdog.run(moveForever, withKey: "moveRight")
+        }
+        
+        //        if bodyA.categoryBitMask == leftBoundCatrgory || bodyB.categoryBitMask == leftBoundCatrgory {
+        //            print("turn back")
+        //            hotdog.xScale *= -1
+        //            hotdog.removeAction(forKey: "moveLeft")
+        //            let moveRight = SKAction.moveBy(x: kHotdogMoveVelocity, y: 0, duration: 1)
+        //            let moveForever = SKAction.repeatForever(moveRight)
+        //            hotdog.run(moveForever, withKey: "moveRight")
+        //        } else if bodyA.categoryBitMask == rightBoundCategory || bodyB.categoryBitMask == rightBoundCategory {
+        //            hotdog.xScale *= -1
+        //            hotdog.removeAction(forKey: "moveRight")
+        //            let moveLeft = SKAction.moveBy(x: -kHotdogMoveVelocity, y: 0, duration: 1)
+        //            let moveForever = SKAction.repeatForever(moveLeft)
+        //            hotdog.run(moveForever, withKey: "moveLeft")
+        //        }
+//        print("touch down")
+    }
+    
+    func touchMoved(toPoint pos : CGPoint) {
 //        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
 //            n.position = pos
 //            n.strokeColor = SKColor.blue
 //            self.addChild(n)
 //        }
-//    }
-//    
-//    func touchUp(atPoint pos : CGPoint) {
+    }
+    
+    func touchUp(atPoint pos : CGPoint) {
 //        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
 //            n.position = pos
 //            n.strokeColor = SKColor.red
 //            self.addChild(n)
 //        }
-//    }
+    }
     
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        hotdog.run(hotdogRunForever, withKey: "hotdogRunForever")
+        print("touch begin")
 //        if let label = self.label {
 //            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
 //        }
-//        
-//        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
-//    }
-//    
-//    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
-//    }
-//    
-//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-//    }
-//    
-//    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-//    }
+//
+        for t in touches {
+            self.touchDown(atPoint: t.location(in: self))
+        }
+    }
     
-//    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for t in touches {
+            self.touchMoved(toPoint: t.location(in: self))
+            print(t.location(in: self))
+        }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        hotdog.removeAllActions()
+        hotdog.run(hotdogRunForever)
+        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        hotdog.removeAllActions()
+        hotdog.run(hotdogRunForever)
+        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+    }
+    
+    
 //    override func update(_ currentTime: TimeInterval) {
 //        // Called before each frame is rendered
-//        
+//
 //        // Initialize _lastUpdateTime if it has not already been
 //        if (self.lastUpdateTime == 0) {
 //            self.lastUpdateTime = currentTime
 //        }
-//        
+//
 //        // Calculate time since last update
 //        let dt = currentTime - self.lastUpdateTime
-//        
+//
 //        // Update entities
 //        for entity in self.entities {
 //            entity.update(deltaTime: dt)
 //        }
-//        
+//
 //        self.lastUpdateTime = currentTime
 //    }
 }
