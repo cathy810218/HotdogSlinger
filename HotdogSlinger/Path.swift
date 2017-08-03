@@ -9,9 +9,10 @@
 import UIKit
 import SpriteKit
 class Path: SKSpriteNode {
-    
+    var isVisited: Bool
     init(position: CGPoint) {
         let texture = SKTexture(imageNamed: "pickle")
+        self.isVisited = false
         super.init(texture: texture, color: UIColor.clear, size: texture.size())
         self.position = position
         self.physicsBody = SKPhysicsBody(texture: texture, size: self.size)

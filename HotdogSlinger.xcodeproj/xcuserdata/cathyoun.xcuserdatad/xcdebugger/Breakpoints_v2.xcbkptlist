@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HotdogSlinger/GameScene.swift"
-            timestampString = "523439888.046283"
+            timestampString = "523441112.949708"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
             landmarkName = "swipeToJump(swipe:)"
             landmarkType = "7">
          </BreakpointContent>

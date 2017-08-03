@@ -22,6 +22,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let pathCategory: UInt32 = 0x1 << 5;
     
     var background = SKSpriteNode()
+    var score = 0
     var scoreLabelNode = SKLabelNode(text: "0")
     var timer = Timer()
     var timeCounter = kMinJumpHeight
@@ -202,6 +203,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func update(_ currentTime: TimeInterval) {
+        scoreLabelNode.text = String(score)
         if let body = hotdog.physicsBody {
             let dy = body.velocity.dy
             if dy > 0 {
@@ -296,7 +298,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //            hotdog.run(moveForever, withKey: "moveLeft")
 //        } else
         if bodyA.categoryBitMask == pathCategory || bodyB.categoryBitMask == pathCategory {
-            let currPath = bodyB.categoryBitMask == pathCategory ? bodyB.node as! SKSpriteNode : bodyA.node as! Path
+            let currPath = bodyB.categoryBitMask == pathCategory ? bodyB.node as! Path : bodyA.node as! Path
             print("hit path")
             let dy = hotdog.physicsBody!.velocity.dy
             if dy > 0 {
@@ -308,6 +310,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     print("about to land!")
                     hotdog.physicsBody?.contactTestBitMask = pathCategory
                     hotdog.physicsBody?.collisionBitMask = sideboundsCategory | pathCategory
+                    
+                    if !currPath.isVisited {
+                        score += 1
+                        currPath.isVisited = true
+                    }
                 }
             }
         }
