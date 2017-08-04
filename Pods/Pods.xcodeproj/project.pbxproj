@@ -7,87 +7,87 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2BBE9821793AE56F2D204076CF4D316A /* Pods-HotdogSlingerTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B0051F659BBA1FC0D3A0C5DCCC84380 /* Pods-HotdogSlingerTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		36B3FCB49D160B1A9623FFC0A8D16B74 /* Pods-HotdogSlinger-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = AA258ED316E8EDB901D296373C637287 /* Pods-HotdogSlinger-dummy.m */; };
-		4EA2F0FB84CB61580BCAE496E38247A2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
-		66A8DE8895CFA29097BA03171643C1D6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
-		C41CBFB1D1F1C601150B0339968DA94F /* Pods-HotdogSlinger-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8DA3C11929989FF3123B7952EBA3D2E9 /* Pods-HotdogSlinger-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EEA3020A7D932F3029F58C98A3C8897C /* Pods-HotdogSlingerTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA63CC263658E2C324D7D1E1290CC0A /* Pods-HotdogSlingerTests-dummy.m */; };
+		64E90AD83BFA049A44D911FD48393C08 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		73ABC7336B69EE7A6CF486F655860167 /* Pods-HotdogUp-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4688EC7650FD49D4C0FBDFA99BF557A5 /* Pods-HotdogUp-dummy.m */; };
+		92BB75E40E466FB139E377510079C406 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		F2FD88C279A143E73061FDDA2CE56C76 /* Pods-HotdogUpTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E47765215E531AFF349B232AB920147 /* Pods-HotdogUpTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F5BDF8E4D883DD53330C2455C2AD3D39 /* Pods-HotdogUpTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BC37DA7F11387751C6037023296308B3 /* Pods-HotdogUpTests-dummy.m */; };
+		FC3F75CDAD5EB72ECBAFD2D23E32D0CF /* Pods-HotdogUp-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 709811228EE053E203D67D9BBEE3E7A3 /* Pods-HotdogUp-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0A6172F338F920D26E66663B16B85FDB /* Pods_HotdogSlingerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_HotdogSlingerTests.framework; path = "Pods-HotdogSlingerTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		0B0051F659BBA1FC0D3A0C5DCCC84380 /* Pods-HotdogSlingerTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-HotdogSlingerTests-umbrella.h"; sourceTree = "<group>"; };
-		19D37C31790D183FBB6B30F599192C3C /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1D0A698D073E10202C399431226D657B /* Pods-HotdogSlinger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HotdogSlinger.release.xcconfig"; sourceTree = "<group>"; };
-		4A283279EC088F64D826D6A49A1A3306 /* Pods-HotdogSlinger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HotdogSlinger.debug.xcconfig"; sourceTree = "<group>"; };
-		4C1D4F119C48337267351C2AB0E2FA5E /* Pods-HotdogSlinger-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-HotdogSlinger-acknowledgements.plist"; sourceTree = "<group>"; };
-		61C44BDA412900707F531B97B4E05E37 /* Pods-HotdogSlingerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HotdogSlingerTests.release.xcconfig"; sourceTree = "<group>"; };
-		62ECA7F12CB58960B009F0662F57BC44 /* Pods-HotdogSlinger-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HotdogSlinger-resources.sh"; sourceTree = "<group>"; };
-		64B92C352D53CAC21AB96C82D9E4D566 /* Pods-HotdogSlingerTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HotdogSlingerTests-frameworks.sh"; sourceTree = "<group>"; };
+		061D2A99212EFC82DCC59BFFE146A155 /* Pods-HotdogUpTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HotdogUpTests.debug.xcconfig"; sourceTree = "<group>"; };
+		15874CDF2610E04C84B8B91C43A7291B /* Pods-HotdogUp.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-HotdogUp.modulemap"; sourceTree = "<group>"; };
+		23EAACE850D2097B1C3EA859C984BA5E /* Pods_HotdogUp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_HotdogUp.framework; path = "Pods-HotdogUp.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E47765215E531AFF349B232AB920147 /* Pods-HotdogUpTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-HotdogUpTests-umbrella.h"; sourceTree = "<group>"; };
+		319067BEE594953CC7758AA675775649 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		387A186B832DECE646743543E1AE8114 /* Pods-HotdogUpTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-HotdogUpTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		3C5F5F176858295355301F3D5DD1299C /* Pods-HotdogUp-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HotdogUp-frameworks.sh"; sourceTree = "<group>"; };
+		4688EC7650FD49D4C0FBDFA99BF557A5 /* Pods-HotdogUp-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-HotdogUp-dummy.m"; sourceTree = "<group>"; };
+		4B331351AE36B9CEBF07700A67882C54 /* Pods_HotdogUpTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_HotdogUpTests.framework; path = "Pods-HotdogUpTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DD5329D8E724FAF1A061E07718F018A /* Pods-HotdogUpTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-HotdogUpTests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		6E5E8C3364EBD8BE8672314743E727CA /* Pods-HotdogSlinger.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-HotdogSlinger.modulemap"; sourceTree = "<group>"; };
-		71129B643D5541F245B05DA0D7EB7EE5 /* Pods-HotdogSlinger-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-HotdogSlinger-acknowledgements.markdown"; sourceTree = "<group>"; };
-		8DA3C11929989FF3123B7952EBA3D2E9 /* Pods-HotdogSlinger-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-HotdogSlinger-umbrella.h"; sourceTree = "<group>"; };
+		709811228EE053E203D67D9BBEE3E7A3 /* Pods-HotdogUp-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-HotdogUp-umbrella.h"; sourceTree = "<group>"; };
+		728899ABC3735C5D6A5BE9692F38224A /* Pods-HotdogUpTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HotdogUpTests-frameworks.sh"; sourceTree = "<group>"; };
+		7D5FF37DDBFF8349CEDC092550F7845A /* Pods-HotdogUp-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-HotdogUp-acknowledgements.markdown"; sourceTree = "<group>"; };
+		86E426FAC506CE523D681A11AEF16394 /* Pods-HotdogUpTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HotdogUpTests-resources.sh"; sourceTree = "<group>"; };
+		87CD59D637FF4CAD334CCA91F9F611A3 /* Pods-HotdogUpTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-HotdogUpTests.modulemap"; sourceTree = "<group>"; };
+		8E12F88F692A9AB94BC546D47827180A /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		91D5AC86F501517574AEC6CE8489C36B /* Pods-HotdogUpTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HotdogUpTests.release.xcconfig"; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		A151DD1DB8865F514012C0710F2D98E6 /* Pods-HotdogSlingerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HotdogSlingerTests.debug.xcconfig"; sourceTree = "<group>"; };
-		A63D8C570606A7A2706FFD72CAAC465D /* Pods-HotdogSlingerTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HotdogSlingerTests-resources.sh"; sourceTree = "<group>"; };
-		AA258ED316E8EDB901D296373C637287 /* Pods-HotdogSlinger-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-HotdogSlinger-dummy.m"; sourceTree = "<group>"; };
-		AB30D94004E1CFC92CFF78ADEF0E011E /* Pods-HotdogSlingerTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-HotdogSlingerTests.modulemap"; sourceTree = "<group>"; };
-		B915945A22AEE74584197F4720D25522 /* Pods_HotdogSlinger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_HotdogSlinger.framework; path = "Pods-HotdogSlinger.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		BFB4632D6DAB37547FD097DDE85BD868 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CAAFB7A699D13BB4B026074E63DCD230 /* Pods-HotdogSlingerTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-HotdogSlingerTests-acknowledgements.plist"; sourceTree = "<group>"; };
-		DAA63CC263658E2C324D7D1E1290CC0A /* Pods-HotdogSlingerTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-HotdogSlingerTests-dummy.m"; sourceTree = "<group>"; };
-		DB330C9702C774265A07DAB5B649AB22 /* Pods-HotdogSlingerTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-HotdogSlingerTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		9E8403CD8F2048F8CD86D00B562ECA9B /* Pods-HotdogUp-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HotdogUp-resources.sh"; sourceTree = "<group>"; };
+		BC37DA7F11387751C6037023296308B3 /* Pods-HotdogUpTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-HotdogUpTests-dummy.m"; sourceTree = "<group>"; };
+		D89E8A29AC6132BB3E4DA666710B9A47 /* Pods-HotdogUp-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-HotdogUp-acknowledgements.plist"; sourceTree = "<group>"; };
+		E549FF6236619EA67053A130D5AEBA28 /* Pods-HotdogUp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HotdogUp.debug.xcconfig"; sourceTree = "<group>"; };
 		F87BBE855D70C2F87C02A1CCA30E262D /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = Frameworks/frameworks/GoogleMobileAds.framework; sourceTree = "<group>"; };
-		FC0C686F0DA433FF10F6040EC38916E7 /* Pods-HotdogSlinger-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HotdogSlinger-frameworks.sh"; sourceTree = "<group>"; };
+		FC9C5671947386C43C142D776B4D21FD /* Pods-HotdogUp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HotdogUp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		9B372FEFA2F27273C5B68CAE1B4727AE /* Frameworks */ = {
+		C4E2C62576D4294CAEAFCE9BF01DA4D8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66A8DE8895CFA29097BA03171643C1D6 /* Foundation.framework in Frameworks */,
+				92BB75E40E466FB139E377510079C406 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F9306B7D485BFB63DD6E363368F7DDB2 /* Frameworks */ = {
+		D3C35288957CDC9428C986E74BDE89D3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4EA2F0FB84CB61580BCAE496E38247A2 /* Foundation.framework in Frameworks */,
+				64E90AD83BFA049A44D911FD48393C08 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		38957C973992EAEA5829DB9A308012E6 /* Targets Support Files */ = {
+		1A7E365B1C826A71D08A973C6AB8022F /* Pods-HotdogUp */ = {
 			isa = PBXGroup;
 			children = (
-				BAB86DFA4BC48263EDBD4FCC3656D599 /* Pods-HotdogSlinger */,
-				51024BEF527DEF35FBC83D987E73CA36 /* Pods-HotdogSlingerTests */,
+				319067BEE594953CC7758AA675775649 /* Info.plist */,
+				15874CDF2610E04C84B8B91C43A7291B /* Pods-HotdogUp.modulemap */,
+				7D5FF37DDBFF8349CEDC092550F7845A /* Pods-HotdogUp-acknowledgements.markdown */,
+				D89E8A29AC6132BB3E4DA666710B9A47 /* Pods-HotdogUp-acknowledgements.plist */,
+				4688EC7650FD49D4C0FBDFA99BF557A5 /* Pods-HotdogUp-dummy.m */,
+				3C5F5F176858295355301F3D5DD1299C /* Pods-HotdogUp-frameworks.sh */,
+				9E8403CD8F2048F8CD86D00B562ECA9B /* Pods-HotdogUp-resources.sh */,
+				709811228EE053E203D67D9BBEE3E7A3 /* Pods-HotdogUp-umbrella.h */,
+				E549FF6236619EA67053A130D5AEBA28 /* Pods-HotdogUp.debug.xcconfig */,
+				FC9C5671947386C43C142D776B4D21FD /* Pods-HotdogUp.release.xcconfig */,
 			);
-			name = "Targets Support Files";
+			name = "Pods-HotdogUp";
+			path = "Target Support Files/Pods-HotdogUp";
 			sourceTree = "<group>";
 		};
-		51024BEF527DEF35FBC83D987E73CA36 /* Pods-HotdogSlingerTests */ = {
+		517F10901E104142B4A83D32209A6F71 /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				19D37C31790D183FBB6B30F599192C3C /* Info.plist */,
-				AB30D94004E1CFC92CFF78ADEF0E011E /* Pods-HotdogSlingerTests.modulemap */,
-				DB330C9702C774265A07DAB5B649AB22 /* Pods-HotdogSlingerTests-acknowledgements.markdown */,
-				CAAFB7A699D13BB4B026074E63DCD230 /* Pods-HotdogSlingerTests-acknowledgements.plist */,
-				DAA63CC263658E2C324D7D1E1290CC0A /* Pods-HotdogSlingerTests-dummy.m */,
-				64B92C352D53CAC21AB96C82D9E4D566 /* Pods-HotdogSlingerTests-frameworks.sh */,
-				A63D8C570606A7A2706FFD72CAAC465D /* Pods-HotdogSlingerTests-resources.sh */,
-				0B0051F659BBA1FC0D3A0C5DCCC84380 /* Pods-HotdogSlingerTests-umbrella.h */,
-				A151DD1DB8865F514012C0710F2D98E6 /* Pods-HotdogSlingerTests.debug.xcconfig */,
-				61C44BDA412900707F531B97B4E05E37 /* Pods-HotdogSlingerTests.release.xcconfig */,
+				1A7E365B1C826A71D08A973C6AB8022F /* Pods-HotdogUp */,
+				DF9A6947AA532262C1D8B99FC0733656 /* Pods-HotdogUpTests */,
 			);
-			name = "Pods-HotdogSlingerTests";
-			path = "Target Support Files/Pods-HotdogSlingerTests";
+			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
 		7DB346D0F39D3F0E887471402A8071AB = {
@@ -96,8 +96,8 @@
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
 				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
 				820FBBDA65C5B1A6A4C379A893C27235 /* Pods */,
-				AC2F3BBB3BD92365CF3F7C19E49E3145 /* Products */,
-				38957C973992EAEA5829DB9A308012E6 /* Targets Support Files */,
+				939905DCAF4E5A366B3AB20EA601208F /* Products */,
+				517F10901E104142B4A83D32209A6F71 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
@@ -109,39 +109,21 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		939905DCAF4E5A366B3AB20EA601208F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				23EAACE850D2097B1C3EA859C984BA5E /* Pods_HotdogUp.framework */,
+				4B331351AE36B9CEBF07700A67882C54 /* Pods_HotdogUpTests.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		953FD61A3CECC96530CB5CA297A086C1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				F87BBE855D70C2F87C02A1CCA30E262D /* GoogleMobileAds.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		AC2F3BBB3BD92365CF3F7C19E49E3145 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				B915945A22AEE74584197F4720D25522 /* Pods_HotdogSlinger.framework */,
-				0A6172F338F920D26E66663B16B85FDB /* Pods_HotdogSlingerTests.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		BAB86DFA4BC48263EDBD4FCC3656D599 /* Pods-HotdogSlinger */ = {
-			isa = PBXGroup;
-			children = (
-				BFB4632D6DAB37547FD097DDE85BD868 /* Info.plist */,
-				6E5E8C3364EBD8BE8672314743E727CA /* Pods-HotdogSlinger.modulemap */,
-				71129B643D5541F245B05DA0D7EB7EE5 /* Pods-HotdogSlinger-acknowledgements.markdown */,
-				4C1D4F119C48337267351C2AB0E2FA5E /* Pods-HotdogSlinger-acknowledgements.plist */,
-				AA258ED316E8EDB901D296373C637287 /* Pods-HotdogSlinger-dummy.m */,
-				FC0C686F0DA433FF10F6040EC38916E7 /* Pods-HotdogSlinger-frameworks.sh */,
-				62ECA7F12CB58960B009F0662F57BC44 /* Pods-HotdogSlinger-resources.sh */,
-				8DA3C11929989FF3123B7952EBA3D2E9 /* Pods-HotdogSlinger-umbrella.h */,
-				4A283279EC088F64D826D6A49A1A3306 /* Pods-HotdogSlinger.debug.xcconfig */,
-				1D0A698D073E10202C399431226D657B /* Pods-HotdogSlinger.release.xcconfig */,
-			);
-			name = "Pods-HotdogSlinger";
-			path = "Target Support Files/Pods-HotdogSlinger";
 			sourceTree = "<group>";
 		};
 		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
@@ -160,6 +142,24 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
+		DF9A6947AA532262C1D8B99FC0733656 /* Pods-HotdogUpTests */ = {
+			isa = PBXGroup;
+			children = (
+				8E12F88F692A9AB94BC546D47827180A /* Info.plist */,
+				87CD59D637FF4CAD334CCA91F9F611A3 /* Pods-HotdogUpTests.modulemap */,
+				5DD5329D8E724FAF1A061E07718F018A /* Pods-HotdogUpTests-acknowledgements.markdown */,
+				387A186B832DECE646743543E1AE8114 /* Pods-HotdogUpTests-acknowledgements.plist */,
+				BC37DA7F11387751C6037023296308B3 /* Pods-HotdogUpTests-dummy.m */,
+				728899ABC3735C5D6A5BE9692F38224A /* Pods-HotdogUpTests-frameworks.sh */,
+				86E426FAC506CE523D681A11AEF16394 /* Pods-HotdogUpTests-resources.sh */,
+				2E47765215E531AFF349B232AB920147 /* Pods-HotdogUpTests-umbrella.h */,
+				061D2A99212EFC82DCC59BFFE146A155 /* Pods-HotdogUpTests.debug.xcconfig */,
+				91D5AC86F501517574AEC6CE8489C36B /* Pods-HotdogUpTests.release.xcconfig */,
+			);
+			name = "Pods-HotdogUpTests";
+			path = "Target Support Files/Pods-HotdogUpTests";
+			sourceTree = "<group>";
+		};
 		E91D6015731707498AAA5817D350B87B /* Google-Mobile-Ads-SDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,57 +172,57 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		A7CD30BCDC7BA80194351DFD56CA549D /* Headers */ = {
+		35A31ED9D9868DACF10198E0A929E5DB /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C41CBFB1D1F1C601150B0339968DA94F /* Pods-HotdogSlinger-umbrella.h in Headers */,
+				FC3F75CDAD5EB72ECBAFD2D23E32D0CF /* Pods-HotdogUp-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B143ED36548A3951E08F58337FA18588 /* Headers */ = {
+		9FA76D9571315A1A1E8B1FB30B3EC670 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2BBE9821793AE56F2D204076CF4D316A /* Pods-HotdogSlingerTests-umbrella.h in Headers */,
+				F2FD88C279A143E73061FDDA2CE56C76 /* Pods-HotdogUpTests-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		46B068D53308F9B4472077B06FEDE395 /* Pods-HotdogSlinger */ = {
+		5A08AAF56F8D0D97071293CB6DF0816C /* Pods-HotdogUpTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1F5A89BFF35BC5A88115A9BD5E5780E4 /* Build configuration list for PBXNativeTarget "Pods-HotdogSlinger" */;
+			buildConfigurationList = 5F25DE63950B4214C271130B2D597C9A /* Build configuration list for PBXNativeTarget "Pods-HotdogUpTests" */;
 			buildPhases = (
-				5C0A11F70CAB12E0AC20EB43B1136481 /* Sources */,
-				9B372FEFA2F27273C5B68CAE1B4727AE /* Frameworks */,
-				A7CD30BCDC7BA80194351DFD56CA549D /* Headers */,
+				ED1932C57FE66FA64491BF87C344554B /* Sources */,
+				D3C35288957CDC9428C986E74BDE89D3 /* Frameworks */,
+				9FA76D9571315A1A1E8B1FB30B3EC670 /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "Pods-HotdogSlinger";
-			productName = "Pods-HotdogSlinger";
-			productReference = B915945A22AEE74584197F4720D25522 /* Pods_HotdogSlinger.framework */;
+			name = "Pods-HotdogUpTests";
+			productName = "Pods-HotdogUpTests";
+			productReference = 4B331351AE36B9CEBF07700A67882C54 /* Pods_HotdogUpTests.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		BFF3A8B8B13CBEE2DF8623E56B9D7751 /* Pods-HotdogSlingerTests */ = {
+		FD2933F7418A36BD01DCC1F583CD0F6E /* Pods-HotdogUp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 69EFD5884BDF7F2EDD321FB4FE749757 /* Build configuration list for PBXNativeTarget "Pods-HotdogSlingerTests" */;
+			buildConfigurationList = 1B3B4540E60F8DE62E66E28F8A8DDB9D /* Build configuration list for PBXNativeTarget "Pods-HotdogUp" */;
 			buildPhases = (
-				5F35153941AF7F87A95F1621A79A2CFB /* Sources */,
-				F9306B7D485BFB63DD6E363368F7DDB2 /* Frameworks */,
-				B143ED36548A3951E08F58337FA18588 /* Headers */,
+				F6B8E424250999C27B6F1AC5B3869BA8 /* Sources */,
+				C4E2C62576D4294CAEAFCE9BF01DA4D8 /* Frameworks */,
+				35A31ED9D9868DACF10198E0A929E5DB /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "Pods-HotdogSlingerTests";
-			productName = "Pods-HotdogSlingerTests";
-			productReference = 0A6172F338F920D26E66663B16B85FDB /* Pods_HotdogSlingerTests.framework */;
+			name = "Pods-HotdogUp";
+			productName = "Pods-HotdogUp";
+			productReference = 23EAACE850D2097B1C3EA859C984BA5E /* Pods_HotdogUp.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -242,30 +242,30 @@
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = AC2F3BBB3BD92365CF3F7C19E49E3145 /* Products */;
+			productRefGroup = 939905DCAF4E5A366B3AB20EA601208F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				46B068D53308F9B4472077B06FEDE395 /* Pods-HotdogSlinger */,
-				BFF3A8B8B13CBEE2DF8623E56B9D7751 /* Pods-HotdogSlingerTests */,
+				FD2933F7418A36BD01DCC1F583CD0F6E /* Pods-HotdogUp */,
+				5A08AAF56F8D0D97071293CB6DF0816C /* Pods-HotdogUpTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		5C0A11F70CAB12E0AC20EB43B1136481 /* Sources */ = {
+		ED1932C57FE66FA64491BF87C344554B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				36B3FCB49D160B1A9623FFC0A8D16B74 /* Pods-HotdogSlinger-dummy.m in Sources */,
+				F5BDF8E4D883DD53330C2455C2AD3D39 /* Pods-HotdogUpTests-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5F35153941AF7F87A95F1621A79A2CFB /* Sources */ = {
+		F6B8E424250999C27B6F1AC5B3869BA8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EEA3020A7D932F3029F58C98A3C8897C /* Pods-HotdogSlingerTests-dummy.m in Sources */,
+				73ABC7336B69EE7A6CF486F655860167 /* Pods-HotdogUp-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,9 +320,9 @@
 			};
 			name = Debug;
 		};
-		35403A82DB4230981D160AE1AC48E45A /* Release */ = {
+		17407F956D5DF72B540350EC61B9D844 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 61C44BDA412900707F531B97B4E05E37 /* Pods-HotdogSlingerTests.release.xcconfig */;
+			baseConfigurationReference = FC9C5671947386C43C142D776B4D21FD /* Pods-HotdogUp.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -336,18 +336,18 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-HotdogSlingerTests/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-HotdogUp/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-HotdogSlingerTests/Pods-HotdogSlingerTests.modulemap";
+				MODULEMAP_FILE = "Target Support Files/Pods-HotdogUp/Pods-HotdogUp.modulemap";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_HotdogSlingerTests;
+				PRODUCT_NAME = Pods_HotdogUp;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -400,9 +400,45 @@
 			};
 			name = Release;
 		};
-		8F372D993E10F01EF157E5270D137560 /* Release */ = {
+		8771FE15652DBD848C5B5B3573A4BBC7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1D0A698D073E10202C399431226D657B /* Pods-HotdogSlinger.release.xcconfig */;
+			baseConfigurationReference = 061D2A99212EFC82DCC59BFFE146A155 /* Pods-HotdogUpTests.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-HotdogUpTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-HotdogUpTests/Pods-HotdogUpTests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_HotdogUpTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		91DB341B1DCC0A2A3A7DFED04D102BE8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 91D5AC86F501517574AEC6CE8489C36B /* Pods-HotdogUpTests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -416,18 +452,18 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-HotdogSlinger/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-HotdogUpTests/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-HotdogSlinger/Pods-HotdogSlinger.modulemap";
+				MODULEMAP_FILE = "Target Support Files/Pods-HotdogUpTests/Pods-HotdogUpTests.modulemap";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_HotdogSlinger;
+				PRODUCT_NAME = Pods_HotdogUpTests;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -436,9 +472,9 @@
 			};
 			name = Release;
 		};
-		9521753CB21028A9A3C0E84A61BE8374 /* Debug */ = {
+		E4DAD0E8C17375A6303B76646F0B5833 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A151DD1DB8865F514012C0710F2D98E6 /* Pods-HotdogSlingerTests.debug.xcconfig */;
+			baseConfigurationReference = E549FF6236619EA67053A130D5AEBA28 /* Pods-HotdogUp.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -452,54 +488,18 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-HotdogSlingerTests/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-HotdogUp/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-HotdogSlingerTests/Pods-HotdogSlingerTests.modulemap";
+				MODULEMAP_FILE = "Target Support Files/Pods-HotdogUp/Pods-HotdogUp.modulemap";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_HotdogSlingerTests;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		A6759E6902F8097AA6277E6F2E65376D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4A283279EC088F64D826D6A49A1A3306 /* Pods-HotdogSlinger.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-HotdogSlinger/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-HotdogSlinger/Pods-HotdogSlinger.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_HotdogSlinger;
+				PRODUCT_NAME = Pods_HotdogUp;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -511,11 +511,11 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1F5A89BFF35BC5A88115A9BD5E5780E4 /* Build configuration list for PBXNativeTarget "Pods-HotdogSlinger" */ = {
+		1B3B4540E60F8DE62E66E28F8A8DDB9D /* Build configuration list for PBXNativeTarget "Pods-HotdogUp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A6759E6902F8097AA6277E6F2E65376D /* Debug */,
-				8F372D993E10F01EF157E5270D137560 /* Release */,
+				E4DAD0E8C17375A6303B76646F0B5833 /* Debug */,
+				17407F956D5DF72B540350EC61B9D844 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -529,11 +529,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		69EFD5884BDF7F2EDD321FB4FE749757 /* Build configuration list for PBXNativeTarget "Pods-HotdogSlingerTests" */ = {
+		5F25DE63950B4214C271130B2D597C9A /* Build configuration list for PBXNativeTarget "Pods-HotdogUpTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9521753CB21028A9A3C0E84A61BE8374 /* Debug */,
-				35403A82DB4230981D160AE1AC48E45A /* Release */,
+				8771FE15652DBD848C5B5B3573A4BBC7 /* Debug */,
+				91DB341B1DCC0A2A3A7DFED04D102BE8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

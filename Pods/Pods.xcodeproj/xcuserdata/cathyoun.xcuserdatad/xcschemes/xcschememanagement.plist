@@ -4,12 +4,12 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-HotdogSlinger.xcscheme</key>
+		<key>Pods-HotdogUp.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-HotdogSlingerTests.xcscheme</key>
+		<key>Pods-HotdogUpTests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

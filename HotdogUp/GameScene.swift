@@ -1,6 +1,6 @@
 //
 //  GameScene.swift
-//  HotdogSlinger
+//  HotdogUp
 //
 //  Created by Cathy Oun on 5/21/17.
 //  Copyright © 2017 Cathy Oun. All rights reserved.

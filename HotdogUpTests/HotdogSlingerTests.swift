@@ -1,15 +1,15 @@
 //
-//  HotdogSlingerTests.swift
-//  HotdogSlingerTests
+//  HotdogUpTests.swift
+//  HotdogUpTests
 //
 //  Created by Cathy Oun on 5/21/17.
 //  Copyright © 2017 Cathy Oun. All rights reserved.
 //
 
 import XCTest
-@testable import HotdogSlinger
+@testable import HotdogUp
 
-class HotdogSlingerTests: XCTestCase {
+class HotdogUpTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

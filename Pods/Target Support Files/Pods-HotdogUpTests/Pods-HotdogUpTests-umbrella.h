@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_HotdogSlingerTestsVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_HotdogSlingerTestsVersionString[];
+FOUNDATION_EXPORT double Pods_HotdogUpTestsVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_HotdogUpTestsVersionString[];
 

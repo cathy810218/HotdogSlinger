@@ -1,6 +1,6 @@
 //
 //  Constants.swift
-//  HotdogSlinger
+//  HotdogUp
 //
 //  Created by Cathy Oun on 7/31/17.
 //  Copyright © 2017 Cathy Oun. All rights reserved.
