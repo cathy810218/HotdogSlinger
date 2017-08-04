@@ -27,7 +27,7 @@ class SettingsViewController: UIViewController, GADInterstitialDelegate {
         
         let request = GADRequest()
         //TODO: Remove this before shipping
-        request.testDevices = [kGADSimulatorID]
+        request.testDevices = [kGADSimulatorID, kCathyDeviceID]
         interstitial.load(request)
         interstitial.delegate = self
         
