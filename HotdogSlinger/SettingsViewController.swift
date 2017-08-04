@@ -7,13 +7,31 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
-class SettingsViewController: UIViewController {
-
+class SettingsViewController: UIViewController, GADInterstitialDelegate {
+    var interstitial: GADInterstitial?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        interstitial = createInterstitial()
         // Do any additional setup after loading the view.
+    }
+    
+    func createInterstitial() -> GADInterstitial? {
+        interstitial = GADInterstitial(adUnitID: kAdMobUnitID)
+        guard let interstitial = interstitial else {
+            return nil
+        }
+        
+        let request = GADRequest()
+        //TODO: Remove this before shipping
+        request.testDevices = [kGADSimulatorID]
+        interstitial.load(request)
+        interstitial.delegate = self
+        
+        return interstitial
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,5 +54,12 @@ class SettingsViewController: UIViewController {
     }
     
     
+    func interstitialDidReceiveAd(_ ad: GADInterstitial) {
+        print("Interstitial loaded successfully")
+        ad.present(fromRootViewController: self)
+    }
     
+    func interstitialDidFail(toPresentScreen ad: GADInterstitial) {
+        print("Fail to receive interstitial")
+    }
 }
