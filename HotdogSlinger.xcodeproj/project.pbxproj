@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D19E850E3D0BE038EED88BE /* Pods_HotdogSlinger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EE896DB96496BD0905252E6 /* Pods_HotdogSlinger.framework */; };
 		3D07A29C1ED1B1B600BFCE3A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07A29B1ED1B1B600BFCE3A /* AppDelegate.swift */; };
 		3D07A2A21ED1B1B600BFCE3A /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07A2A11ED1B1B600BFCE3A /* GameScene.swift */; };
 		3D07A2A41ED1B1B600BFCE3A /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07A2A31ED1B1B600BFCE3A /* GameViewController.swift */; };
@@ -16,8 +17,10 @@
 		3D07A2B71ED1B1B700BFCE3A /* HotdogSlingerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07A2B61ED1B1B700BFCE3A /* HotdogSlingerTests.swift */; };
 		3D07A2C51ED1B2F000BFCE3A /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07A2C41ED1B2F000BFCE3A /* MenuViewController.swift */; };
 		3D07A2C81ED27A7B00BFCE3A /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07A2C71ED27A7B00BFCE3A /* SettingsViewController.swift */; };
+		3D42BBDE1F34934D00EA722C /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D42BBDD1F34934D00EA722C /* Keys.swift */; };
 		3D857D791F2F2466001C8E28 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D857D781F2F2466001C8E28 /* Constants.swift */; };
 		3DEF5CCC1F31C1A900BFA806 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEF5CCB1F31C1A900BFA806 /* Path.swift */; };
+		CFEC07CEB0275011CEE00B7B /* Pods_HotdogSlingerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82BBDCA2F9A926A70404BFA5 /* Pods_HotdogSlingerTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +34,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		00103EA6DDADC9843B79DAA7 /* Pods-HotdogSlinger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HotdogSlinger.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HotdogSlinger/Pods-HotdogSlinger.debug.xcconfig"; sourceTree = "<group>"; };
+		014CCCCB14F9EA00DA861068 /* Pods-HotdogSlingerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HotdogSlingerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HotdogSlingerTests/Pods-HotdogSlingerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		3C2375A49694432129E27F24 /* Pods-HotdogSlingerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HotdogSlingerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HotdogSlingerTests/Pods-HotdogSlingerTests.release.xcconfig"; sourceTree = "<group>"; };
 		3D07A2981ED1B1B600BFCE3A /* HotdogSlinger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HotdogSlinger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D07A29B1ED1B1B600BFCE3A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3D07A2A11ED1B1B600BFCE3A /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -44,8 +50,12 @@
 		3D07A2B81ED1B1B700BFCE3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D07A2C41ED1B2F000BFCE3A /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		3D07A2C71ED27A7B00BFCE3A /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		3D42BBDD1F34934D00EA722C /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		3D857D781F2F2466001C8E28 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3DEF5CCB1F31C1A900BFA806 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
+		4EE896DB96496BD0905252E6 /* Pods_HotdogSlinger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HotdogSlinger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		82BBDCA2F9A926A70404BFA5 /* Pods_HotdogSlingerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HotdogSlingerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C695ECA072516579A592FFCB /* Pods-HotdogSlinger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HotdogSlinger.release.xcconfig"; path = "Pods/Target Support Files/Pods-HotdogSlinger/Pods-HotdogSlinger.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D19E850E3D0BE038EED88BE /* Pods_HotdogSlinger.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,18 +71,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CFEC07CEB0275011CEE00B7B /* Pods_HotdogSlingerTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		10A315D10CAD015480461E36 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4EE896DB96496BD0905252E6 /* Pods_HotdogSlinger.framework */,
+				82BBDCA2F9A926A70404BFA5 /* Pods_HotdogSlingerTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		3D07A28F1ED1B1B600BFCE3A = {
 			isa = PBXGroup;
 			children = (
 				3D07A29A1ED1B1B600BFCE3A /* HotdogSlinger */,
 				3D07A2B51ED1B1B700BFCE3A /* HotdogSlingerTests */,
 				3D07A2991ED1B1B600BFCE3A /* Products */,
+				9608E25D061C7B33E83A072F /* Pods */,
+				10A315D10CAD015480461E36 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -109,6 +132,7 @@
 		3D07A2C11ED1B29700BFCE3A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3DEF5CCB1F31C1A900BFA806 /* Path.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -129,10 +153,21 @@
 				3D07A2C71ED27A7B00BFCE3A /* SettingsViewController.swift */,
 				3D07A2A31ED1B1B600BFCE3A /* GameViewController.swift */,
 				3D07A2A11ED1B1B600BFCE3A /* GameScene.swift */,
-				3DEF5CCB1F31C1A900BFA806 /* Path.swift */,
 				3D857D781F2F2466001C8E28 /* Constants.swift */,
+				3D42BBDD1F34934D00EA722C /* Keys.swift */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		9608E25D061C7B33E83A072F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				00103EA6DDADC9843B79DAA7 /* Pods-HotdogSlinger.debug.xcconfig */,
+				C695ECA072516579A592FFCB /* Pods-HotdogSlinger.release.xcconfig */,
+				014CCCCB14F9EA00DA861068 /* Pods-HotdogSlingerTests.debug.xcconfig */,
+				3C2375A49694432129E27F24 /* Pods-HotdogSlingerTests.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,9 +177,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3D07A2BB1ED1B1B700BFCE3A /* Build configuration list for PBXNativeTarget "HotdogSlinger" */;
 			buildPhases = (
+				E3BFE60F66E0CAF7B14E8331 /* [CP] Check Pods Manifest.lock */,
 				3D07A2941ED1B1B600BFCE3A /* Sources */,
 				3D07A2951ED1B1B600BFCE3A /* Frameworks */,
 				3D07A2961ED1B1B600BFCE3A /* Resources */,
+				F2CCDE4989720B507FF8F25E /* [CP] Embed Pods Frameworks */,
+				3A8FD5E1F0037CB72AC97B99 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -159,9 +197,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3D07A2BE1ED1B1B700BFCE3A /* Build configuration list for PBXNativeTarget "HotdogSlingerTests" */;
 			buildPhases = (
+				B905642A2C5A9703CB35A693 /* [CP] Check Pods Manifest.lock */,
 				3D07A2AE1ED1B1B600BFCE3A /* Sources */,
 				3D07A2AF1ED1B1B600BFCE3A /* Frameworks */,
 				3D07A2B01ED1B1B600BFCE3A /* Resources */,
+				9A0A832A156D06FBB659FC04 /* [CP] Embed Pods Frameworks */,
+				9A6B7B3C3A42FD798A0DD084 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -237,12 +278,106 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		3A8FD5E1F0037CB72AC97B99 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HotdogSlinger/Pods-HotdogSlinger-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9A0A832A156D06FBB659FC04 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HotdogSlingerTests/Pods-HotdogSlingerTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9A6B7B3C3A42FD798A0DD084 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HotdogSlingerTests/Pods-HotdogSlingerTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B905642A2C5A9703CB35A693 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E3BFE60F66E0CAF7B14E8331 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F2CCDE4989720B507FF8F25E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HotdogSlinger/Pods-HotdogSlinger-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		3D07A2941ED1B1B600BFCE3A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				3D07A2A21ED1B1B600BFCE3A /* GameScene.swift in Sources */,
+				3D42BBDE1F34934D00EA722C /* Keys.swift in Sources */,
 				3DEF5CCC1F31C1A900BFA806 /* Path.swift in Sources */,
 				3D07A2A41ED1B1B600BFCE3A /* GameViewController.swift in Sources */,
 				3D07A29C1ED1B1B600BFCE3A /* AppDelegate.swift in Sources */,
@@ -399,6 +534,7 @@
 		};
 		3D07A2BC1ED1B1B700BFCE3A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 00103EA6DDADC9843B79DAA7 /* Pods-HotdogSlinger.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 597HR9EHGW;
@@ -414,6 +550,7 @@
 		};
 		3D07A2BD1ED1B1B700BFCE3A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C695ECA072516579A592FFCB /* Pods-HotdogSlinger.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 597HR9EHGW;
@@ -429,6 +566,7 @@
 		};
 		3D07A2BF1ED1B1B700BFCE3A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 014CCCCB14F9EA00DA861068 /* Pods-HotdogSlingerTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -445,6 +583,7 @@
 		};
 		3D07A2C01ED1B1B700BFCE3A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C2375A49694432129E27F24 /* Pods-HotdogSlingerTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";

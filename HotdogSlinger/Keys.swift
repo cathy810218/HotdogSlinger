@@ -7,3 +7,6 @@
 //
 
 import Foundation
+
+let kAdMobUnitID = "ca-app-pub-2197102849280566/4221506534"
+let kAdMobAppID = "ca-app-pub-2197102849280566~1992774927"
