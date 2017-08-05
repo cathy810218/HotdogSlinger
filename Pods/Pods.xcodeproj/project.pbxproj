@@ -16,30 +16,41 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0067D8771465CA894EE4C1F51A456816 /* Answers.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Answers.h; path = iOS/Crashlytics.framework/Headers/Answers.h; sourceTree = "<group>"; };
 		061D2A99212EFC82DCC59BFFE146A155 /* Pods-HotdogUpTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HotdogUpTests.debug.xcconfig"; sourceTree = "<group>"; };
+		1002869B0ABB066C5605273FDFD4AF70 /* CLSAttributes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CLSAttributes.h; path = iOS/Crashlytics.framework/Headers/CLSAttributes.h; sourceTree = "<group>"; };
 		15874CDF2610E04C84B8B91C43A7291B /* Pods-HotdogUp.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-HotdogUp.modulemap"; sourceTree = "<group>"; };
+		1B578F5B6371ACD61B686630611F0AA4 /* CLSLogging.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CLSLogging.h; path = iOS/Crashlytics.framework/Headers/CLSLogging.h; sourceTree = "<group>"; };
 		23EAACE850D2097B1C3EA859C984BA5E /* Pods_HotdogUp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_HotdogUp.framework; path = "Pods-HotdogUp.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E47765215E531AFF349B232AB920147 /* Pods-HotdogUpTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-HotdogUpTests-umbrella.h"; sourceTree = "<group>"; };
+		3046F742B9FBF70A2C0026C8C8DDD461 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = Frameworks/frameworks/GoogleMobileAds.framework; sourceTree = "<group>"; };
 		319067BEE594953CC7758AA675775649 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		387A186B832DECE646743543E1AE8114 /* Pods-HotdogUpTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-HotdogUpTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		3C5F5F176858295355301F3D5DD1299C /* Pods-HotdogUp-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HotdogUp-frameworks.sh"; sourceTree = "<group>"; };
 		4688EC7650FD49D4C0FBDFA99BF557A5 /* Pods-HotdogUp-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-HotdogUp-dummy.m"; sourceTree = "<group>"; };
 		4B331351AE36B9CEBF07700A67882C54 /* Pods_HotdogUpTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_HotdogUpTests.framework; path = "Pods-HotdogUpTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F2014F46E176B65B3F5ED61F6A7F46E /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = iOS/Crashlytics.framework; sourceTree = "<group>"; };
+		51D312AF116C40A33FA00A940F15AD72 /* Fabric.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Fabric.h; path = iOS/Fabric.framework/Headers/Fabric.h; sourceTree = "<group>"; };
 		5DD5329D8E724FAF1A061E07718F018A /* Pods-HotdogUpTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-HotdogUpTests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		709811228EE053E203D67D9BBEE3E7A3 /* Pods-HotdogUp-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-HotdogUp-umbrella.h"; sourceTree = "<group>"; };
 		728899ABC3735C5D6A5BE9692F38224A /* Pods-HotdogUpTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HotdogUpTests-frameworks.sh"; sourceTree = "<group>"; };
 		7D5FF37DDBFF8349CEDC092550F7845A /* Pods-HotdogUp-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-HotdogUp-acknowledgements.markdown"; sourceTree = "<group>"; };
+		8034D9FBAB8B96E4C4E60600F7879A86 /* CLSReport.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CLSReport.h; path = iOS/Crashlytics.framework/Headers/CLSReport.h; sourceTree = "<group>"; };
 		86E426FAC506CE523D681A11AEF16394 /* Pods-HotdogUpTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HotdogUpTests-resources.sh"; sourceTree = "<group>"; };
 		87CD59D637FF4CAD334CCA91F9F611A3 /* Pods-HotdogUpTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-HotdogUpTests.modulemap"; sourceTree = "<group>"; };
 		8E12F88F692A9AB94BC546D47827180A /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		91D5AC86F501517574AEC6CE8489C36B /* Pods-HotdogUpTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HotdogUpTests.release.xcconfig"; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9E8403CD8F2048F8CD86D00B562ECA9B /* Pods-HotdogUp-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HotdogUp-resources.sh"; sourceTree = "<group>"; };
+		AED7D10EB82280EAAA6C50C96FBCE173 /* Crashlytics.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Crashlytics.h; path = iOS/Crashlytics.framework/Headers/Crashlytics.h; sourceTree = "<group>"; };
 		BC37DA7F11387751C6037023296308B3 /* Pods-HotdogUpTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-HotdogUpTests-dummy.m"; sourceTree = "<group>"; };
+		C5CDE4B96ABA6E0F177143EF4B92CA2C /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = iOS/Fabric.framework; sourceTree = "<group>"; };
+		C68F98075ACF80A671EEE5EA2A785881 /* ANSCompatibility.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ANSCompatibility.h; path = iOS/Crashlytics.framework/Headers/ANSCompatibility.h; sourceTree = "<group>"; };
+		C7A7DF6CFDE3A89A6DAB7CD360B7974F /* CLSStackFrame.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CLSStackFrame.h; path = iOS/Crashlytics.framework/Headers/CLSStackFrame.h; sourceTree = "<group>"; };
 		D89E8A29AC6132BB3E4DA666710B9A47 /* Pods-HotdogUp-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-HotdogUp-acknowledgements.plist"; sourceTree = "<group>"; };
+		DC06C9DCC488401883E597878EA11D55 /* FABAttributes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FABAttributes.h; path = iOS/Fabric.framework/Headers/FABAttributes.h; sourceTree = "<group>"; };
 		E549FF6236619EA67053A130D5AEBA28 /* Pods-HotdogUp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HotdogUp.debug.xcconfig"; sourceTree = "<group>"; };
-		F87BBE855D70C2F87C02A1CCA30E262D /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = Frameworks/frameworks/GoogleMobileAds.framework; sourceTree = "<group>"; };
 		FC9C5671947386C43C142D776B4D21FD /* Pods-HotdogUp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HotdogUp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -63,6 +74,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		02A7F044355E0E37D84D102F4C2BFFA3 /* Fabric */ = {
+			isa = PBXGroup;
+			children = (
+				DC06C9DCC488401883E597878EA11D55 /* FABAttributes.h */,
+				51D312AF116C40A33FA00A940F15AD72 /* Fabric.h */,
+				D440AC702182065EBDA22A8ADECE2265 /* Frameworks */,
+			);
+			name = Fabric;
+			path = Fabric;
+			sourceTree = "<group>";
+		};
+		052A2FE2524436A2A0576784EEB37B50 /* Crashlytics */ = {
+			isa = PBXGroup;
+			children = (
+				C68F98075ACF80A671EEE5EA2A785881 /* ANSCompatibility.h */,
+				0067D8771465CA894EE4C1F51A456816 /* Answers.h */,
+				1002869B0ABB066C5605273FDFD4AF70 /* CLSAttributes.h */,
+				1B578F5B6371ACD61B686630611F0AA4 /* CLSLogging.h */,
+				8034D9FBAB8B96E4C4E60600F7879A86 /* CLSReport.h */,
+				C7A7DF6CFDE3A89A6DAB7CD360B7974F /* CLSStackFrame.h */,
+				AED7D10EB82280EAAA6C50C96FBCE173 /* Crashlytics.h */,
+				801D5FCBC283705F639FCD1FEAC3A79D /* Frameworks */,
+			);
+			name = Crashlytics;
+			path = Crashlytics;
+			sourceTree = "<group>";
+		};
+		1250CCB0DF35AB83B9B08814A6CEDB8F /* Google-Mobile-Ads-SDK */ = {
+			isa = PBXGroup;
+			children = (
+				962407FEC8C0E9ADB73E5716A2D2CDCD /* Frameworks */,
+			);
+			name = "Google-Mobile-Ads-SDK";
+			path = "Google-Mobile-Ads-SDK";
+			sourceTree = "<group>";
+		};
 		1A7E365B1C826A71D08A973C6AB8022F /* Pods-HotdogUp */ = {
 			isa = PBXGroup;
 			children = (
@@ -95,18 +142,18 @@
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
 				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
-				820FBBDA65C5B1A6A4C379A893C27235 /* Pods */,
+				A98E770F75560939087969303E97D0FF /* Pods */,
 				939905DCAF4E5A366B3AB20EA601208F /* Products */,
 				517F10901E104142B4A83D32209A6F71 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
-		820FBBDA65C5B1A6A4C379A893C27235 /* Pods */ = {
+		801D5FCBC283705F639FCD1FEAC3A79D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E91D6015731707498AAA5817D350B87B /* Google-Mobile-Ads-SDK */,
+				4F2014F46E176B65B3F5ED61F6A7F46E /* Crashlytics.framework */,
 			);
-			name = Pods;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		939905DCAF4E5A366B3AB20EA601208F /* Products */ = {
@@ -118,12 +165,22 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		953FD61A3CECC96530CB5CA297A086C1 /* Frameworks */ = {
+		962407FEC8C0E9ADB73E5716A2D2CDCD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F87BBE855D70C2F87C02A1CCA30E262D /* GoogleMobileAds.framework */,
+				3046F742B9FBF70A2C0026C8C8DDD461 /* GoogleMobileAds.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A98E770F75560939087969303E97D0FF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				052A2FE2524436A2A0576784EEB37B50 /* Crashlytics */,
+				02A7F044355E0E37D84D102F4C2BFFA3 /* Fabric */,
+				1250CCB0DF35AB83B9B08814A6CEDB8F /* Google-Mobile-Ads-SDK */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
@@ -142,6 +199,14 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
+		D440AC702182065EBDA22A8ADECE2265 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C5CDE4B96ABA6E0F177143EF4B92CA2C /* Fabric.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		DF9A6947AA532262C1D8B99FC0733656 /* Pods-HotdogUpTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -158,15 +223,6 @@
 			);
 			name = "Pods-HotdogUpTests";
 			path = "Target Support Files/Pods-HotdogUpTests";
-			sourceTree = "<group>";
-		};
-		E91D6015731707498AAA5817D350B87B /* Google-Mobile-Ads-SDK */ = {
-			isa = PBXGroup;
-			children = (
-				953FD61A3CECC96530CB5CA297A086C1 /* Frameworks */,
-			);
-			name = "Google-Mobile-Ads-SDK";
-			path = "Google-Mobile-Ads-SDK";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

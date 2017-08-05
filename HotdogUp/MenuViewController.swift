@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Crashlytics
 
 class MenuViewController: UIViewController {
     @IBOutlet weak var startButton: UIButton!
