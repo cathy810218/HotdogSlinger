@@ -28,7 +28,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var timeCounter = kMinJumpHeight
     var isLanded = true
     
-    var paths = [SKSpriteNode]()
+    var paths = [Path]()
     var backgrounds = [SKSpriteNode]()
     
     override func didMove(to view: SKView) {
@@ -172,7 +172,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hotdog.physicsBody?.affectedByGravity = true
         hotdog.physicsBody?.collisionBitMask = 0
         hotdog.physicsBody?.categoryBitMask = hotdogCategory
-        hotdog.physicsBody?.collisionBitMask = sideboundsCategory
+        hotdog.physicsBody?.collisionBitMask = sideboundsCategory | rightBoundCategory | leftBoundCatrgory
         
         let run = SKAction.animate(with: [hotdogTexture1, hotdogTexture2, hotdogTexture3, hotdogTexture4, hotdogTexture5, hotdogTexture6, hotdogTexture7], timePerFrame: 0.2)
         hotdogRunForever = SKAction.repeatForever(run)
@@ -201,14 +201,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if hotdog.position.y > 2 * self.frame.size.height / 3.0 {
                 // move the background up
                 for bg in backgrounds {
-                    bg.speed = 0.5
+                    bg.speed = kGameSpeed
                 }
                 for path in paths {
-                    path.speed = 0.5
+                    path.speed = kGameSpeed
                 }
                 self.sideboundsCategory = hotdogCategory
             }
         }
+        reusePath()
         if hotdog.position.y < -300 {
             print("Game Over")
             gameOver()
@@ -245,7 +246,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var firstPath = Path(position: CGPoint(x: 80, y: 130))
         paths.append(firstPath)
         for _ in 0 ... 5 {
-            firstPath = paths.last as! Path
+            firstPath = paths.last!
             let x = p_randomPoint(min: Int(firstPath.size.width / 2.0),
                                   max: Int(self.frame.size.width - (firstPath.size.width / 2.0) - 100))
             let y = Int(firstPath.frame.origin.y) + kMinJumpHeight + 30
@@ -257,6 +258,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private func p_randomPoint(min: Int, max: Int) -> Int {
         let rand = Int(arc4random_uniform(UInt32(max))) + min
         return rand
+    }
+    
+    func reusePath() {
+        for path in paths {
+            if path.position.y < 0 {
+                path.reset()
+                let x = p_randomPoint(min: Int(paths.last!.size.width / 2.0),
+                                      max: Int(self.frame.size.width - (paths.last!.size.width / 2.0) - 100))
+                let y = Int(paths.last!.frame.origin.y) + kMinJumpHeight + 30
+                path.position = CGPoint(x: x, y: y)
+                paths.remove(at: paths.index(of: path)!) // remove the old path
+                paths.append(path) // append new path
+            }
+        }
     }
     
     //MARK: Collision Detection
@@ -316,6 +331,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func gameOver() {
         self.speed = 0
+    }
+    
+    func resetGame() {
+        
+        self.score = 0
+        self.scoreLabelNode.text = "0"
     }
     
     override func sceneDidLoad() {
