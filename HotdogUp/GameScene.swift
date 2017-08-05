@@ -8,6 +8,7 @@
 
 import SpriteKit
 import GameplayKit
+import SnapKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
@@ -23,7 +24,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var background = SKSpriteNode()
     var score = 0
-    var scoreLabelNode = SKLabelNode(text: "0")
+    var scoreLabel = UILabel()
     var timer = Timer()
     var timeCounter = kMinJumpHeight
     var isLanded = true
@@ -40,6 +41,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         createBackground()
         setupPaths()
         setupCounterLabel()
+        setupHighestScoreLabel()
 //        let longPress = UILongPressGestureRecognizer(target: self,
 //                                                     action: #selector(moveDirection(longPress:)))
 //        let tap = UITapGestureRecognizer(target: self,
@@ -77,15 +79,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //        timeCounter += kJumpIntensity
 //        print(timeCounter)
 //    }
-    
-    @objc func tapJump() {
-//        let diff = CGVector(dx: hotdog.xScale > 0.0 ? 20 : -20, dy: kMinJumpHeight)
-        let diff = CGVector(dx: 0, dy: kMinJumpHeight)
-        if isLanded {
-            hotdog.physicsBody?.applyImpulse(diff)
-        }
-        isLanded = false
-    }
     
     func createBackground() {
         for i in 0 ... 1 {
@@ -184,15 +177,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func setupCounterLabel() {
-        scoreLabelNode.position = CGPoint(x: self.frame.size.width/2, y: self.frame.size.height - 80)
-        scoreLabelNode.zPosition = 100
-        scoreLabelNode.fontSize = 50
-        scoreLabelNode.fontName = "MarkerFelt-Wide"
-        addChild(scoreLabelNode)
+        self.view?.addSubview(scoreLabel)
+        scoreLabel.text = "0"
+        scoreLabel.snp.makeConstraints { (make) in
+            make.centerX.equalTo(self.view!)
+            make.top.equalTo(30)
+        }
+        scoreLabel.textColor = UIColor.white
+        scoreLabel.font = UIFont.init(name: "MarkerFelt-Wide", size: 50)
     }
     
     override func update(_ currentTime: TimeInterval) {
-        scoreLabelNode.text = String(score)
+        scoreLabel.text = String(score)
         if let body = hotdog.physicsBody {
             let dy = body.velocity.dy
             if dy > 0 {
@@ -202,7 +198,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         reusePath()
         if hotdog.position.y < -300 {
-            print("Game Over")
             gameOver()
         }
     }
@@ -265,6 +260,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    func setupHighestScoreLabel() {
+        let highestScoreLabel = UILabel()
+        highestScoreLabel.text = "Highest"
+        self.view?.addSubview(highestScoreLabel)
+        highestScoreLabel.snp.makeConstraints { (make) in
+            make.height.equalTo(20)
+            make.top.equalTo(30)
+            make.left.equalTo(scoreLabel.snp.right).offset(80)
+        }
+        highestScoreLabel.textAlignment = NSTextAlignment.center
+        highestScoreLabel.textColor = UIColor.white
+        
+        let highest = UILabel()
+        highest.text = String(UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey"))
+        self.view?.addSubview(highest)
+        highest.snp.makeConstraints { (make) in
+            make.centerX.equalTo(highestScoreLabel)
+            make.top.equalTo(highestScoreLabel.snp.bottom)
+            make.height.equalTo(20)
+        }
+        highest.textColor = UIColor.white
+        highest.textAlignment = NSTextAlignment.center
+    }
+    
     //MARK: Collision Detection
     func didBegin(_ contact: SKPhysicsContact) {
         let bodyA = contact.bodyA
@@ -322,12 +341,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func gameOver() {
         self.speed = 0
+        let prev = UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey")
+        UserDefaults.standard.set(score > prev ? score : prev, forKey: "UserDefaultHighestScoreKey")
     }
     
     func resetGame() {
         
         self.score = 0
-        self.scoreLabelNode.text = "0"
+        self.scoreLabel.text = "0"
     }
     
     override func sceneDidLoad() {
