@@ -29,13 +29,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var isLanded = true
     
     var paths = [SKSpriteNode]()
-    var moveDown = SKAction()
+    var backgrounds = [SKSpriteNode]()
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
         self.physicsWorld.contactDelegate = self
         self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -8.5)
-        moveDown = SKAction.moveBy(x: 0, y: -background.size.height/3.0, duration: 12)
         
         createHotdog()
         createBackground()
@@ -98,6 +97,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                                      height: self.frame.size.height)
             background.position = CGPoint(x: 0, y: background.size.height * CGFloat(i))
             addChild(background)
+            backgrounds.append(background)
 //            let moveDown = SKAction.moveBy(x: 0, y: -background.size.height, duration: 12)
 //            let moveReset = SKAction.moveBy(x: 0, y: background.size.height, duration: 0)
 //            let moveLoop = SKAction.sequence([moveDown, moveReset])
@@ -202,21 +202,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 // move the background up
                 print("move the background")
                 
-                
-//                for i in 0 ... 1 {
-//                    background = SKSpriteNode(texture: SKTexture(imageNamed: "background"))
-//                    background.zPosition = -30
-//                    background.anchorPoint = CGPoint.zero
-//                    background.size = CGSize(width: self.frame.size.width,
-//                                             height: self.frame.size.height)
-//                    background.position = CGPoint(x: 0, y: background.size.height * CGFloat(i))
-//                    addChild(background)
-//                    let moveDown = SKAction.moveBy(x: 0, y: -background.size.height, duration: 12)
-//                    //            let moveReset = SKAction.moveBy(x: 0, y: background.size.height, duration: 0)
-//                    //            let moveLoop = SKAction.sequence([moveDown, moveReset])
-//                    let moveForever = SKAction.repeatForever(moveDown)
-//                    background.run(moveForever)
-//                }
+                for i in 0 ... 1 {
+                    let currBg = backgrounds[i]
+//                    currBg.position = CGPoint(x: 0, y: currBg.size.height * CGFloat(i))
+                    let moveDown = SKAction.moveBy(x: 0, y: -background.size.height, duration: 10)
+                    let moveReset = SKAction.moveBy(x: 0, y: background.size.height, duration: 0)
+                    let moveLoop = SKAction.sequence([moveDown, moveReset])
+                    
+                    currBg.run(moveLoop)
+                }
             }
 //            } else if dy < 0 {
 //                // Allow collisions if the hero is falling
@@ -286,21 +280,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //            hotdog.run(SKAction.repeat(deadAction, count: 1))
 //            gameover()
 //        }
+        isLanded = hotdog.physicsBody?.velocity.dy == 0.0
         
         if bodyA.categoryBitMask == leftBoundCatrgory || bodyB.categoryBitMask == leftBoundCatrgory {
             print("turn back")
-//            hotdog.removeAllActions()
-//            hotdog.texture = SKTexture(imageNamed: "8")
-            
-            hotdog.xScale *= -1
+            hotdog.xScale *= hotdog.xScale > 0 ? 1 : -1
             hotdog.removeAction(forKey: "moveLeft")
             let moveRight = SKAction.moveBy(x: kHotdogMoveVelocity, y: 0, duration: 1)
             let moveForever = SKAction.repeatForever(moveRight)
             hotdog.run(moveForever, withKey: "moveRight")
         } else if bodyA.categoryBitMask == rightBoundCategory || bodyB.categoryBitMask == rightBoundCategory {
-//            hotdog.removeAllActions()
-//            hotdog.texture = SKTexture(imageNamed: "8")
-            hotdog.xScale *= -1
+            hotdog.xScale *= hotdog.xScale > 0 ? -1 : 1
             hotdog.removeAction(forKey: "moveRight")
             let moveLeft = SKAction.moveBy(x: -kHotdogMoveVelocity, y: 0, duration: 1)
             let moveForever = SKAction.repeatForever(moveLeft)
@@ -309,7 +299,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //        } else
         if bodyA.categoryBitMask == pathCategory || bodyB.categoryBitMask == pathCategory {
             let currPath = bodyB.categoryBitMask == pathCategory ? bodyB.node as! Path : bodyA.node as! Path
-            print("hit path")
             let dy = hotdog.physicsBody!.velocity.dy
             if dy > 0 {
                 // go up
@@ -318,7 +307,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             } else if dy < 0 {
                 // if current hotdog position is greater than current path
                 if (hotdog.position.y - hotdog.size.height / 2 >= currPath.position.y + currPath.size.height / 2 - 20) {
-                    print("about to land!")
                     hotdog.physicsBody?.contactTestBitMask = pathCategory
                     hotdog.physicsBody?.collisionBitMask = sideboundsCategory | pathCategory
                     
@@ -332,7 +320,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
         }
-        isLanded = hotdog.physicsBody?.velocity.dy == 0.0
     }
     
     func gameover() {
@@ -370,7 +357,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //            n.strokeColor = SKColor.green
 //            self.addChild(n)
 //        }
-        print(pos)
         if pos.x < self.frame.size.width / 5.0 {
             if !hotdog.hasActions() {
                 hotdog.run(hotdogRunForever, withKey: "hotdogRunForever")
@@ -400,6 +386,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let diff = CGVector(dx: 0, dy: kMinJumpHeight)
             if isLanded {
                 hotdog.physicsBody?.applyImpulse(diff)
+                print("middle jump")
             }
             isLanded = false
         }
