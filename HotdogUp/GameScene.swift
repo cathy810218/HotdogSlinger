@@ -40,7 +40,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         createBackground()
         setupPaths()
         setupCounterLabel()
-        
 //        let longPress = UILongPressGestureRecognizer(target: self,
 //                                                     action: #selector(moveDirection(longPress:)))
 //        let tap = UITapGestureRecognizer(target: self,
@@ -95,14 +94,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             background.anchorPoint = CGPoint.zero
             background.size = CGSize(width: self.frame.size.width,
                                      height: self.frame.size.height)
-            background.position = CGPoint(x: 0, y: background.size.height * CGFloat(i))
+            background.position = CGPoint(x: 0, y: background.size.height * CGFloat(i) - 5)
             addChild(background)
             backgrounds.append(background)
-//            let moveDown = SKAction.moveBy(x: 0, y: -background.size.height, duration: 12)
-//            let moveReset = SKAction.moveBy(x: 0, y: background.size.height, duration: 0)
-//            let moveLoop = SKAction.sequence([moveDown, moveReset])
-//            let moveForever = SKAction.repeatForever(moveLoop)
-//            background.run(moveForever)
+            let moveDown = SKAction.moveBy(x: 0, y: -background.size.height, duration: 12)
+            let moveReset = SKAction.moveBy(x: 0, y: background.size.height, duration: 0)
+            let moveLoop = SKAction.sequence([moveDown, moveReset])
+            let moveForever = SKAction.repeatForever(moveLoop)
+            background.run(moveForever)
+            self.background.speed = 0
         }
         
         // Add boundries physics body
@@ -201,22 +201,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if hotdog.position.y > 2 * self.frame.size.height / 3.0 {
                 // move the background up
                 print("move the background")
-                
-                for i in 0 ... 1 {
-                    let currBg = backgrounds[i]
-//                    currBg.position = CGPoint(x: 0, y: currBg.size.height * CGFloat(i))
-                    let moveDown = SKAction.moveBy(x: 0, y: -background.size.height, duration: 10)
-                    let moveReset = SKAction.moveBy(x: 0, y: background.size.height, duration: 0)
-                    let moveLoop = SKAction.sequence([moveDown, moveReset])
-                    
-                    currBg.run(moveLoop)
+                for bg in backgrounds {
+                    bg.speed = 1
+                }
+                for path in paths {
+                    path.speed = 1
                 }
             }
-//            } else if dy < 0 {
-//                // Allow collisions if the hero is falling
-//                body.collisionBitMask = sideboundsCategory | pathCategory
-//                body.contactTestBitMask = pathCategory
-//            }
         }
     }
     func setupPaths() {
@@ -226,10 +217,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             path.physicsBody?.contactTestBitMask = hotdogCategory
             path.physicsBody?.collisionBitMask = hotdogCategory
             addChild(path)
-//            let moveReset = SKAction.moveBy(x: 0, y: background.size.height, duration: 0)
-//            let moveLoop = SKAction.sequence([moveDown, moveReset])
-//            let moveForever = SKAction.repeatForever(moveLoop)
-//            path.run(moveForever)
+            let moveDown = SKAction.moveBy(x: 0, y: -background.size.height, duration: 12)
+            let moveForever = SKAction.repeatForever(moveDown)
+            path.run(moveForever)
+            path.speed = 0
         }
 //            self.addChild(path)
 //            let moveReset = SKAction.moveBy(x: 0, y: background.size.height, duration: 0)
@@ -255,9 +246,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                                   max: Int(self.frame.size.width - (firstPath.size.width / 2.0) - 100))
             let y = Int(firstPath.frame.origin.y) + kMinJumpHeight + 30
             let path = Path(position: CGPoint(x: x, y: y))
-            print("view width \(self.frame.size.width)")
-            print("x: \(x) y: \(y)")
-            print("hotdog size: \(hotdog.size)")
             paths.append(path)
         }
     }
