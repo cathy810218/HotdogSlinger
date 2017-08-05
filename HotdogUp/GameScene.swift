@@ -16,7 +16,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let hotdogCategory: UInt32 = 0x1 << 0;
     let cactusCategory: UInt32 = 0x1 << 1;
-    let sideboundsCategory: UInt32 = 0x1 << 2;
+    var sideboundsCategory: UInt32 = 0x1 << 2;
     let leftBoundCatrgory: UInt32 = 0x1 << 3;
     let rightBoundCategory: UInt32 = 0x1 << 4;
     let pathCategory: UInt32 = 0x1 << 5;
@@ -200,14 +200,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             if hotdog.position.y > 2 * self.frame.size.height / 3.0 {
                 // move the background up
-                print("move the background")
                 for bg in backgrounds {
-                    bg.speed = 1
+                    bg.speed = 0.5
                 }
                 for path in paths {
-                    path.speed = 1
+                    path.speed = 0.5
                 }
+                self.sideboundsCategory = hotdogCategory
             }
+        }
+        if hotdog.position.y < -300 {
+            print("Game Over")
+            gameOver()
         }
     }
     func setupPaths() {
@@ -310,7 +314,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    func gameover() {
+    func gameOver() {
         self.speed = 0
     }
     
