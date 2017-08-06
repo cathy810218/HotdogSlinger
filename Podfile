@@ -6,7 +6,10 @@ target 'HotdogUp' do
   use_frameworks!
 
   # Pods for HotdogUp
+  pod 'SnapKit', :git => "https://github.com/SnapKit/SnapKit.git", :branch => "swift-4"
   pod 'Google-Mobile-Ads-SDK'
+  pod 'Fabric'
+  pod 'Crashlytics'
   
   target 'HotdogUpTests' do
     inherit! :search_paths
