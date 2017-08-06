@@ -32,6 +32,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var paths = [Path]()
     var backgrounds = [SKSpriteNode]()
     var isGameOver = false
+    let jumpSound = SKAction.playSoundFileNamed("jumping", waitForCompletion: false)
+    let fallingSound = SKAction.playSoundFileNamed("falling", waitForCompletion: true)
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
@@ -314,7 +316,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let moveForever = SKAction.repeatForever(moveLeft)
             hotdog.run(moveForever, withKey: "moveLeft")
         }
-//        } else
         if bodyA.categoryBitMask == pathCategory || bodyB.categoryBitMask == pathCategory {
             let currPath = bodyB.categoryBitMask == pathCategory ? bodyB.node as! Path : bodyA.node as! Path
             let dy = hotdog.physicsBody!.velocity.dy
@@ -329,8 +330,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     hotdog.physicsBody?.collisionBitMask = pathCategory | sideboundsCategory | rightBoundCategory | leftBoundCatrgory
                     
                     if !currPath.isVisited {
-//                        let jumpSound = SKAction.playSoundFileNamed("StarPing.wav", waitForCompletion: false)
-//                        self.run(jumpSound)
                         score += 1
                         currPath.isVisited = true
                     }
@@ -341,8 +340,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func gameOver() {
-        isGameOver = true
-        let fallingSound = SKAction.playSoundFileNamed("falling", waitForCompletion: true)
+        isGameOver = true // needs to set this first to prevent updating getting called again
         self.run(fallingSound)
         self.speed = 0
         let prev = UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey")
@@ -381,16 +379,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     func touchDown(atPoint pos : CGPoint) {
-//        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-//            n.position = pos
-//            n.strokeColor = SKColor.green
-//            self.addChild(n)
-//        }
         if pos.x < self.frame.size.width / 5.0 {
             if !hotdog.hasActions() {
                 hotdog.run(hotdogRunForever, withKey: "hotdogRunForever")
             }
-            print("tap left")
             hotdog.xScale *= hotdog.xScale > 0 ? -1 : 1
             hotdog.removeAction(forKey: "moveRight")
             let moveLeft = SKAction.moveBy(x: -kHotdogMoveVelocity, y: 0, duration: 1)
@@ -400,7 +392,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if !hotdog.hasActions() {
                 hotdog.run(hotdogRunForever, withKey: "hotdogRunForever")
             }
-            print("tap right")
             hotdog.xScale *= hotdog.xScale > 0 ? 1 : -1
             hotdog.removeAction(forKey: "moveLeft")
             let moveRight = SKAction.moveBy(x: kHotdogMoveVelocity, y: 0, duration: 1)
@@ -408,14 +399,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             hotdog.run(moveForever, withKey: "moveRight")
         } else {
             // middle
-//            hotdog.removeAction(forKey: "hotdogRunForever")
             if !hotdog.hasActions() {
                 hotdog.texture = SKTexture(imageNamed: "face")
             }
             let diff = CGVector(dx: 0, dy: kMinJumpHeight)
             if isLanded {
                 hotdog.physicsBody?.applyImpulse(diff)
-                print("middle jump")
+                self.run(jumpSound)
             }
             isLanded = false
             
