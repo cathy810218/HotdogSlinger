@@ -18,13 +18,15 @@ class MenuViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(hex: "#85C5B5")
 //        startButton.setImage(UIImage(named:"startClicked"), for: .highlighted)
-        startButton.imageView?.contentMode = .scaleAspectFill
+//        startButton.imageView?.contentMode = .scaleAspectFill
         
 //        settingsButton.setImage(UIImage(named: "settingsClicked"), for: .highlighted)
 //        helpButton.setImage(UIImage(named:"helpClicked"), for: .highlighted)
     }
 
     @IBAction func startButtonPressed(_ sender: Any) {
+//        let gameVC = GameViewController()
+//        self.present(gameVC, animated: true, completion: nil)
     }
     
     @IBAction func settingsButtonPressed(_ sender: Any) {
