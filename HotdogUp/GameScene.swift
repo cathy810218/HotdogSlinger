@@ -31,6 +31,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var paths = [Path]()
     var backgrounds = [SKSpriteNode]()
+    var isGameOver = false
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
@@ -197,7 +198,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         reusePath()
-        if hotdog.position.y < -300 {
+        if hotdog.position.y < -100 && !isGameOver {
             gameOver()
         }
     }
@@ -340,6 +341,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func gameOver() {
+        isGameOver = true
+        let fallingSound = SKAction.playSoundFileNamed("falling", waitForCompletion: true)
+        self.run(fallingSound)
         self.speed = 0
         let prev = UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey")
         UserDefaults.standard.set(score > prev ? score : prev, forKey: "UserDefaultHighestScoreKey")
