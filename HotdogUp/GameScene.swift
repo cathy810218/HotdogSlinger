@@ -48,6 +48,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupCounterLabel()
         setupHighestScoreLabel()
         setupPauseView()
+        setupGameOverView()
         
 //        let longPress = UILongPressGestureRecognizer(target: self,
 //                                                     action: #selector(moveDirection(longPress:)))
@@ -121,12 +122,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         rightNode.physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: self.frame.size.width, y: self.frame.size.height), to: CGPoint(x: self.frame.size.width, y: 0))
         rightNode.physicsBody?.categoryBitMask = rightBoundCategory
         rightNode.physicsBody?.contactTestBitMask = hotdogCategory
-        
-//        let bottomNode = SKSpriteNode()
-//        addChild(bottomNode)
-//        bottomNode.physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: 0, y: 0), to: CGPoint(x: self.frame.size.width, y: self.frame.size.height))
-//        bottomNode.physicsBody?.categoryBitMask = bottomCategory
-//        bottomNode.physicsBody?.contactTestBitMask = hotdogCategory
     }
     
     
@@ -219,19 +214,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             path.run(moveForever)
             path.speed = 0
         }
-//            self.addChild(path)
-//            let moveReset = SKAction.moveBy(x: 0, y: background.size.height, duration: 0)
-//            let moveLoop = SKAction.sequence([moveDown, moveReset])
-//            let moveForever = SKAction.repeatForever(moveLoop)
-//            path.run(moveForever)
-//        }
-//        let delay = SKAction.wait(forDuration: 2)
-//        let generate = SKAction.run {
-//            
-//        }
-//        let initial = SKAction.sequence([generate, delay])
-//        let regenerate = SKAction.repeatForever(initial)
-//        run(regenerate)
     }
     
     private func generatePaths() {
@@ -298,6 +280,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pauseBtn.isEnabled = false // disable it
     }
     
+    func setupGameOverView() {
+        
+    }
+    
     func setupPauseView() {
         pauseBtn = UIButton(type: .custom)
         pauseBtn.setBackgroundImage(UIImage(named: "backButton"), for: .normal)
@@ -318,7 +304,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         pauseView.backgroundColor = UIColor.brown
         
-        // 4 buttons
         // resume button
         let resumeBtn = UIButton(type: .custom)
         resumeBtn.setBackgroundImage(UIImage(named: "backButton"), for: .normal)
