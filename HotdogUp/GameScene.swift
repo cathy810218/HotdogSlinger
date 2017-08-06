@@ -28,6 +28,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var timer = Timer()
     var timeCounter = kMinJumpHeight
     var isLanded = true
+    var pauseView = UIView()
     
     var paths = [Path]()
     var backgrounds = [SKSpriteNode]()
@@ -45,6 +46,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupPaths()
         setupCounterLabel()
         setupHighestScoreLabel()
+        setupPauseView()
 //        let longPress = UILongPressGestureRecognizer(target: self,
 //                                                     action: #selector(moveDirection(longPress:)))
 //        let tap = UITapGestureRecognizer(target: self,
@@ -287,6 +289,51 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         highest.textAlignment = NSTextAlignment.center
     }
     
+    @objc func pauseButtonDidPressed() {
+        UserDefaults.standard.set(self.speed, forKey: "UserDefaultResumeSpeedKey")
+        self.isPaused = true
+        self.hotdog.isPaused = true
+        pauseView.isHidden = false
+    }
+    
+    func setupPauseView() {
+        let pauseBtn = UIButton(type: .custom)
+        pauseBtn.setBackgroundImage(UIImage(named: "backButton"), for: .normal)
+        self.view?.addSubview(pauseBtn)
+        pauseBtn.addTarget(self, action: #selector(pauseButtonDidPressed), for: .touchUpInside)
+        pauseBtn.snp.makeConstraints { (make) in
+            make.top.left.equalTo(20)
+            make.width.height.equalTo(40)
+        }
+        
+        pauseView = UIView()
+        self.view?.addSubview(pauseView)
+        pauseView.isHidden = true
+        pauseView.snp.makeConstraints { (make) in
+            make.width.height.equalTo(self.frame.size.width)
+            make.center.equalTo(self.view!)
+        }
+        pauseView.backgroundColor = UIColor.brown
+        
+        // 4 buttons
+        let resumeBtn = UIButton(type: .custom)
+        resumeBtn.setBackgroundImage(UIImage(named: "backButton"), for: .normal)
+        
+        pauseView.addSubview(resumeBtn)
+        resumeBtn.snp.makeConstraints { (make) in
+            make.left.top.equalTo(pauseView)
+            make.width.height.equalTo(100)
+        }
+        resumeBtn.addTarget(self, action: #selector(resume), for: .touchUpInside)
+    }
+    
+    @objc func resume() {
+        self.speed = CGFloat(UserDefaults.standard.float(forKey: "UserDefaultResumeSpeedKey"))
+        pauseView.isHidden = true
+        self.isPaused = false
+        self.hotdog.isPaused = false
+    }
+    
     //MARK: Collision Detection
     func didBegin(_ contact: SKPhysicsContact) {
         let bodyA = contact.bodyA
@@ -488,24 +535,4 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
-    
-    
-//    override func update(_ currentTime: TimeInterval) {
-//        // Called before each frame is rendered
-//
-//        // Initialize _lastUpdateTime if it has not already been
-//        if (self.lastUpdateTime == 0) {
-//            self.lastUpdateTime = currentTime
-//        }
-//
-//        // Calculate time since last update
-//        let dt = currentTime - self.lastUpdateTime
-//
-//        // Update entities
-//        for entity in self.entities {
-//            entity.update(deltaTime: dt)
-//        }
-//
-//        self.lastUpdateTime = currentTime
-//    }
 }
