@@ -11,11 +11,12 @@ import SpriteKit
 import GameplayKit
 import SnapKit
 
-class GameViewController: UIViewController {
+class GameViewController: UIViewController, GameSceneDelegate {
     var pauseView = UIView()
     var pauseBtn = UIButton()
     var gameScene : GameScene!
     var skView = SKView()
+    var gameoverView = UIView()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -26,6 +27,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         gameScene = GameScene(size: view.bounds.size)
         gameScene.scaleMode = .resizeFill
+        gameScene.gameSceneDelegate = self
         
 //        gameScene.gameVC = self
         
@@ -190,6 +192,7 @@ class GameViewController: UIViewController {
         gameScene.hotdog.isPaused = false
         gameScene.isGameOver = false
         pauseView.isHidden = true
+        gameoverView.isHidden = true
         pauseBtn.isEnabled = true
         gameScene.isLanded = true
         gameScene.sideboundsCategory = 0x1 << 2 // reset sidebounds
@@ -197,14 +200,69 @@ class GameViewController: UIViewController {
     
     
     func setupGameOverView() {
-        let gameOverView = UIView()
-        self.view.addSubview(gameOverView)
-        gameOverView.backgroundColor = UIColor(hex: "#85C5B5")
-        gameOverView.snp.makeConstraints { (make) in
-            make.center.equalTo(self.view)
-            
+        let gameoverHotdogView = UIImageView(image: UIImage(named: "gameover_hotdog"))
+
+        gameoverView = UIView()
+        self.view.addSubview(gameoverView)
+        gameoverView.isHidden = true
+        gameoverView.snp.makeConstraints { (make) in
+            make.edges.equalTo(self.view!)
+        }
+        gameoverView.backgroundColor = UIColor(hex: "#000000", alpha: 0.5)
+        
+        let gameoverBackgroundView = UIView()
+        gameoverView.addSubview(gameoverBackgroundView)
+        gameoverBackgroundView.backgroundColor = UIColor(hex: "#85C5B5")
+        gameoverBackgroundView.snp.makeConstraints { (make) in
+            make.center.equalTo(gameoverView)
+            make.width.equalTo(self.view.frame.size.width)
+            make.height.equalTo(gameoverHotdogView.frame.size.height * 2)
+        }
+        gameoverBackgroundView.layer.cornerRadius = 10.0
+        gameoverBackgroundView.layer.masksToBounds = true
+        
+        let gameoverTitleView = UIImageView(image: UIImage(named: "gameover"))
+        gameoverBackgroundView.addSubview(gameoverTitleView)
+        gameoverTitleView.snp.makeConstraints { (make) in
+            make.top.left.equalTo(gameoverBackgroundView).offset(10)
+            make.right.equalTo(gameoverBackgroundView).offset(-10)
         }
         
+        gameoverBackgroundView.addSubview(gameoverHotdogView)
+        gameoverHotdogView.snp.makeConstraints { (make) in
+            make.center.equalTo(gameoverBackgroundView)
+        }
+        
+        let homeBtn = UIButton(type: .custom)
+        homeBtn.setBackgroundImage(UIImage(named: "gameover_home"), for: .normal)
+        gameoverBackgroundView.addSubview(homeBtn)
+        homeBtn.snp.makeConstraints { (make) in
+            make.left.equalTo(gameoverBackgroundView)
+            make.bottom.equalTo(gameoverBackgroundView).offset(-12)
+        }
+        homeBtn.addTarget(self, action: #selector(returnToMenu), for: .touchUpInside)
+        
+        let replayBtn = UIButton(type: .custom)
+        replayBtn.setBackgroundImage(UIImage(named: "gameover_replay"), for: .normal)
+        gameoverBackgroundView.addSubview(replayBtn)
+        replayBtn.snp.makeConstraints { (make) in
+            make.centerX.equalTo(gameoverBackgroundView)
+            make.bottom.equalTo(homeBtn)
+        }
+        replayBtn.addTarget(self, action: #selector(resetGame), for: .touchUpInside)
+        
+        let shareBtn = UIButton(type: .custom)
+        shareBtn.setBackgroundImage(UIImage(named: "gameover_share"), for: .normal)
+        gameoverBackgroundView.addSubview(shareBtn)
+        shareBtn.snp.makeConstraints { (make) in
+            make.right.equalTo(gameoverBackgroundView)
+            make.bottom.equalTo(homeBtn)
+        }
+        shareBtn.addTarget(self, action: #selector(share), for: .touchUpInside)
+    }
+    
+    func gameSceneGameEnded() {
+        gameoverView.isHidden = false
     }
     
     // ============================

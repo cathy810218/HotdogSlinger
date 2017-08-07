@@ -10,7 +10,13 @@ import SpriteKit
 import GameplayKit
 import SnapKit
 
+protocol GameSceneDelegate: class {
+    func gameSceneGameEnded()
+}
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
+    
+    weak var gameSceneDelegate: GameSceneDelegate?
     
     var hotdog = SKSpriteNode()
     var hotdogRunForever = SKAction()
@@ -282,6 +288,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let prev = UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey")
         UserDefaults.standard.set(score > prev ? score : prev, forKey: "UserDefaultHighestScoreKey")
         highest.text = String(UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey"))
+        gameSceneDelegate?.gameSceneGameEnded()
     }
     
     //MARK: Collision Detection
