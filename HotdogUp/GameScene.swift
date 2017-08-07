@@ -35,8 +35,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var timer = Timer()
     var timeCounter = kMinJumpHeight
     var isLanded = true
-//    var pauseView = UIView()
-//    var pauseBtn = UIButton()
     var gameVC: GameViewController!
     
     var paths = [Path]()
@@ -44,6 +42,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var isGameOver = false
     let jumpSound = SKAction.playSoundFileNamed("jumping", waitForCompletion: false)
     let fallingSound = SKAction.playSoundFileNamed("falling", waitForCompletion: true)
+    var isSoundEffectOn = UserDefaults.standard.bool(forKey: "UserDefaultIsSoundEffectOnKey")
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
@@ -283,7 +282,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func gameOver() {
         isGameOver = true // needs to set this first to prevent updating getting called again
         let fallingSound = SKAction.playSoundFileNamed("falling", waitForCompletion: true)
-        run(fallingSound)
+        if isSoundEffectOn {
+            run(fallingSound)
+        }
         speed = 0
         let prev = UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey")
         UserDefaults.standard.set(score > prev ? score : prev, forKey: "UserDefaultHighestScoreKey")
@@ -373,7 +374,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let diff = CGVector(dx: 0, dy: kMinJumpHeight)
             if isLanded {
                 hotdog.physicsBody?.applyImpulse(diff)
-                self.run(jumpSound)
+                if isSoundEffectOn {
+                    run(jumpSound)
+                }
             }
             isLanded = false
             

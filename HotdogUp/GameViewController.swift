@@ -17,6 +17,7 @@ class GameViewController: UIViewController, GameSceneDelegate {
     var gameScene : GameScene!
     var skView = SKView()
     var gameoverView = UIView()
+    var soundBtn = UIButton()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -28,9 +29,7 @@ class GameViewController: UIViewController, GameSceneDelegate {
         gameScene = GameScene(size: view.bounds.size)
         gameScene.scaleMode = .resizeFill
         gameScene.gameSceneDelegate = self
-        
-//        gameScene.gameVC = self
-        
+        UserDefaults.standard.set(true, forKey: "UserDefaultIsSoundEffectOnKey")
         setupPauseView()
         setupGameOverView()
     }
@@ -107,8 +106,8 @@ class GameViewController: UIViewController, GameSceneDelegate {
         replayBtn.addTarget(self, action: #selector(resetGame), for: .touchUpInside)
         
         // sound button
-        let soundBtn = UIButton(type: .custom)
-        soundBtn.setBackgroundImage(UIImage(named: "button_sound"), for: .normal)
+        soundBtn = UIButton(type: .custom)
+        soundBtn.setBackgroundImage(UIImage(named: gameScene.isSoundEffectOn ? "button_sound" : "button_soundoff"), for: .normal)
         soundBtn.layer.cornerRadius = 5.0
         soundBtn.layer.masksToBounds = true
         buttonsView.addSubview(soundBtn)
@@ -156,7 +155,10 @@ class GameViewController: UIViewController, GameSceneDelegate {
     }
     
     @objc func soundSwitch() {
-        
+        // check if sound is on or off
+        gameScene.isSoundEffectOn = !gameScene.isSoundEffectOn
+        UserDefaults.standard.set(gameScene.isSoundEffectOn, forKey: "UserDefaultIsSoundEffectOnKey")
+        soundBtn.setBackgroundImage(UIImage(named: gameScene.isSoundEffectOn ? "button_sound" : "button_soundoff"), for: .normal)
     }
     
     @objc func musicSwitch() {
@@ -201,7 +203,7 @@ class GameViewController: UIViewController, GameSceneDelegate {
     
     func setupGameOverView() {
         let gameoverHotdogView = UIImageView(image: UIImage(named: "gameover_hotdog"))
-
+        
         gameoverView = UIView()
         self.view.addSubview(gameoverView)
         gameoverView.isHidden = true
