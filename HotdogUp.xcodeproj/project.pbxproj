@@ -16,7 +16,6 @@
 		3D07A2AC1ED1B1B600BFCE3A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D07A2AA1ED1B1B600BFCE3A /* LaunchScreen.storyboard */; };
 		3D07A2B71ED1B1B700BFCE3A /* HotdogSlingerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07A2B61ED1B1B700BFCE3A /* HotdogSlingerTests.swift */; };
 		3D07A2C51ED1B2F000BFCE3A /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07A2C41ED1B2F000BFCE3A /* MenuViewController.swift */; };
-		3D07A2C81ED27A7B00BFCE3A /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07A2C71ED27A7B00BFCE3A /* SettingsViewController.swift */; };
 		3D3430D31F349D8A00B71BDC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D8E75341F349BE10019035A /* Assets.xcassets */; };
 		3D42BBDE1F34934D00EA722C /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D42BBDD1F34934D00EA722C /* Keys.swift */; };
 		3D45CB071F369124002B4D2F /* falling.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D45CB061F369124002B4D2F /* falling.mp3 */; };
@@ -54,7 +53,6 @@
 		3D07A2B61ED1B1B700BFCE3A /* HotdogSlingerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotdogSlingerTests.swift; sourceTree = "<group>"; };
 		3D07A2B81ED1B1B700BFCE3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D07A2C41ED1B2F000BFCE3A /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
-		3D07A2C71ED27A7B00BFCE3A /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		3D42BBDD1F34934D00EA722C /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		3D45CB061F369124002B4D2F /* falling.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = falling.mp3; path = ../../../Desktop/falling.mp3; sourceTree = "<group>"; };
 		3D45CB0A1F3696D8002B4D2F /* jumping.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = jumping.wav; path = ../../../Downloads/jumping.wav; sourceTree = "<group>"; };
@@ -167,7 +165,6 @@
 			children = (
 				3D07A2C41ED1B2F000BFCE3A /* MenuViewController.swift */,
 				3D07A2A31ED1B1B600BFCE3A /* GameViewController.swift */,
-				3D07A2C71ED27A7B00BFCE3A /* SettingsViewController.swift */,
 				3D07A2A11ED1B1B600BFCE3A /* GameScene.swift */,
 				3D857D781F2F2466001C8E28 /* Constants.swift */,
 				3D42BBDD1F34934D00EA722C /* Keys.swift */,
@@ -433,7 +430,6 @@
 				3DEF5CCC1F31C1A900BFA806 /* Path.swift in Sources */,
 				3D07A2A41ED1B1B600BFCE3A /* GameViewController.swift in Sources */,
 				3D07A29C1ED1B1B600BFCE3A /* AppDelegate.swift in Sources */,
-				3D07A2C81ED27A7B00BFCE3A /* SettingsViewController.swift in Sources */,
 				3D07A2C51ED1B2F000BFCE3A /* MenuViewController.swift in Sources */,
 				3D857D791F2F2466001C8E28 /* Constants.swift in Sources */,
 			);

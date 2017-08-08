@@ -147,6 +147,7 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
         gameScene.removeAllChildren()
         gameScene.removeFromParent()
         skView.presentScene(nil)
+        MusicPlayer.player.stop()
         self.dismiss(animated: true, completion: nil)
     }
     

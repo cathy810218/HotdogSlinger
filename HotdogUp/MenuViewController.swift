@@ -11,8 +11,7 @@ import Crashlytics
 
 class MenuViewController: UIViewController {
     @IBOutlet weak var startButton: UIButton!
-    @IBOutlet weak var settingsButton: UIButton!
-    @IBOutlet weak var helpButton: UIButton!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,11 +27,21 @@ class MenuViewController: UIViewController {
 //        let gameVC = GameViewController()
 //        self.present(gameVC, animated: true, completion: nil)
     }
-    
-    @IBAction func settingsButtonPressed(_ sender: Any) {
+    @IBAction func helpButtonPressed(_ sender: UIButton) {
+        
     }
     
-    @IBAction func helpButtonPressed(_ sender: Any) {
+    @IBAction func rateButtonPressed(_ sender: UIButton) {
+        
+        if let checkURL = URL(string: reviewUrlString) {
+            UIApplication.shared.open(checkURL, options: [:], completionHandler: { (success) in
+                if !success {
+                    print("Fail to go to the App Store")
+                }
+            })
+        } else {
+            print("invalid url")
+        }
     }
 }
 
