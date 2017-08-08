@@ -10,8 +10,9 @@ import UIKit
 import SpriteKit
 import GameplayKit
 import SnapKit
+import GoogleMobileAds
 
-class GameViewController: UIViewController, GameSceneDelegate {
+class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDelegate {
     var pauseView = UIView()
     var pauseBtn = UIButton()
     var gameScene : GameScene!
@@ -19,6 +20,9 @@ class GameViewController: UIViewController, GameSceneDelegate {
     var gameoverView = UIView()
     var soundBtn = UIButton()
     var musicBtn = UIButton()
+    var interstitial: GADInterstitial?
+
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         presentGameScene()
@@ -105,7 +109,6 @@ class GameViewController: UIViewController, GameSceneDelegate {
             make.top.centerX.equalTo(buttonsView)
         }
         replayBtn.addTarget(self, action: #selector(resetGame), for: .touchUpInside)
-        
         // sound button
         soundBtn = UIButton(type: .custom)
         soundBtn.setBackgroundImage(UIImage(named: gameScene.isSoundEffectOn ? "button_sound" : "button_soundoff"), for: .normal)
@@ -183,6 +186,11 @@ class GameViewController: UIViewController, GameSceneDelegate {
         gameScene.isUserInteractionEnabled = true
     }
     
+    @objc func resetGameToShowAds() {
+        gameoverView.isHidden = true
+        interstitial = createInterstitial()
+    }
+    
     @objc func resetGame() {
         gameScene.score = 0
         gameScene.scoreLabel.text = "0"
@@ -192,20 +200,18 @@ class GameViewController: UIViewController, GameSceneDelegate {
         gameScene.createHotdog()
         gameScene.createBackground()
         gameScene.setupPaths()
-        
+        gameScene.isMusicOn = UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey")
         gameScene.speed = 1
         gameScene.physicsBody?.categoryBitMask = gameScene.sideboundsCategory
         gameScene.isPaused = false
         gameScene.hotdog.isPaused = false
         gameScene.isGameOver = false
         pauseView.isHidden = true
-        gameoverView.isHidden = true
         pauseBtn.isEnabled = true
         gameScene.isLanded = true
         gameScene.sideboundsCategory = 0x1 << 2 // reset sidebounds
         gameScene.isUserInteractionEnabled = true
     }
-    
     
     func setupGameOverView() {
         let gameoverHotdogView = UIImageView(image: UIImage(named: "gameover_hotdog"))
@@ -257,7 +263,8 @@ class GameViewController: UIViewController, GameSceneDelegate {
             make.centerX.equalTo(gameoverBackgroundView)
             make.bottom.equalTo(homeBtn)
         }
-        replayBtn.addTarget(self, action: #selector(resetGame), for: .touchUpInside)
+        replayBtn.addTarget(self, action: #selector(resetGameToShowAds), for: .touchUpInside)
+        replayBtn.tag = 0 // dead
         
         let shareBtn = UIButton(type: .custom)
         shareBtn.setBackgroundImage(UIImage(named: "gameover_share"), for: .normal)
@@ -271,6 +278,37 @@ class GameViewController: UIViewController, GameSceneDelegate {
     
     func gameSceneGameEnded() {
         gameoverView.isHidden = false
+    }
+    
+    // ============================
+    //MARK: Admob
+    func createInterstitial() -> GADInterstitial? {
+        interstitial = GADInterstitial(adUnitID: kAdMobUnitID)
+        guard let interstitial = interstitial else {
+            return nil
+        }
+        
+        let request = GADRequest()
+        //TODO: Remove this before shipping
+        request.testDevices = [kGADSimulatorID, kCathyDeviceID]
+        interstitial.load(request)
+        
+        interstitial.delegate = self
+        
+        return interstitial
+    }
+    
+    func interstitialDidReceiveAd(_ ad: GADInterstitial) {
+        print("Interstitial loaded successfully")
+        ad.present(fromRootViewController: self)
+    }
+    
+    func interstitialDidFail(toPresentScreen ad: GADInterstitial) {
+        print("Fail to receive interstitial")
+    }
+    
+    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
+        resetGame()
     }
     
     // ============================

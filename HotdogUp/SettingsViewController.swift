@@ -15,24 +15,24 @@ class SettingsViewController: UIViewController, GADInterstitialDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        interstitial = createInterstitial()
+//        interstitial = createInterstitial()
         // Do any additional setup after loading the view.
     }
     
-    func createInterstitial() -> GADInterstitial? {
-        interstitial = GADInterstitial(adUnitID: kAdMobUnitID)
-        guard let interstitial = interstitial else {
-            return nil
-        }
-        
-        let request = GADRequest()
-        //TODO: Remove this before shipping
-        request.testDevices = [kGADSimulatorID, kCathyDeviceID]
-        interstitial.load(request)
-        interstitial.delegate = self
-        
-        return interstitial
-    }
+//    func createInterstitial() -> GADInterstitial? {
+//        interstitial = GADInterstitial(adUnitID: kAdMobUnitID)
+//        guard let interstitial = interstitial else {
+//            return nil
+//        }
+//        
+//        let request = GADRequest()
+//        //TODO: Remove this before shipping
+//        request.testDevices = [kGADSimulatorID, kCathyDeviceID]
+//        interstitial.load(request)
+//        interstitial.delegate = self
+//        
+//        return interstitial
+//    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

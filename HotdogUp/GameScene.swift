@@ -49,25 +49,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let jumpSound = SKAction.playSoundFileNamed("jumping", waitForCompletion: false)
     let fallingSound = SKAction.playSoundFileNamed("falling", waitForCompletion: true)
     var isSoundEffectOn = UserDefaults.standard.bool(forKey: "UserDefaultIsSoundEffectOnKey")
-    var isMusicOn = UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey") {
+    var isMusicOn = UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey")
+    {
         didSet {
             isMusicOn ? MusicPlayer.playBackgroundMusic() : MusicPlayer.player.stop()
         }
     }
+    
+    
+    override func sceneDidLoad() {
+        super.sceneDidLoad()
+        
+    }
+    
     override func didMove(to view: SKView) {
         super.didMove(to: view)
-        if isMusicOn {
-            MusicPlayer.playBackgroundMusic()
+        
+        if !isGameOver {
+            self.physicsWorld.contactDelegate = self
+            self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -8.5)
+            createHotdog()
+            createBackground()
+            setupPaths()
+            setupCounterLabel()
+            setupHighestScoreLabel()
         }
-        
-        self.physicsWorld.contactDelegate = self
-        self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -8.5)
-        
-        createHotdog()
-        createBackground()
-        setupPaths()
-        setupCounterLabel()
-        setupHighestScoreLabel()
+        isMusicOn ? MusicPlayer.playBackgroundMusic() : MusicPlayer.player.stop()
         
 //        let longPress = UILongPressGestureRecognizer(target: self,
 //                                                     action: #selector(moveDirection(longPress:)))
@@ -304,6 +311,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         UserDefaults.standard.set(score > prev ? score : prev, forKey: "UserDefaultHighestScoreKey")
         highest.text = String(UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey"))
         gameSceneDelegate?.gameSceneGameEnded()
+        isMusicOn = false
     }
     
     //MARK: Collision Detection
@@ -356,9 +364,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    override func sceneDidLoad() {
-        
-    }
     
     
     func touchDown(atPoint pos : CGPoint) {
