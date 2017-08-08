@@ -9,9 +9,15 @@
 import SpriteKit
 import GameplayKit
 import SnapKit
+import AVFoundation
 
 protocol GameSceneDelegate: class {
     func gameSceneGameEnded()
+}
+
+enum GameState {
+    case playing
+    case dead
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
@@ -43,9 +49,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let jumpSound = SKAction.playSoundFileNamed("jumping", waitForCompletion: false)
     let fallingSound = SKAction.playSoundFileNamed("falling", waitForCompletion: true)
     var isSoundEffectOn = UserDefaults.standard.bool(forKey: "UserDefaultIsSoundEffectOnKey")
-    
+    var isMusicOn = UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey") {
+        didSet {
+            isMusicOn ? MusicPlayer.playBackgroundMusic() : MusicPlayer.player.stop()
+        }
+    }
     override func didMove(to view: SKView) {
         super.didMove(to: view)
+        if isMusicOn {
+            MusicPlayer.playBackgroundMusic()
+        }
+        
         self.physicsWorld.contactDelegate = self
         self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -8.5)
         
@@ -201,10 +215,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 // Prevent collisions if the hotdog is jumping -> no pathCategory
                 body.collisionBitMask = sideboundsCategory | rightBoundCategory | leftBoundCatrgory
             }
-        }
-        reusePath()
-        if hotdog.position.y < -100 && !isGameOver {
-            gameOver()
+            reusePath()
+            if hotdog.position.y < -100 && !isGameOver {
+                gameOver()
+            }
         }
     }
     

@@ -18,7 +18,7 @@ class GameViewController: UIViewController, GameSceneDelegate {
     var skView = SKView()
     var gameoverView = UIView()
     var soundBtn = UIButton()
-    
+    var musicBtn = UIButton()
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         presentGameScene()
@@ -30,6 +30,7 @@ class GameViewController: UIViewController, GameSceneDelegate {
         gameScene.scaleMode = .resizeFill
         gameScene.gameSceneDelegate = self
         UserDefaults.standard.set(true, forKey: "UserDefaultIsSoundEffectOnKey")
+        UserDefaults.standard.set(true, forKey: "UserDefaultIsMusicOnKey")
         setupPauseView()
         setupGameOverView()
     }
@@ -117,8 +118,8 @@ class GameViewController: UIViewController, GameSceneDelegate {
         soundBtn.addTarget(self, action: #selector(soundSwitch), for: .touchUpInside)
         
         // music button
-        let musicBtn = UIButton(type: .custom)
-        musicBtn.setBackgroundImage(UIImage(named: "button_music"), for: .normal)
+        musicBtn = UIButton(type: .custom)
+        musicBtn.setBackgroundImage(UIImage(named: gameScene.isMusicOn ? "button_music" : "button_musicoff"), for: .normal)
         musicBtn.layer.cornerRadius = 5.0
         musicBtn.layer.masksToBounds = true
         buttonsView.addSubview(musicBtn)
@@ -151,6 +152,7 @@ class GameViewController: UIViewController, GameSceneDelegate {
         gameScene.isPaused = true
         gameScene.hotdog.isPaused = true
         pauseView.isHidden = false
+        gameScene.isUserInteractionEnabled = false
         pauseBtn.isEnabled = false // disable it
     }
     
@@ -162,7 +164,9 @@ class GameViewController: UIViewController, GameSceneDelegate {
     }
     
     @objc func musicSwitch() {
-        
+        gameScene.isMusicOn = !gameScene.isMusicOn
+        UserDefaults.standard.set(gameScene.isMusicOn, forKey: "UserDefaultIsMusicOnKey")
+        musicBtn.setBackgroundImage(UIImage(named: gameScene.isMusicOn ? "button_music" : "button_musicoff"), for: .normal)
     }
     
     @objc func share() {
@@ -176,6 +180,7 @@ class GameViewController: UIViewController, GameSceneDelegate {
         gameScene.hotdog.isPaused = false
         pauseView.isHidden = true
         pauseBtn.isEnabled = true
+        gameScene.isUserInteractionEnabled = true
     }
     
     @objc func resetGame() {
@@ -198,6 +203,7 @@ class GameViewController: UIViewController, GameSceneDelegate {
         pauseBtn.isEnabled = true
         gameScene.isLanded = true
         gameScene.sideboundsCategory = 0x1 << 2 // reset sidebounds
+        gameScene.isUserInteractionEnabled = true
     }
     
     
