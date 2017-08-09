@@ -35,9 +35,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let pathCategory: UInt32 = 0x1 << 5;
     
     var background = SKSpriteNode()
-    var score = 0
     var scoreLabel = UILabel()
     var highest = UILabel()
+    
+    var score = 0 {
+        didSet {
+            scoreLabel.text = String(score)
+            if (score > UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey")) {
+                highest.text = String(score)
+                UserDefaults.standard.set(score, forKey: "UserDefaultHighestScoreKey")
+            }
+        }
+    }
     var timer = Timer()
     var timeCounter = kMinJumpHeight
     var isLanded = true
@@ -49,8 +58,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let jumpSound = SKAction.playSoundFileNamed("jumping", waitForCompletion: false)
     let fallingSound = SKAction.playSoundFileNamed("falling", waitForCompletion: true)
     var isSoundEffectOn = UserDefaults.standard.bool(forKey: "UserDefaultIsSoundEffectOnKey")
-    var isMusicOn = UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey")
-    {
+    var isMusicOn = UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey") {
         didSet {
             isMusicOn ? MusicPlayer.playBackgroundMusic() : MusicPlayer.player.stop()
         }
@@ -215,7 +223,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func update(_ currentTime: TimeInterval) {
-        scoreLabel.text = String(score)
+        
         if let body = hotdog.physicsBody {
             let dy = body.velocity.dy
             if dy > 0 {
@@ -307,9 +315,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             run(fallingSound)
         }
         speed = 0
-        let prev = UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey")
-        UserDefaults.standard.set(score > prev ? score : prev, forKey: "UserDefaultHighestScoreKey")
-        highest.text = String(UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey"))
+//        let prev = UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey")
+//        UserDefaults.standard.set(score > prev ? score : prev, forKey: "UserDefaultHighestScoreKey")
+//        highest.text = String(UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey"))
         gameSceneDelegate?.gameSceneGameEnded()
         isMusicOn = false
     }
@@ -318,7 +326,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         let bodyA = contact.bodyA
         let bodyB = contact.bodyB
-
+        
         isLanded = hotdog.physicsBody?.velocity.dy == 0.0
         
         if bodyA.categoryBitMask == leftBoundCatrgory || bodyB.categoryBitMask == leftBoundCatrgory {
