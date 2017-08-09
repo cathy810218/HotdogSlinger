@@ -176,9 +176,43 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     }
     
     @objc func share() {
+        let score : String = gameScene.scoreLabel.text ?? "0"
         
+        //Generate the screenshot
+        UIGraphicsBeginImageContext(view.frame.size)
+        let context: CGContext = UIGraphicsGetCurrentContext()!
+        view.layer.render(in: context)
+        let screenshot = view.takeSnapshot()
+        socialShare(sharingText: "🌭 I just hit \(score) on HotdogUp! Beat it! 🌭\n\n\n\(shareToAppStoreURL)",
+                    sharingImage: screenshot)
     }
     
+    private func socialShare(sharingText: String?, sharingImage: UIImage?) {
+        var sharingItems = [Any]()
+        
+        if let text = sharingText {
+            sharingItems.append(text)
+        }
+        if let image = sharingImage {
+            sharingItems.append(image)
+        }
+        
+        let activityVC = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
+        if #available(iOS 11.0, *) {
+            activityVC.excludedActivityTypes = [.addToReadingList,
+                                                .airDrop,
+                                                .assignToContact,
+                                                .copyToPasteboard,
+                                                .markupAsPDF,
+                                                .openInIBooks,
+                                                .postToVimeo,
+                                                .saveToCameraRoll,
+                                                .print]
+        } else {
+            // Fallback on earlier versions
+        }
+        self.present(activityVC, animated: true, completion: nil)
+    }
     
     @objc func resume() {
         gameScene.speed = CGFloat(UserDefaults.standard.float(forKey: "UserDefaultResumeSpeedKey"))
@@ -335,5 +369,17 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
 
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+}
+
+extension UIView {
+    
+    func takeSnapshot() -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, UIScreen.main.scale)
+        drawHierarchy(in: self.bounds, afterScreenUpdates: true)
+        
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
     }
 }
