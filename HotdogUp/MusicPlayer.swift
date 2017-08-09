@@ -24,7 +24,7 @@ class MusicPlayer {
                     AVAudioPlayer(contentsOf: url!)
                 player.numberOfLoops = -1
                 player.prepareToPlay()
-//                player.volume = musicVolume
+                player.volume = 0.2
                 player.play()
             } catch {
                 

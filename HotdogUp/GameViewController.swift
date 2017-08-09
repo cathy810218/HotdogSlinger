@@ -30,11 +30,13 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // need to set the key value before init the GameScene
+        UserDefaults.standard.set(true, forKey: "UserDefaultIsSoundEffectOnKey")
+        UserDefaults.standard.set(true, forKey: "UserDefaultIsMusicOnKey")
+        
         gameScene = GameScene(size: view.bounds.size)
         gameScene.scaleMode = .resizeFill
         gameScene.gameSceneDelegate = self
-        UserDefaults.standard.set(true, forKey: "UserDefaultIsSoundEffectOnKey")
-        UserDefaults.standard.set(true, forKey: "UserDefaultIsMusicOnKey")
         setupPauseView()
         setupGameOverView()
     }
