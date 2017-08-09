@@ -318,15 +318,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         let bodyA = contact.bodyA
         let bodyB = contact.bodyB
-        
-//        if bodyA.categoryBitMask == cactusCategory || bodyB.categoryBitMask == cactusCategory {
-//            // show dead hotdog
-//            let deadHotdogTexture = SKTexture(imageNamed: "deadHotdog")
-//            let deadAction = SKAction.animate(with: [deadHotdogTexture], timePerFrame: 1, resize: true, restore: true)
-//            hotdog.size = CGSize(width: 100, height: 85)
-//            hotdog.run(SKAction.repeat(deadAction, count: 1))
-//            gameover()
-//        }
+
         isLanded = hotdog.physicsBody?.velocity.dy == 0.0
         
         if bodyA.categoryBitMask == leftBoundCatrgory || bodyB.categoryBitMask == leftBoundCatrgory {
