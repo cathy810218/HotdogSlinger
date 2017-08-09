@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Fabric.with([Crashlytics.self])
         //TODO: Update new id in production
         GADMobileAds.configure(withApplicationID: kAdMobAppID)
+        
         return true
     }
 

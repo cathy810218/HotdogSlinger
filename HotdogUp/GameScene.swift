@@ -9,8 +9,20 @@
 import SpriteKit
 import GameplayKit
 import SnapKit
+import AVFoundation
+
+protocol GameSceneDelegate: class {
+    func gameSceneGameEnded()
+}
+
+enum GameState {
+    case playing
+    case dead
+}
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
+    
+    weak var gameSceneDelegate: GameSceneDelegate?
     
     var hotdog = SKSpriteNode()
     var hotdogRunForever = SKAction()
@@ -25,29 +37,44 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var background = SKSpriteNode()
     var score = 0
     var scoreLabel = UILabel()
+    var highest = UILabel()
     var timer = Timer()
     var timeCounter = kMinJumpHeight
     var isLanded = true
-    var pauseView = UIView()
-    var pauseBtn = UIButton()
+    var gameVC: GameViewController!
     
     var paths = [Path]()
     var backgrounds = [SKSpriteNode]()
     var isGameOver = false
     let jumpSound = SKAction.playSoundFileNamed("jumping", waitForCompletion: false)
     let fallingSound = SKAction.playSoundFileNamed("falling", waitForCompletion: true)
+    var isSoundEffectOn = UserDefaults.standard.bool(forKey: "UserDefaultIsSoundEffectOnKey")
+    var isMusicOn = UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey")
+    {
+        didSet {
+            isMusicOn ? MusicPlayer.playBackgroundMusic() : MusicPlayer.player.stop()
+        }
+    }
+    
+    
+    override func sceneDidLoad() {
+        super.sceneDidLoad()
+        
+    }
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
-        self.physicsWorld.contactDelegate = self
-        self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -8.5)
         
-        createHotdog()
-        createBackground()
-        setupPaths()
-        setupCounterLabel()
-        setupHighestScoreLabel()
-        setupPauseView()
+        if !isGameOver {
+            self.physicsWorld.contactDelegate = self
+            self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -8.5)
+            createHotdog()
+            createBackground()
+            setupPaths()
+            setupCounterLabel()
+            setupHighestScoreLabel()
+        }
+        isMusicOn ? MusicPlayer.playBackgroundMusic() : MusicPlayer.player.stop()
         
 //        let longPress = UILongPressGestureRecognizer(target: self,
 //                                                     action: #selector(moveDirection(longPress:)))
@@ -121,12 +148,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         rightNode.physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: self.frame.size.width, y: self.frame.size.height), to: CGPoint(x: self.frame.size.width, y: 0))
         rightNode.physicsBody?.categoryBitMask = rightBoundCategory
         rightNode.physicsBody?.contactTestBitMask = hotdogCategory
-        
-//        let bottomNode = SKSpriteNode()
-//        addChild(bottomNode)
-//        bottomNode.physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: 0, y: 0), to: CGPoint(x: self.frame.size.width, y: self.frame.size.height))
-//        bottomNode.physicsBody?.categoryBitMask = bottomCategory
-//        bottomNode.physicsBody?.contactTestBitMask = hotdogCategory
     }
     
     
@@ -201,12 +222,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 // Prevent collisions if the hotdog is jumping -> no pathCategory
                 body.collisionBitMask = sideboundsCategory | rightBoundCategory | leftBoundCatrgory
             }
-        }
-        reusePath()
-        if hotdog.position.y < -100 && !isGameOver {
-            gameOver()
+            reusePath()
+            if hotdog.position.y < -100 && !isGameOver {
+                gameOver()
+            }
         }
     }
+    
     func setupPaths() {
         generatePaths()
         for path in paths {
@@ -219,19 +241,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             path.run(moveForever)
             path.speed = 0
         }
-//            self.addChild(path)
-//            let moveReset = SKAction.moveBy(x: 0, y: background.size.height, duration: 0)
-//            let moveLoop = SKAction.sequence([moveDown, moveReset])
-//            let moveForever = SKAction.repeatForever(moveLoop)
-//            path.run(moveForever)
-//        }
-//        let delay = SKAction.wait(forDuration: 2)
-//        let generate = SKAction.run {
-//            
-//        }
-//        let initial = SKAction.sequence([generate, delay])
-//        let regenerate = SKAction.repeatForever(initial)
-//        run(regenerate)
     }
     
     private func generatePaths() {
@@ -278,7 +287,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         highestScoreLabel.textAlignment = NSTextAlignment.center
         highestScoreLabel.textColor = UIColor.white
         
-        let highest = UILabel()
         highest.text = String(UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey"))
         self.view?.addSubview(highest)
         highest.snp.makeConstraints { (make) in
@@ -290,110 +298,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         highest.textAlignment = NSTextAlignment.center
     }
     
-    @objc func pauseButtonDidPressed() {
-        UserDefaults.standard.set(self.speed, forKey: "UserDefaultResumeSpeedKey")
-        self.isPaused = true
-        self.hotdog.isPaused = true
-        pauseView.isHidden = false
-        pauseBtn.isEnabled = false // disable it
-    }
-    
-    func setupPauseView() {
-        pauseBtn = UIButton(type: .custom)
-        pauseBtn.setBackgroundImage(UIImage(named: "backButton"), for: .normal)
-        self.view?.addSubview(pauseBtn)
-        
-        pauseBtn.addTarget(self, action: #selector(pauseButtonDidPressed), for: .touchUpInside)
-        pauseBtn.snp.makeConstraints { (make) in
-            make.top.left.equalTo(20)
-            make.width.height.equalTo(40)
-        }
-        
-        pauseView = UIView()
-        self.view?.addSubview(pauseView)
-        pauseView.isHidden = true
-        pauseView.snp.makeConstraints { (make) in
-            make.width.height.equalTo(self.frame.size.width)
-            make.center.equalTo(self.view!)
-        }
-        pauseView.backgroundColor = UIColor.brown
-        
-        // 4 buttons
-        // resume button
-        let resumeBtn = UIButton(type: .custom)
-        resumeBtn.setBackgroundImage(UIImage(named: "backButton"), for: .normal)
-        
-        pauseView.addSubview(resumeBtn)
-        resumeBtn.snp.makeConstraints { (make) in
-            make.left.top.equalTo(pauseView)
-            make.width.height.equalTo(100)
-        }
-        resumeBtn.addTarget(self, action: #selector(resume), for: .touchUpInside)
-        
-        // replay button
-        let replayBtn = UIButton(type: .custom)
-        replayBtn.setBackgroundImage(UIImage(named: "backButton"), for: .normal)
-        
-        pauseView.addSubview(replayBtn)
-        replayBtn.snp.makeConstraints { (make) in
-            make.right.top.equalTo(pauseView)
-            make.width.height.equalTo(100)
-        }
-        replayBtn.addTarget(self, action: #selector(resetGame), for: .touchUpInside)
-        
-    }
-    
-    @objc func resume() {
-        self.speed = CGFloat(UserDefaults.standard.float(forKey: "UserDefaultResumeSpeedKey"))
-        self.isPaused = false
-        pauseView.isHidden = true
-        hotdog.isPaused = false
-        pauseBtn.isEnabled = true
-    }
-    
-    @objc func resetGame() {
-        self.score = 0
-        self.scoreLabel.text = "0"
-        
-        self.removeAllChildren()
-        paths.removeAll()
-        createHotdog()
-        createBackground()
-        setupPaths()
-        
-        speed = 1
-        self.physicsBody?.categoryBitMask = sideboundsCategory
-        self.isPaused = false
-        hotdog.isPaused = false
-        isGameOver = false
-        pauseView.isHidden = true
-        pauseBtn.isEnabled = true
-        isLanded = true
-        sideboundsCategory = 0x1 << 2 // reset sidebounds
-    }
+    // ====================================================================================================
     
     func gameOver() {
         isGameOver = true // needs to set this first to prevent updating getting called again
         let fallingSound = SKAction.playSoundFileNamed("falling", waitForCompletion: true)
-        run(fallingSound)
+        if isSoundEffectOn {
+            run(fallingSound)
+        }
         speed = 0
         let prev = UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey")
         UserDefaults.standard.set(score > prev ? score : prev, forKey: "UserDefaultHighestScoreKey")
+        highest.text = String(UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey"))
+        gameSceneDelegate?.gameSceneGameEnded()
+        isMusicOn = false
     }
     
     //MARK: Collision Detection
     func didBegin(_ contact: SKPhysicsContact) {
         let bodyA = contact.bodyA
         let bodyB = contact.bodyB
-        
-//        if bodyA.categoryBitMask == cactusCategory || bodyB.categoryBitMask == cactusCategory {
-//            // show dead hotdog
-//            let deadHotdogTexture = SKTexture(imageNamed: "deadHotdog")
-//            let deadAction = SKAction.animate(with: [deadHotdogTexture], timePerFrame: 1, resize: true, restore: true)
-//            hotdog.size = CGSize(width: 100, height: 85)
-//            hotdog.run(SKAction.repeat(deadAction, count: 1))
-//            gameover()
-//        }
+
         isLanded = hotdog.physicsBody?.velocity.dy == 0.0
         
         if bodyA.categoryBitMask == leftBoundCatrgory || bodyB.categoryBitMask == leftBoundCatrgory {
@@ -431,9 +356,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    override func sceneDidLoad() {
-        
-    }
     
     
     func touchDown(atPoint pos : CGPoint) {
@@ -463,7 +385,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let diff = CGVector(dx: 0, dy: kMinJumpHeight)
             if isLanded {
                 hotdog.physicsBody?.applyImpulse(diff)
-                self.run(jumpSound)
+                if isSoundEffectOn {
+                    run(jumpSound)
+                }
             }
             isLanded = false
             
@@ -487,22 +411,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
         }
-        
-        //        if bodyA.categoryBitMask == leftBoundCatrgory || bodyB.categoryBitMask == leftBoundCatrgory {
-        //            print("turn back")
-        //            hotdog.xScale *= -1
-        //            hotdog.removeAction(forKey: "moveLeft")
-        //            let moveRight = SKAction.moveBy(x: kHotdogMoveVelocity, y: 0, duration: 1)
-        //            let moveForever = SKAction.repeatForever(moveRight)
-        //            hotdog.run(moveForever, withKey: "moveRight")
-        //        } else if bodyA.categoryBitMask == rightBoundCategory || bodyB.categoryBitMask == rightBoundCategory {
-        //            hotdog.xScale *= -1
-        //            hotdog.removeAction(forKey: "moveRight")
-        //            let moveLeft = SKAction.moveBy(x: -kHotdogMoveVelocity, y: 0, duration: 1)
-        //            let moveForever = SKAction.repeatForever(moveLeft)
-        //            hotdog.run(moveForever, withKey: "moveLeft")
-        //        }
-//        print("touch down")
     }
     
     func touchMoved(toPoint pos : CGPoint) {
