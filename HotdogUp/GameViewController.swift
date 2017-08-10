@@ -156,7 +156,6 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     @objc func pauseButtonDidPressed() {
         UserDefaults.standard.set(gameScene.speed, forKey: "UserDefaultResumeSpeedKey")
         gameScene.isPaused = true
-        gameScene.hotdog.isPaused = true
         pauseView.isHidden = false
         gameScene.isUserInteractionEnabled = false
         pauseBtn.isEnabled = false // disable it
@@ -217,7 +216,6 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     @objc func resume() {
         gameScene.speed = CGFloat(UserDefaults.standard.float(forKey: "UserDefaultResumeSpeedKey"))
         gameScene.isPaused = false
-        gameScene.hotdog.isPaused = false
         pauseView.isHidden = true
         pauseBtn.isEnabled = true
         gameScene.isUserInteractionEnabled = true
@@ -241,13 +239,12 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
         gameScene.speed = 1
         gameScene.physicsBody?.categoryBitMask = gameScene.sideboundsCategory
         gameScene.isPaused = false
-        gameScene.hotdog.isPaused = false
         gameScene.isGameOver = false
         pauseView.isHidden = true
         pauseBtn.isEnabled = true
         gameScene.isLanded = true
-        gameScene.sideboundsCategory = 0x1 << 2 // reset sidebounds
         gameScene.isUserInteractionEnabled = true
+        gameScene.sideboundsCategory = 0x1 << 2 // reset sidebounds
     }
     
     func setupGameOverView() {
@@ -333,6 +330,9 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
         interstitial.delegate = self
         
         return interstitial
+    }
+    func interstitialWillPresentScreen(_ ad: GADInterstitial) {
+        print("will present ads")
     }
     
     func interstitialDidReceiveAd(_ ad: GADInterstitial) {
