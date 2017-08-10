@@ -15,5 +15,5 @@ let kJumpIntensity: Int = 30
 let kHotdogMoveVelocity: CGFloat = 100.0
 
 let kGameSpeed: CGFloat = 1.2
-let kSpeedIncrement: CGFloat = 0.3
+let kSpeedIncrement: CGFloat = 0.15
 let kLevel: Int = 10
