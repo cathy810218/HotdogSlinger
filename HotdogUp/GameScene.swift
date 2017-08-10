@@ -89,7 +89,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func createBackground() {
         for i in 0 ... 1 {
-            background = SKSpriteNode(texture: SKTexture(imageNamed: "background"))
+            background = SKSpriteNode(texture: SKTexture(imageNamed: "background_kitchen2"))
             background.zPosition = -30
             background.anchorPoint = CGPoint.zero
             background.size = CGSize(width: self.frame.size.width,
