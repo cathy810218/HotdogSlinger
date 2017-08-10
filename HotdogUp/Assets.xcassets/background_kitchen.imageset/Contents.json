@@ -2,6 +2,10 @@
   "images" : [
     {
       "idiom" : "universal",
+<<<<<<< HEAD
+=======
+      "filename" : "background_kitchen.png",
+>>>>>>> 475288c032c40d464bc2a6cf8194405645bb4ae3
       "scale" : "1x"
     },
     {
@@ -10,7 +14,10 @@
     },
     {
       "idiom" : "universal",
+<<<<<<< HEAD
       "filename" : "background_kitchen.png",
+=======
+>>>>>>> 475288c032c40d464bc2a6cf8194405645bb4ae3
       "scale" : "3x"
     }
   ],
