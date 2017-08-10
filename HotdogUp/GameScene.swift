@@ -35,6 +35,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let pathCategory: UInt32 = 0x1 << 5;
     
     var background = SKSpriteNode()
+    var initialBackground = SKSpriteNode()
+    
     var scoreLabel = UILabel()
     var highest = UILabel()
     
@@ -137,8 +139,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let moveLoop = SKAction.sequence([moveDown, moveReset])
             let moveForever = SKAction.repeatForever(moveLoop)
             background.run(moveForever)
-            self.background.speed = 0
+            background.speed = 0
         }
+        initialBackground = SKSpriteNode(texture: SKTexture(imageNamed: "background_kitchen"))
+        initialBackground.zPosition = -20
+        initialBackground.anchorPoint = CGPoint.zero
+        initialBackground.size = CGSize(width: self.frame.size.width, height: self.frame.size.height)
+        initialBackground.position = CGPoint(x: 0, y: 0)
+        addChild(initialBackground)
+        let moveDown = SKAction.moveBy(x: 0, y: -initialBackground.size.height, duration: 12)
+        initialBackground.run(moveDown)
+        initialBackground.speed = 0
+        
         
         // Add boundries physics body
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
@@ -254,7 +266,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private func generatePaths() {
         var firstPath = Path(position: CGPoint(x: 80, y: 130))
         paths.append(firstPath)
-        for _ in 0 ... 5 {
+        for _ in 0 ... 3 {
             firstPath = paths.last!
             let x = p_randomPoint(min: Int(firstPath.size.width / 2.0),
                                   max: Int(self.frame.size.width - (firstPath.size.width / 2.0) - 100))
@@ -269,7 +281,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return rand
     }
     
-    func reusePath() {
+    private func reusePath() {
+//        reusePathCount += 1
         for path in paths {
             if path.position.y < 0 {
                 path.reset()
@@ -278,10 +291,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let y = Int(paths.last!.frame.origin.y) + kMinJumpHeight + 30
                 path.position = CGPoint(x: x, y: y)
                 paths.remove(at: paths.index(of: path)!) // remove the old path
+//                updatePathTexture(path: path)
                 paths.append(path) // append new path
             }
         }
     }
+    
+//    private func updatePathTexture(path: Path) {
+//        if reusePathCount == 2 {
+//            print("lvl 2")
+//            path.texture = SKTexture(imageNamed: "onion")
+//        } else if reusePathCount == 4 {
+//            print("lvl 3")
+//            path.texture = SKTexture(imageNamed: "ketchup")
+//        }
+//    }
     
     func setupHighestScoreLabel() {
         let highestScoreLabel = UILabel()
@@ -401,6 +425,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             if hotdog.position.y > self.frame.size.height / 2.0 && background.speed == 0 {
                 // move the background up
+                initialBackground.speed = kGameSpeed
                 for bg in backgrounds {
                     bg.speed = kGameSpeed
                 }
