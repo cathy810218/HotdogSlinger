@@ -40,6 +40,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var scoreLabel = UILabel()
     var highest = UILabel()
     
+    var gamePaused = false {
+        didSet {
+            isPaused = gamePaused
+        }
+    }
+    
+    override var isPaused: Bool {
+        didSet {
+            super.isPaused = gamePaused
+        }
+    }
+    
     var score = 0 {
         didSet {
             scoreLabel.text = String(score)
@@ -65,7 +77,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             isMusicOn ? MusicPlayer.playBackgroundMusic() : MusicPlayer.player.stop()
         }
     }
-    
     
     override func sceneDidLoad() {
         super.sceneDidLoad()

@@ -21,7 +21,6 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     var soundBtn = UIButton()
     var musicBtn = UIButton()
     var interstitial: GADInterstitial?
-
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -155,7 +154,7 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     
     @objc func pauseButtonDidPressed() {
         UserDefaults.standard.set(gameScene.speed, forKey: "UserDefaultResumeSpeedKey")
-        gameScene.isPaused = true
+        gameScene.gamePaused = true
         MusicPlayer.player.pause()
         pauseView.isHidden = false
         gameScene.isUserInteractionEnabled = false
@@ -216,7 +215,7 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     
     @objc func resume() {
         gameScene.speed = CGFloat(UserDefaults.standard.float(forKey: "UserDefaultResumeSpeedKey"))
-        gameScene.isPaused = false
+        gameScene.gamePaused = false
         MusicPlayer.player.play()
         pauseView.isHidden = true
         pauseBtn.isEnabled = true
@@ -241,7 +240,7 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
         gameScene.isMusicOn = UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey")
         gameScene.speed = 1
         gameScene.physicsBody?.categoryBitMask = gameScene.sideboundsCategory
-        gameScene.isPaused = false
+        gameScene.gamePaused = false
         gameScene.isGameOver = false
         pauseView.isHidden = true
         pauseBtn.isEnabled = true
@@ -252,7 +251,6 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     
     func setupGameOverView() {
         let gameoverHotdogView = UIImageView(image: UIImage(named: "gameover_hotdog"))
-        
         gameoverView = UIView()
         self.view.addSubview(gameoverView)
         gameoverView.isHidden = true
