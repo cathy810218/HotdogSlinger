@@ -30,12 +30,11 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     override func viewDidLoad() {
         super.viewDidLoad()
         // need to set the key value before init the GameScene
-        
-        if UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey") {
+        if UserDefaults.standard.object(forKey: "UserDefaultIsMusicOnKey") == nil {
             UserDefaults.standard.set(true, forKey: "UserDefaultIsMusicOnKey")
         }
         
-        if UserDefaults.standard.bool(forKey: "UserDefaultIsSoundEffectOnKey") {
+        if UserDefaults.standard.object(forKey: "UserDefaultIsSoundEffectOnKey") == nil {
             UserDefaults.standard.set(true, forKey: "UserDefaultIsSoundEffectOnKey")
         }
         
@@ -57,12 +56,13 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     
     func setupPauseView() {
         pauseBtn = UIButton(type: .custom)
-        pauseBtn.setBackgroundImage(UIImage(named: "button_pause"), for: .normal)
+        let pauseImg = UIImage(named: "button_pause")
+        pauseBtn.setBackgroundImage(pauseImg, for: .normal)
         self.view?.addSubview(pauseBtn)
         pauseBtn.addTarget(self, action: #selector(pauseButtonDidPressed), for: .touchUpInside)
         pauseBtn.snp.makeConstraints { (make) in
             make.top.left.equalTo(30)
-            make.width.height.equalTo(25)
+            make.width.height.equalTo((pauseImg?.size.width)!)
         }
         
         let img = UIImage(named: "button_resume")
@@ -331,7 +331,7 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
         
         let request = GADRequest()
         //TODO: Remove this before shipping
-        request.testDevices = [kGADSimulatorID, kCathyDeviceID]
+        request.testDevices = [kGADSimulatorID, kCathyDeviceID, kShellyDeviceID]
         interstitial.load(request)
         
         interstitial.delegate = self
