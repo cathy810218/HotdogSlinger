@@ -315,6 +315,22 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
             make.bottom.equalTo(homeBtn)
         }
         shareBtn.addTarget(self, action: #selector(share), for: .touchUpInside)
+        
+        #if DEBUG
+            let resetGameWithoutAdsBtn = UIButton(type: .custom)
+            gameoverView.addSubview(resetGameWithoutAdsBtn)
+            resetGameWithoutAdsBtn.setBackgroundImage(UIImage(named: "backButton"), for: .normal)
+            resetGameWithoutAdsBtn.snp.makeConstraints({ (make) in
+                make.right.bottom.equalTo(-12)
+                make.width.height.equalTo(50)
+            })
+            resetGameWithoutAdsBtn.addTarget(self, action: #selector(removeAdsPressed), for: .touchUpInside)
+        #endif
+    }
+    
+    @objc func removeAdsPressed() {
+        gameoverView.isHidden = true
+        resetGame()
     }
     
     func gameSceneGameEnded() {
