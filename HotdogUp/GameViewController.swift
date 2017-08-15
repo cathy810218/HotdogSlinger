@@ -156,6 +156,7 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     @objc func pauseButtonDidPressed() {
         UserDefaults.standard.set(gameScene.speed, forKey: "UserDefaultResumeSpeedKey")
         gameScene.isPaused = true
+        MusicPlayer.player.pause()
         pauseView.isHidden = false
         gameScene.isUserInteractionEnabled = false
         pauseBtn.isEnabled = false // disable it
@@ -216,6 +217,7 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     @objc func resume() {
         gameScene.speed = CGFloat(UserDefaults.standard.float(forKey: "UserDefaultResumeSpeedKey"))
         gameScene.isPaused = false
+        MusicPlayer.player.play()
         pauseView.isHidden = true
         pauseBtn.isEnabled = true
         gameScene.isUserInteractionEnabled = true
@@ -229,7 +231,8 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     @objc func resetGame() {
         gameScene.score = 0
         gameScene.scoreLabel.text = "0"
-        
+        MusicPlayer.player.stop()
+        MusicPlayer.player.play()
         gameScene.removeAllChildren()
         gameScene.paths.removeAll()
         gameScene.createHotdog()
