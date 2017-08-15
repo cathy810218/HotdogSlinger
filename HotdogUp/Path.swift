@@ -10,6 +10,7 @@ import UIKit
 import SpriteKit
 class Path: SKSpriteNode {
     var isVisited: Bool
+    var tag = 0
     init(position: CGPoint) {
         let texture = SKTexture(imageNamed: "pickle")
         self.isVisited = false

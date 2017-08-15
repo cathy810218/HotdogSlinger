@@ -40,6 +40,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var scoreLabel = UILabel()
     var highest = UILabel()
     
+    var gamePaused = false {
+        didSet {
+            isPaused = gamePaused
+        }
+    }
+    
+    override var isPaused: Bool {
+        didSet {
+            super.isPaused = gamePaused
+        }
+    }
+    
     var score = 0 {
         didSet {
             scoreLabel.text = String(score)
@@ -65,7 +77,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             isMusicOn ? MusicPlayer.playBackgroundMusic() : MusicPlayer.player.stop()
         }
     }
-    
     
     override func sceneDidLoad() {
         super.sceneDidLoad()
@@ -272,6 +283,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                                   max: Int(self.frame.size.width - (firstPath.size.width / 2.0) - 100))
             let y = Int(firstPath.frame.origin.y) + kMinJumpHeight + 30
             let path = Path(position: CGPoint(x: x, y: y))
+            path.tag = firstPath.tag + 1
             paths.append(path)
         }
     }
@@ -282,7 +294,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     private func reusePath() {
-//        reusePathCount += 1
         for path in paths {
             if path.position.y < 0 {
                 path.reset()
@@ -291,21 +302,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let y = Int(paths.last!.frame.origin.y) + kMinJumpHeight + 30
                 path.position = CGPoint(x: x, y: y)
                 paths.remove(at: paths.index(of: path)!) // remove the old path
-//                updatePathTexture(path: path)
+                if path.tag == 4 {
+                    updatePathTexture(path: path)
+                }
                 paths.append(path) // append new path
             }
         }
     }
     
-//    private func updatePathTexture(path: Path) {
+    private func updatePathTexture(path: Path) {
 //        if reusePathCount == 2 {
-//            print("lvl 2")
-//            path.texture = SKTexture(imageNamed: "onion")
+            print("lvl 2")
+            path.texture = SKTexture(imageNamed: "onion")
 //        } else if reusePathCount == 4 {
 //            print("lvl 3")
 //            path.texture = SKTexture(imageNamed: "ketchup")
 //        }
-//    }
+    }
     
     func setupHighestScoreLabel() {
         let highestScoreLabel = UILabel()
