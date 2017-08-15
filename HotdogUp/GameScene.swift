@@ -74,7 +74,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var isSoundEffectOn = UserDefaults.standard.bool(forKey: "UserDefaultIsSoundEffectOnKey")
     var isMusicOn = UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey") {
         didSet {
-            isMusicOn ? MusicPlayer.playBackgroundMusic() : MusicPlayer.player.stop()
+            isMusicOn && !gamePaused ? MusicPlayer.resumePlay() : MusicPlayer.player.pause()
         }
     }
     
@@ -95,7 +95,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             setupCounterLabel()
             setupHighestScoreLabel()
         }
-        isMusicOn ? MusicPlayer.playBackgroundMusic() : MusicPlayer.player.stop()
+        MusicPlayer.loadBackgroundMusic()
+        isMusicOn ? MusicPlayer.resumePlay() : MusicPlayer.player.stop()
         
 //        let longPress = UILongPressGestureRecognizer(target: self,
 //                                                     action: #selector(moveDirection(longPress:)))

@@ -11,7 +11,11 @@ import AVFoundation
 class MusicPlayer {
     static var player = AVAudioPlayer()
     
-    class func playBackgroundMusic() {
+    class func resumePlay() {
+        player.play()
+    }
+    
+    class func loadBackgroundMusic() {
         let filename = "Brother_Jack.mp3"
         if !AVAudioSession.sharedInstance().isOtherAudioPlaying {
             let url = Bundle.main.url(forResource: filename, withExtension: nil)
@@ -25,7 +29,6 @@ class MusicPlayer {
                 player.numberOfLoops = -1
                 player.prepareToPlay()
                 player.volume = 0.2
-                player.play()
             } catch {
                 
             }

@@ -30,8 +30,14 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     override func viewDidLoad() {
         super.viewDidLoad()
         // need to set the key value before init the GameScene
-        UserDefaults.standard.set(true, forKey: "UserDefaultIsSoundEffectOnKey")
-        UserDefaults.standard.set(true, forKey: "UserDefaultIsMusicOnKey")
+        
+        if UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey") {
+            UserDefaults.standard.set(true, forKey: "UserDefaultIsMusicOnKey")
+        }
+        
+        if UserDefaults.standard.bool(forKey: "UserDefaultIsSoundEffectOnKey") {
+            UserDefaults.standard.set(true, forKey: "UserDefaultIsSoundEffectOnKey")
+        }
         
         gameScene = GameScene(size: view.bounds.size)
         gameScene.scaleMode = .resizeFill
@@ -216,7 +222,7 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     @objc func resume() {
         gameScene.speed = CGFloat(UserDefaults.standard.float(forKey: "UserDefaultResumeSpeedKey"))
         gameScene.gamePaused = false
-        MusicPlayer.player.play()
+        gameScene.isMusicOn = UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey")
         pauseView.isHidden = true
         pauseBtn.isEnabled = true
         gameScene.isUserInteractionEnabled = true
