@@ -20,6 +20,7 @@
 		3D42BBDE1F34934D00EA722C /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D42BBDD1F34934D00EA722C /* Keys.swift */; };
 		3D45CB071F369124002B4D2F /* falling.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D45CB061F369124002B4D2F /* falling.mp3 */; };
 		3D45CB0B1F3696D8002B4D2F /* jumping.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3D45CB0A1F3696D8002B4D2F /* jumping.wav */; };
+		3D79C3691F43A64200013DAE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D79C3681F43A64200013DAE /* StoreKit.framework */; };
 		3D857D791F2F2466001C8E28 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D857D781F2F2466001C8E28 /* Constants.swift */; };
 		3DE3B7691F3935AE0037FC18 /* Brother_Jack.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3DE3B7681F3935AD0037FC18 /* Brother_Jack.mp3 */; };
 		3DE3B76B1F393B4C0037FC18 /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE3B76A1F393B4C0037FC18 /* MusicPlayer.swift */; };
@@ -56,6 +57,7 @@
 		3D42BBDD1F34934D00EA722C /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		3D45CB061F369124002B4D2F /* falling.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = falling.mp3; path = ../../../Desktop/falling.mp3; sourceTree = "<group>"; };
 		3D45CB0A1F3696D8002B4D2F /* jumping.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = jumping.wav; path = ../../../Downloads/jumping.wav; sourceTree = "<group>"; };
+		3D79C3681F43A64200013DAE /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		3D857D781F2F2466001C8E28 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3D8E75341F349BE10019035A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = HotdogUp/Assets.xcassets; sourceTree = SOURCE_ROOT; };
 		3DE3B7681F3935AD0037FC18 /* Brother_Jack.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Brother_Jack.mp3; path = ../../../Downloads/Brother_Jack.mp3; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				29B28F316E517519474E1A13 /* Pods_HotdogUp.framework in Frameworks */,
+				3D79C3691F43A64200013DAE /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +98,7 @@
 		10A315D10CAD015480461E36 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3D79C3681F43A64200013DAE /* StoreKit.framework */,
 				4EE896DB96496BD0905252E6 /* Pods_HotdogSlinger.framework */,
 				82BBDCA2F9A926A70404BFA5 /* Pods_HotdogSlingerTests.framework */,
 				7A99EF62718219B8EF6FF4B5 /* Pods_HotdogUp.framework */,
@@ -261,6 +265,11 @@
 						DevelopmentTeam = 597HR9EHGW;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+						};
 					};
 					3D07A2B11ED1B1B600BFCE3A = {
 						CreatedOnToolsVersion = 8.3.2;

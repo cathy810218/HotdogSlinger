@@ -10,17 +10,22 @@ import UIKit
 import SpriteKit
 import GameplayKit
 import SnapKit
+import StoreKit
 import GoogleMobileAds
 
-class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDelegate {
+class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDelegate, SKPaymentTransactionObserver, SKProductsRequestDelegate {
     var pauseView = UIView()
     var pauseBtn = UIButton()
+    var removeAdsBtn = UIButton()
     var gameScene : GameScene!
     var skView = SKView()
     var gameoverView = UIView()
     var soundBtn = UIButton()
     var musicBtn = UIButton()
     var interstitial: GADInterstitial?
+    
+    var product: SKProduct?
+    var productID = "com.hotdogup.removeads"
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -316,21 +321,30 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
         }
         shareBtn.addTarget(self, action: #selector(share), for: .touchUpInside)
         
-        #if DEBUG
-            let resetGameWithoutAdsBtn = UIButton(type: .custom)
-            gameoverView.addSubview(resetGameWithoutAdsBtn)
-            resetGameWithoutAdsBtn.setBackgroundImage(UIImage(named: "backButton"), for: .normal)
-            resetGameWithoutAdsBtn.snp.makeConstraints({ (make) in
+//        #if DEBUG
+            removeAdsBtn = UIButton(type: .custom)
+            gameoverView.addSubview(removeAdsBtn)
+            removeAdsBtn.setBackgroundImage(UIImage(named: "backButton"), for: .normal)
+            removeAdsBtn.snp.makeConstraints({ (make) in
                 make.right.bottom.equalTo(-12)
                 make.width.height.equalTo(50)
             })
-            resetGameWithoutAdsBtn.addTarget(self, action: #selector(removeAdsPressed), for: .touchUpInside)
-        #endif
+            removeAdsBtn.addTarget(self, action: #selector(removeAdsPressed), for: .touchUpInside)
+            
+            
+            removeAdsBtn.isEnabled = false
+            SKPaymentQueue.default().add(self)
+            getPurchaseInfo()
+//        #endif
+        
     }
     
     @objc func removeAdsPressed() {
-        gameoverView.isHidden = true
-        resetGame()
+        let payment = SKPayment(product: product!)
+        SKPaymentQueue.default().add(payment)
+//        gameoverView.isHidden = true
+//        resetGame()
+        
     }
     
     func gameSceneGameEnded() {
@@ -372,6 +386,59 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     }
     
     // ============================
+    
+    // IAP
+    func getPurchaseInfo() {
+        if SKPaymentQueue.canMakePayments() {
+            let request = SKProductsRequest(productIdentifiers: NSSet(object: self.productID) as! Set<String>)
+            request.delegate = self
+            request.start()
+        } else {
+            print("Can't make payments check settings")
+            //TODO: Show alert
+        }
+    }
+    
+    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
+        let products = response.products
+        if products.count == 0 {
+            print("No product found")
+        } else {
+            product = products[0]
+            print("title: \(product?.localizedTitle ?? "no title")")
+            removeAdsBtn.isEnabled = true
+        }
+        
+        let invalids = response.invalidProductIdentifiers
+        for product in invalids {
+            print("product not found: \(product)")
+        }
+    }
+    
+    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+        for transaction in transactions {
+            switch transaction.transactionState {
+            case .purchased:
+                queue.finishTransaction(transaction)
+                print("Succeed")
+                removeAdsBtn.isEnabled = false
+                break
+            case .failed:
+                queue.finishTransaction(transaction)
+                removeAdsBtn.isEnabled = true
+                print("Failed")
+                break
+            case .restored:
+                
+                break
+            default:
+                break
+            }
+        }
+        
+    }
+    
+    // ===============================
     
     override var shouldAutorotate: Bool {
         return true
