@@ -17,13 +17,24 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     var pauseView = UIView()
     var pauseBtn = UIButton()
     var removeAdsBtn = UIButton()
+    var restoreIAPBtn = UIButton()
     var gameScene : GameScene!
     var skView = SKView()
     var gameoverView = UIView()
     var soundBtn = UIButton()
     var musicBtn = UIButton()
     var interstitial: GADInterstitial?
-    
+    var hasInternet = true {
+        didSet {
+            if !hasInternet {
+                let alert = UIAlertController(title: "No Internet Warnings!",
+                                              message: "Please make sure you have internet connection for storing your highest score",
+                                              preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
     var product: SKProduct?
     var productID = "com.hotdogup.removeads"
     
@@ -235,7 +246,7 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     
     @objc func resetGameToShowAds() {
         gameoverView.isHidden = true
-        if !UserDefaults.standard.bool(forKey: "UserDefaultPurchaseKey") {
+        if !UserDefaults.standard.bool(forKey: "UserDefaultPurchaseKey") && hasInternet {
             interstitial = createInterstitial()
         } else {
             resetGame()
@@ -245,8 +256,6 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     @objc func resetGame() {
         gameScene.score = 0
         gameScene.scoreLabel.text = "0"
-        MusicPlayer.player.stop()
-        MusicPlayer.player.play()
         gameScene.removeAllChildren()
         gameScene.paths.removeAll()
         gameScene.createHotdog()
@@ -334,6 +343,18 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
         })
         removeAdsBtn.addTarget(self, action: #selector(removeAdsPressed), for: .touchUpInside)
         removeAdsBtn.isEnabled = false
+        
+        restoreIAPBtn = UIButton(type: .custom)
+        gameoverView.addSubview(restoreIAPBtn)
+        restoreIAPBtn.setBackgroundImage(UIImage(named: "backButton"), for: .normal)
+        restoreIAPBtn.snp.makeConstraints { (make) in
+            make.right.equalTo(removeAdsBtn.snp.left).offset(-12)
+            make.bottom.equalTo(-12)
+            make.width.height.equalTo(50)
+        }
+        restoreIAPBtn.addTarget(self, action: #selector(restoreIAPPressed), for: .touchUpInside)
+        restoreIAPBtn.isEnabled = false
+        
         SKPaymentQueue.default().add(self)
         getPurchaseInfo()
     }
@@ -341,6 +362,11 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     @objc func removeAdsPressed() {
         let payment = SKPayment(product: product!)
         SKPaymentQueue.default().add(payment)
+    }
+    
+    @objc func restoreIAPPressed() {
+        SKPaymentQueue.default().restoreCompletedTransactions()
+        
     }
     
     // delegation
@@ -395,8 +421,14 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
             //TODO: Show alert
         }
     }
+    func request(_ request: SKRequest, didFailWithError error: Error) {
+        hasInternet = false
+        gameScene.hasInternet = false
+    }
     
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
+        hasInternet = true
+        gameScene.hasInternet = true
         let products = response.products
         if products.count == 0 {
             print("No product found")
@@ -404,6 +436,7 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
             product = products[0]
             print("title: \(product?.localizedTitle ?? "no title")")
             removeAdsBtn.isEnabled = !UserDefaults.standard.bool(forKey: "UserDefaultPurchaseKey")
+            restoreIAPBtn.isEnabled = removeAdsBtn.isEnabled
         }
         
         let invalids = response.invalidProductIdentifiers
@@ -419,6 +452,7 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
                 queue.finishTransaction(transaction)
                 print("Succeed")
                 removeAdsBtn.isEnabled = false
+                restoreIAPBtn.isEnabled = false
                 
                 UserDefaults.standard.set(true, forKey: "UserDefaultPurchaseKey")
                 UserDefaults.standard.synchronize()
@@ -429,14 +463,38 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
                 removeAdsBtn.isEnabled = true
                 print("Failed")
                 break
-            case .restored:
-                
-                break
             default:
+                print(transaction.transactionState)
                 break
             }
         }
-        
+    }
+    
+    func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
+        if queue.transactions.count == 0 {
+            let alert = UIAlertController(title: "Restore Failed",
+                                          message: "You have not purchased RemoveAds feature",
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        for transaction in queue.transactions {
+            if transaction.transactionState == .restored {
+                queue.finishTransaction(transaction)
+                print("Restore")
+                removeAdsBtn.isEnabled = false
+                restoreIAPBtn.isEnabled = false
+                
+                UserDefaults.standard.set(true, forKey: "UserDefaultPurchaseKey")
+                UserDefaults.standard.synchronize()
+                let alert = UIAlertController(title: "Restore Succeed",
+                                              message: "Ads is now removed",
+                                              preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                break
+            }
+        }
     }
     
     // ===============================

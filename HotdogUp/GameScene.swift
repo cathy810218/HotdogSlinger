@@ -51,11 +51,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             super.isPaused = gamePaused
         }
     }
-    
+    var hasInternet = true {
+        didSet {
+            highest.textColor = hasInternet ? UIColor.white : UIColor.red
+        }
+    }
     var score = 0 {
         didSet {
             scoreLabel.text = String(score)
-            if (score > UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey")) {
+            if (score > UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey") && hasInternet) {
                 highest.text = String(score)
                 UserDefaults.standard.set(score, forKey: "UserDefaultHighestScoreKey")
             }
@@ -64,8 +68,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var timer = Timer()
     var timeCounter = kMinJumpHeight
     var isLanded = true
-    var gameVC: GameViewController!
-    
     var paths = [Path]()
     var backgrounds = [SKSpriteNode]()
     var isGameOver = false
@@ -353,9 +355,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             run(fallingSound)
         }
         speed = 0
-//        let prev = UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey")
-//        UserDefaults.standard.set(score > prev ? score : prev, forKey: "UserDefaultHighestScoreKey")
-//        highest.text = String(UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey"))
         gameSceneDelegate?.gameSceneGameEnded()
         isMusicOn = false
     }
