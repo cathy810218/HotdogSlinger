@@ -235,7 +235,11 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     
     @objc func resetGameToShowAds() {
         gameoverView.isHidden = true
-        interstitial = createInterstitial()
+        if !UserDefaults.standard.bool(forKey: "UserDefaultPurchaseKey") {
+            interstitial = createInterstitial()
+        } else {
+            resetGame()
+        }
     }
     
     @objc func resetGame() {
@@ -321,32 +325,25 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
         }
         shareBtn.addTarget(self, action: #selector(share), for: .touchUpInside)
         
-//        #if DEBUG
-            removeAdsBtn = UIButton(type: .custom)
-            gameoverView.addSubview(removeAdsBtn)
-            removeAdsBtn.setBackgroundImage(UIImage(named: "backButton"), for: .normal)
-            removeAdsBtn.snp.makeConstraints({ (make) in
-                make.right.bottom.equalTo(-12)
-                make.width.height.equalTo(50)
-            })
-            removeAdsBtn.addTarget(self, action: #selector(removeAdsPressed), for: .touchUpInside)
-            
-            
-            removeAdsBtn.isEnabled = false
-            SKPaymentQueue.default().add(self)
-            getPurchaseInfo()
-//        #endif
-        
+        removeAdsBtn = UIButton(type: .custom)
+        gameoverView.addSubview(removeAdsBtn)
+        removeAdsBtn.setBackgroundImage(UIImage(named: "backButton"), for: .normal)
+        removeAdsBtn.snp.makeConstraints({ (make) in
+            make.right.bottom.equalTo(-12)
+            make.width.height.equalTo(50)
+        })
+        removeAdsBtn.addTarget(self, action: #selector(removeAdsPressed), for: .touchUpInside)
+        removeAdsBtn.isEnabled = false
+        SKPaymentQueue.default().add(self)
+        getPurchaseInfo()
     }
     
     @objc func removeAdsPressed() {
         let payment = SKPayment(product: product!)
         SKPaymentQueue.default().add(payment)
-//        gameoverView.isHidden = true
-//        resetGame()
-        
     }
     
+    // delegation
     func gameSceneGameEnded() {
         gameoverView.isHidden = false
     }
@@ -406,7 +403,7 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
         } else {
             product = products[0]
             print("title: \(product?.localizedTitle ?? "no title")")
-            removeAdsBtn.isEnabled = true
+            removeAdsBtn.isEnabled = !UserDefaults.standard.bool(forKey: "UserDefaultPurchaseKey")
         }
         
         let invalids = response.invalidProductIdentifiers
@@ -422,6 +419,10 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
                 queue.finishTransaction(transaction)
                 print("Succeed")
                 removeAdsBtn.isEnabled = false
+                
+                UserDefaults.standard.set(true, forKey: "UserDefaultPurchaseKey")
+                UserDefaults.standard.synchronize()
+                
                 break
             case .failed:
                 queue.finishTransaction(transaction)
