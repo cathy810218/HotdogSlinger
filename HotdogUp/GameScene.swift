@@ -76,7 +76,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var isSoundEffectOn = UserDefaults.standard.bool(forKey: "UserDefaultIsSoundEffectOnKey")
     var isMusicOn = UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey") {
         didSet {
-            isMusicOn && !gamePaused ? MusicPlayer.resumePlay() : MusicPlayer.player.pause()
+            if !gamePaused {
+                isMusicOn ? MusicPlayer.resumePlay() : MusicPlayer.player.pause()
+            }
+        }
+    }
+    var isReset = false {
+        didSet {
+            if isReset && UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey"){
+                print("did reset")
+                MusicPlayer.replay()
+            }
         }
     }
     

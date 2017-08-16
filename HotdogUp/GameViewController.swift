@@ -238,6 +238,7 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     @objc func resume() {
         gameScene.speed = CGFloat(UserDefaults.standard.float(forKey: "UserDefaultResumeSpeedKey"))
         gameScene.gamePaused = false
+        gameScene.isReset = false
         gameScene.isMusicOn = UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey")
         pauseView.isHidden = true
         pauseBtn.isEnabled = true
@@ -261,7 +262,7 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
         gameScene.createHotdog()
         gameScene.createBackground()
         gameScene.setupPaths()
-        gameScene.isMusicOn = UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey")
+        gameScene.isReset = true
         gameScene.speed = 1
         gameScene.physicsBody?.categoryBitMask = gameScene.sideboundsCategory
         gameScene.gamePaused = false
