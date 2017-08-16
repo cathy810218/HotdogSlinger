@@ -10,6 +10,7 @@ import UIKit
 import Crashlytics
 
 class MenuViewController: UIViewController {
+    var gameVC: GameViewController?
     @IBOutlet weak var startButton: UIButton!
     
     
@@ -24,8 +25,8 @@ class MenuViewController: UIViewController {
     }
 
     @IBAction func startButtonPressed(_ sender: Any) {
-//        let gameVC = GameViewController()
-//        self.present(gameVC, animated: true, completion: nil)
+        gameVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GameViewController") as? GameViewController
+        self.present(gameVC!, animated: true, completion: nil)
     }
     @IBAction func helpButtonPressed(_ sender: UIButton) {
         

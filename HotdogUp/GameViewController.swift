@@ -10,17 +10,33 @@ import UIKit
 import SpriteKit
 import GameplayKit
 import SnapKit
+import StoreKit
 import GoogleMobileAds
 
-class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDelegate {
+class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDelegate, SKPaymentTransactionObserver, SKProductsRequestDelegate {
     var pauseView = UIView()
     var pauseBtn = UIButton()
+    var removeAdsBtn = UIButton()
+    var restoreIAPBtn = UIButton()
     var gameScene : GameScene!
     var skView = SKView()
     var gameoverView = UIView()
     var soundBtn = UIButton()
     var musicBtn = UIButton()
     var interstitial: GADInterstitial?
+    var hasInternet = true {
+        didSet {
+            if !hasInternet {
+                let alert = UIAlertController(title: "No Internet Warnings!",
+                                              message: "Please make sure you have internet connection for storing your highest score",
+                                              preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    var product: SKProduct?
+    var productID = "com.hotdogup.removeads"
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -222,6 +238,7 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     @objc func resume() {
         gameScene.speed = CGFloat(UserDefaults.standard.float(forKey: "UserDefaultResumeSpeedKey"))
         gameScene.gamePaused = false
+        gameScene.isReset = false
         gameScene.isMusicOn = UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey")
         pauseView.isHidden = true
         pauseBtn.isEnabled = true
@@ -230,20 +247,22 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     
     @objc func resetGameToShowAds() {
         gameoverView.isHidden = true
-        interstitial = createInterstitial()
+        if !UserDefaults.standard.bool(forKey: "UserDefaultPurchaseKey") && hasInternet {
+            interstitial = createInterstitial()
+        } else {
+            resetGame()
+        }
     }
     
     @objc func resetGame() {
         gameScene.score = 0
         gameScene.scoreLabel.text = "0"
-        MusicPlayer.player.stop()
-        MusicPlayer.player.play()
         gameScene.removeAllChildren()
         gameScene.paths.removeAll()
         gameScene.createHotdog()
         gameScene.createBackground()
         gameScene.setupPaths()
-        gameScene.isMusicOn = UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey")
+        gameScene.isReset = true
         gameScene.speed = 1
         gameScene.physicsBody?.categoryBitMask = gameScene.sideboundsCategory
         gameScene.gamePaused = false
@@ -315,8 +334,43 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
             make.bottom.equalTo(homeBtn)
         }
         shareBtn.addTarget(self, action: #selector(share), for: .touchUpInside)
+        
+        removeAdsBtn = UIButton(type: .custom)
+        gameoverView.addSubview(removeAdsBtn)
+        removeAdsBtn.setBackgroundImage(UIImage(named: "backButton"), for: .normal)
+        removeAdsBtn.snp.makeConstraints({ (make) in
+            make.right.bottom.equalTo(-12)
+            make.width.height.equalTo(50)
+        })
+        removeAdsBtn.addTarget(self, action: #selector(removeAdsPressed), for: .touchUpInside)
+        removeAdsBtn.isEnabled = false
+        
+        restoreIAPBtn = UIButton(type: .custom)
+        gameoverView.addSubview(restoreIAPBtn)
+        restoreIAPBtn.setBackgroundImage(UIImage(named: "backButton"), for: .normal)
+        restoreIAPBtn.snp.makeConstraints { (make) in
+            make.right.equalTo(removeAdsBtn.snp.left).offset(-12)
+            make.bottom.equalTo(-12)
+            make.width.height.equalTo(50)
+        }
+        restoreIAPBtn.addTarget(self, action: #selector(restoreIAPPressed), for: .touchUpInside)
+        restoreIAPBtn.isEnabled = false
+        
+        SKPaymentQueue.default().add(self)
+        getPurchaseInfo()
     }
     
+    @objc func removeAdsPressed() {
+        let payment = SKPayment(product: product!)
+        SKPaymentQueue.default().add(payment)
+    }
+    
+    @objc func restoreIAPPressed() {
+        SKPaymentQueue.default().restoreCompletedTransactions()
+        
+    }
+    
+    // delegation
     func gameSceneGameEnded() {
         gameoverView.isHidden = false
     }
@@ -356,6 +410,95 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     }
     
     // ============================
+    
+    // IAP
+    func getPurchaseInfo() {
+        if SKPaymentQueue.canMakePayments() {
+            let request = SKProductsRequest(productIdentifiers: NSSet(object: self.productID) as! Set<String>)
+            request.delegate = self
+            request.start()
+        } else {
+            print("Can't make payments check settings")
+            //TODO: Show alert
+        }
+    }
+    func request(_ request: SKRequest, didFailWithError error: Error) {
+        hasInternet = false
+        gameScene.hasInternet = false
+    }
+    
+    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
+        hasInternet = true
+        gameScene.hasInternet = true
+        let products = response.products
+        if products.count == 0 {
+            print("No product found")
+        } else {
+            product = products[0]
+            print("title: \(product?.localizedTitle ?? "no title")")
+            removeAdsBtn.isEnabled = !UserDefaults.standard.bool(forKey: "UserDefaultPurchaseKey")
+            restoreIAPBtn.isEnabled = removeAdsBtn.isEnabled
+        }
+        
+        let invalids = response.invalidProductIdentifiers
+        for product in invalids {
+            print("product not found: \(product)")
+        }
+    }
+    
+    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+        for transaction in transactions {
+            switch transaction.transactionState {
+            case .purchased:
+                queue.finishTransaction(transaction)
+                print("Succeed")
+                removeAdsBtn.isEnabled = false
+                restoreIAPBtn.isEnabled = false
+                
+                UserDefaults.standard.set(true, forKey: "UserDefaultPurchaseKey")
+                UserDefaults.standard.synchronize()
+                
+                break
+            case .failed:
+                queue.finishTransaction(transaction)
+                removeAdsBtn.isEnabled = true
+                print("Failed")
+                break
+            default:
+                print(transaction.transactionState)
+                break
+            }
+        }
+    }
+    
+    func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
+        if queue.transactions.count == 0 {
+            let alert = UIAlertController(title: "Restore Failed",
+                                          message: "You have not purchased RemoveAds feature",
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        for transaction in queue.transactions {
+            if transaction.transactionState == .restored {
+                queue.finishTransaction(transaction)
+                print("Restore")
+                removeAdsBtn.isEnabled = false
+                restoreIAPBtn.isEnabled = false
+                
+                UserDefaults.standard.set(true, forKey: "UserDefaultPurchaseKey")
+                UserDefaults.standard.synchronize()
+                let alert = UIAlertController(title: "Restore Succeed",
+                                              message: "Ads is now removed",
+                                              preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                break
+            }
+        }
+    }
+    
+    // ===============================
     
     override var shouldAutorotate: Bool {
         return true

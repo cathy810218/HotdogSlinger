@@ -39,7 +39,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var scoreLabel = UILabel()
     var highest = UILabel()
-    
+    var reuseCount = 0
     var gamePaused = false {
         didSet {
             isPaused = gamePaused
@@ -51,11 +51,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             super.isPaused = gamePaused
         }
     }
-    
+    var hasInternet = true {
+        didSet {
+            highest.textColor = hasInternet ? UIColor.white : UIColor.red
+        }
+    }
     var score = 0 {
         didSet {
             scoreLabel.text = String(score)
-            if (score > UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey")) {
+            if (score > UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey") && hasInternet) {
                 highest.text = String(score)
                 UserDefaults.standard.set(score, forKey: "UserDefaultHighestScoreKey")
             }
@@ -64,8 +68,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var timer = Timer()
     var timeCounter = kMinJumpHeight
     var isLanded = true
-    var gameVC: GameViewController!
-    
     var paths = [Path]()
     var backgrounds = [SKSpriteNode]()
     var isGameOver = false
@@ -74,7 +76,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var isSoundEffectOn = UserDefaults.standard.bool(forKey: "UserDefaultIsSoundEffectOnKey")
     var isMusicOn = UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey") {
         didSet {
-            isMusicOn && !gamePaused ? MusicPlayer.resumePlay() : MusicPlayer.player.pause()
+            if !gamePaused {
+                isMusicOn ? MusicPlayer.resumePlay() : MusicPlayer.player.pause()
+            }
+        }
+    }
+    var isReset = false {
+        didSet {
+            if isReset && UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey"){
+                print("did reset")
+                MusicPlayer.replay()
+            }
         }
     }
     
@@ -276,14 +288,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     private func generatePaths() {
-        var firstPath = Path(position: CGPoint(x: 80, y: 130))
+        var firstPath = Path(position: CGPoint(x: 320, y: 130))
         paths.append(firstPath)
+        var lastPath = firstPath
         for _ in 0 ... 3 {
             firstPath = paths.last!
-            let x = p_randomPoint(min: Int(firstPath.size.width / 2.0),
-                                  max: Int(self.frame.size.width - (firstPath.size.width / 2.0) - 100))
+            var x = p_randomPoint(min: Int(firstPath.size.width / 2.0),
+                                  max: Int(self.frame.size.width - firstPath.size.width))
+            
+            // if the distance between two paths (center to center) is greater than 1.5 paths
+            while abs(Int(lastPath.position.x) - x) > Int(1.5 * firstPath.size.width) {
+                x = p_randomPoint(min: Int(firstPath.size.width / 2.0),
+                                  max: Int(self.frame.size.width - firstPath.size.width))
+            }
+            
             let y = Int(firstPath.frame.origin.y) + kMinJumpHeight + 30
+//            print("x: \(x) y: \(y)")
             let path = Path(position: CGPoint(x: x, y: y))
+            lastPath = path
             path.tag = firstPath.tag + 1
             paths.append(path)
         }
@@ -298,23 +320,45 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for path in paths {
             if path.position.y < 0 {
                 path.reset()
-                let x = p_randomPoint(min: Int(paths.last!.size.width / 2.0),
-                                      max: Int(self.frame.size.width - (paths.last!.size.width / 2.0) - 100))
+                var x = p_randomPoint(min: Int(path.size.width / 2.0),
+                                      max: Int(self.frame.size.width - path.size.width))
+                
+                // if the distance between two paths (center to center) is greater than 1.5 paths
+                while abs(Int(paths.last!.position.x) - x) > Int(1.5 * path.size.width) {
+                    x = p_randomPoint(min: Int(path.size.width / 2.0),
+                                      max: Int(self.frame.size.width - path.size.width))
+                }
                 let y = Int(paths.last!.frame.origin.y) + kMinJumpHeight + 30
+                print("x: \(x) y: \(y)")
                 path.position = CGPoint(x: x, y: y)
                 paths.remove(at: paths.index(of: path)!) // remove the old path
-                if path.tag == 4 {
-                    updatePathTexture(path: path)
+                if path.tag == 0 {
+                    reuseCount += 1
+                }
+                if reuseCount % 5 == 0 { // every 25 stairs change the stair style
+                    updatePathTexture(path: path, level: reuseCount / 5)
                 }
                 paths.append(path) // append new path
             }
         }
     }
     
-    private func updatePathTexture(path: Path) {
-//        if reusePathCount == 2 {
-            print("lvl 2")
+    private func updatePathTexture(path: Path, level: Int) {
+        switch level {
+        case 1:
             path.texture = SKTexture(imageNamed: "onion")
+        case 2:
+            path.texture = SKTexture(imageNamed: "ketchup")
+        case 3:
+            path.texture = SKTexture(imageNamed: "mustard")
+        case 4:
+            path.texture = SKTexture(imageNamed: "fire")
+        default:
+            print("reach the highest level")
+        }
+//        if reusePathCount == 2 {
+//            print("lvl 2")
+//            path.texture = SKTexture(imageNamed: "onion")
 //        } else if reusePathCount == 4 {
 //            print("lvl 3")
 //            path.texture = SKTexture(imageNamed: "ketchup")
@@ -353,9 +397,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             run(fallingSound)
         }
         speed = 0
-//        let prev = UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey")
-//        UserDefaults.standard.set(score > prev ? score : prev, forKey: "UserDefaultHighestScoreKey")
-//        highest.text = String(UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey"))
         gameSceneDelegate?.gameSceneGameEnded()
         isMusicOn = false
     }

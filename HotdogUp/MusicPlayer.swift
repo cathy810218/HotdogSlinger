@@ -15,6 +15,12 @@ class MusicPlayer {
         player.play()
     }
     
+    class func replay() {
+        player.stop()
+        loadBackgroundMusic()
+        player.play()
+    }
+    
     class func loadBackgroundMusic() {
         let filename = "Brother_Jack.mp3"
         if !AVAudioSession.sharedInstance().isOtherAudioPlaying {
