@@ -183,13 +183,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsBody?.restitution = 0.0
         let leftNode = SKSpriteNode()
         addChild(leftNode)
-        leftNode.physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: 0, y: self.frame.size.height), to: CGPoint(x: 0, y: 0))
+        leftNode.physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: 0, y: self.frame.size.height + CGFloat(kMaxJumpHeight)), to: CGPoint(x: 0, y: 0))
         leftNode.physicsBody?.categoryBitMask = leftBoundCatrgory
         leftNode.physicsBody?.contactTestBitMask = hotdogCategory
         
         let rightNode = SKSpriteNode()
         addChild(rightNode)
-        rightNode.physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: self.frame.size.width, y: self.frame.size.height), to: CGPoint(x: self.frame.size.width, y: 0))
+        rightNode.physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: self.frame.size.width, y: self.frame.size.height + CGFloat(kMaxJumpHeight)), to: CGPoint(x: self.frame.size.width, y: 0))
         rightNode.physicsBody?.categoryBitMask = rightBoundCategory
         rightNode.physicsBody?.contactTestBitMask = hotdogCategory
     }
@@ -455,7 +455,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.physicsBody?.categoryBitMask = hotdogCategory
             }
             
-            if score % kLevel == 0 && score > 0{
+            if score % kLevel == 0 && score > 0 {
                 for bg in backgrounds {
                     bg.speed += kSpeedIncrement
                 }

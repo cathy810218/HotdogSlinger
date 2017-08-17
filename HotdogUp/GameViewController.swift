@@ -273,6 +273,7 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     
     @objc func resetGame() {
         gameScene.score = 0
+        gameScene.reuseCount = 0
         gameScene.scoreLabel.text = "0"
         gameScene.removeAllChildren()
         gameScene.paths.removeAll()
