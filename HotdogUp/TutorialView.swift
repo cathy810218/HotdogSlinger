@@ -13,7 +13,9 @@ class TutorialView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         self.backgroundColor = UIColor(hex: "#000000", alpha: 0.8)
+        
         
         let jumpAreaView = UIView()
         self.addSubview(jumpAreaView)
@@ -21,7 +23,13 @@ class TutorialView: UIView {
             make.center.height.equalTo(self)
             make.width.equalTo(self).multipliedBy(3.0/5.0)
         }
-        jumpAreaView.backgroundColor = UIColor.red
+        jumpAreaView.backgroundColor = UIColor(hex: "#2C2C2C", alpha: 0.5)
+        
+        let imageView = UIImageView(image: UIImage(named: "tutorial"))
+        self.addSubview(imageView)
+        imageView.snp.makeConstraints { (make) in
+            make.edges.equalTo(self)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
