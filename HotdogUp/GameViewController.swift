@@ -313,21 +313,22 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
         gameoverBackgroundView.layer.cornerRadius = 10.0
         gameoverBackgroundView.layer.masksToBounds = true
         
+        
         let gameoverTitleView = UIImageView(image: UIImage(named: "gameover"))
-        gameoverBackgroundView.addSubview(gameoverTitleView)
+        gameoverView.addSubview(gameoverTitleView)
         gameoverTitleView.snp.makeConstraints { (make) in
             make.top.left.equalTo(gameoverBackgroundView).offset(10)
             make.right.equalTo(gameoverBackgroundView).offset(-10)
         }
         
-        gameoverBackgroundView.addSubview(gameoverHotdogView)
+        gameoverView.addSubview(gameoverHotdogView)
         gameoverHotdogView.snp.makeConstraints { (make) in
             make.center.equalTo(gameoverBackgroundView)
         }
         
         let homeBtn = UIButton(type: .custom)
         homeBtn.setBackgroundImage(UIImage(named: "gameover_home"), for: .normal)
-        gameoverBackgroundView.addSubview(homeBtn)
+        gameoverView.addSubview(homeBtn)
         homeBtn.snp.makeConstraints { (make) in
             make.left.equalTo(gameoverBackgroundView)
             make.bottom.equalTo(gameoverBackgroundView).offset(-12)
@@ -336,7 +337,7 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
         
         let replayBtn = UIButton(type: .custom)
         replayBtn.setBackgroundImage(UIImage(named: "gameover_replay"), for: .normal)
-        gameoverBackgroundView.addSubview(replayBtn)
+        gameoverView.addSubview(replayBtn)
         replayBtn.snp.makeConstraints { (make) in
             make.centerX.equalTo(gameoverBackgroundView)
             make.bottom.equalTo(homeBtn)
@@ -346,7 +347,7 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
         
         let shareBtn = UIButton(type: .custom)
         shareBtn.setBackgroundImage(UIImage(named: "gameover_share"), for: .normal)
-        gameoverBackgroundView.addSubview(shareBtn)
+        gameoverView.addSubview(shareBtn)
         shareBtn.snp.makeConstraints { (make) in
             make.right.equalTo(gameoverBackgroundView)
             make.bottom.equalTo(homeBtn)
@@ -489,14 +490,15 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
         }
     }
     
+    func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
+        let alert = UIAlertController(title: "Restore Failed",
+                                      message: "You have not purchased RemoveAds feature or please check the internet connections",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
-        if queue.transactions.count == 0 {
-            let alert = UIAlertController(title: "Restore Failed",
-                                          message: "You have not purchased RemoveAds feature",
-                                          preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        }
         for transaction in queue.transactions {
             if transaction.transactionState == .restored {
                 queue.finishTransaction(transaction)
