@@ -40,6 +40,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var scoreLabel = UILabel()
     var highest = SKLabelNode()
     var reuseCount = 0
+    var hotdogMoveVelocity: CGFloat = 100.0
+
     var gamePaused = false {
         didSet {
             isPaused = gamePaused
@@ -148,6 +150,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //        print(timeCounter)
 //    }
     
+    
+    func resetGameScene() {
+        removeAllChildren()
+        paths.removeAll()
+        
+        setupPaths()
+        setupHighestScoreLabel()
+        createHotdog()
+        createBackground()
+        
+        score = 0
+        reuseCount = 0
+        scoreLabel.text = "0"
+        
+        gamePaused = false
+        isGameOver = false
+        isLanded = true
+        isReset = true
+        isUserInteractionEnabled = true
+    }
+    
     func createBackground() {
         for i in 0 ... 1 {
             background = SKSpriteNode(texture: SKTexture(imageNamed: "background_second"))
@@ -175,12 +198,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         initialBackground.run(moveDown)
         initialBackground.speed = 0
         
+        sideboundsCategory = 0x1 << 2 // reset sidebounds
         
         // Add boundries physics body
-        self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
-        self.physicsBody?.categoryBitMask = sideboundsCategory
-        self.physicsBody?.contactTestBitMask = hotdogCategory
-        self.physicsBody?.restitution = 0.0
+        physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
+        physicsBody?.categoryBitMask = sideboundsCategory
+        physicsBody?.contactTestBitMask = hotdogCategory
+        physicsBody?.restitution = 0.0
         let leftNode = SKSpriteNode()
         addChild(leftNode)
         leftNode.physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: 0, y: self.frame.size.height + CGFloat(kMaxJumpHeight)), to: CGPoint(x: 0, y: 0))
@@ -192,6 +216,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         rightNode.physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: self.frame.size.width, y: self.frame.size.height + CGFloat(kMaxJumpHeight)), to: CGPoint(x: self.frame.size.width, y: 0))
         rightNode.physicsBody?.categoryBitMask = rightBoundCategory
         rightNode.physicsBody?.contactTestBitMask = hotdogCategory
+        speed = 1
     }
     
     func createHotdog() {
@@ -219,6 +244,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hotdogRunForever = SKAction.repeatForever(run)
         hotdog.physicsBody?.allowsRotation = false
         hotdog.physicsBody?.restitution = 0.0
+        hotdogMoveVelocity = 100.0
+        
         self.addChild(hotdog)
     }
     
@@ -378,13 +405,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if bodyA.categoryBitMask == leftBoundCatrgory || bodyB.categoryBitMask == leftBoundCatrgory {
             hotdog.xScale *= hotdog.xScale > 0 ? 1 : -1
             hotdog.removeAction(forKey: "moveLeft")
-            let moveRight = SKAction.moveBy(x: kHotdogMoveVelocity, y: 0, duration: 1)
+            let moveRight = SKAction.moveBy(x: hotdogMoveVelocity, y: 0, duration: 1)
             let moveForever = SKAction.repeatForever(moveRight)
             hotdog.run(moveForever, withKey: "moveRight")
         } else if bodyA.categoryBitMask == rightBoundCategory || bodyB.categoryBitMask == rightBoundCategory {
             hotdog.xScale *= hotdog.xScale > 0 ? -1 : 1
             hotdog.removeAction(forKey: "moveRight")
-            let moveLeft = SKAction.moveBy(x: -kHotdogMoveVelocity, y: 0, duration: 1)
+            let moveLeft = SKAction.moveBy(x: -hotdogMoveVelocity, y: 0, duration: 1)
             let moveForever = SKAction.repeatForever(moveLeft)
             hotdog.run(moveForever, withKey: "moveLeft")
         }
@@ -417,7 +444,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             hotdog.xScale *= hotdog.xScale > 0 ? -1 : 1
             hotdog.removeAction(forKey: "moveRight")
-            let moveLeft = SKAction.moveBy(x: -kHotdogMoveVelocity, y: 0, duration: 1)
+            let moveLeft = SKAction.moveBy(x: -hotdogMoveVelocity, y: 0, duration: 1)
             let moveForever = SKAction.repeatForever(moveLeft)
             hotdog.run(moveForever, withKey: "moveLeft")
         } else if pos.x > 4 * self.frame.size.width / 5.0 {
@@ -426,7 +453,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             hotdog.xScale *= hotdog.xScale > 0 ? 1 : -1
             hotdog.removeAction(forKey: "moveLeft")
-            let moveRight = SKAction.moveBy(x: kHotdogMoveVelocity, y: 0, duration: 1)
+            let moveRight = SKAction.moveBy(x: hotdogMoveVelocity, y: 0, duration: 1)
             let moveForever = SKAction.repeatForever(moveRight)
             hotdog.run(moveForever, withKey: "moveRight")
         } else {
@@ -459,6 +486,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 for bg in backgrounds {
                     bg.speed += kSpeedIncrement
                 }
+                hotdogMoveVelocity += kHotdogMoveVelocityIncrement
                 for path in paths {
                     path.speed += kSpeedIncrement
                 }
