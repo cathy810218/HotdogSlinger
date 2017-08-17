@@ -150,7 +150,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func createBackground() {
         for i in 0 ... 1 {
-            background = SKSpriteNode(texture: SKTexture(imageNamed: "background_kitchen2"))
+            background = SKSpriteNode(texture: SKTexture(imageNamed: "background_second"))
             background.zPosition = -30
             background.anchorPoint = CGPoint.zero
             background.size = CGSize(width: self.frame.size.width,
@@ -165,7 +165,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             background.run(moveForever)
             background.speed = 0
         }
-        initialBackground = SKSpriteNode(texture: SKTexture(imageNamed: "background_kitchen"))
+        initialBackground = SKSpriteNode(texture: SKTexture(imageNamed: "background_first"))
         initialBackground.zPosition = -20
         initialBackground.anchorPoint = CGPoint.zero
         initialBackground.size = CGSize(width: self.frame.size.width, height: self.frame.size.height)

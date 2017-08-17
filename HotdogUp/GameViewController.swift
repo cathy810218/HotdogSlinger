@@ -293,7 +293,6 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     }
     
     func setupGameOverView() {
-        let gameoverHotdogView = UIImageView(image: UIImage(named: "gameover_hotdog"))
         gameoverView = UIView()
         self.view.addSubview(gameoverView)
         gameoverView.isHidden = true
@@ -302,9 +301,10 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
         }
         gameoverView.backgroundColor = UIColor(hex: "#000000", alpha: 0.5)
         
-        let gameoverBackgroundView = UIView()
+        let gameoverHotdogView = UIImageView(image: UIImage(named: "gameover_hotdog"))
+            
+        let gameoverBackgroundView = UIImageView(image: UIImage(named: "gameover_background"))
         gameoverView.addSubview(gameoverBackgroundView)
-        gameoverBackgroundView.backgroundColor = UIColor(hex: "#85C5B5")
         gameoverBackgroundView.snp.makeConstraints { (make) in
             make.center.equalTo(gameoverView)
             make.width.equalTo(self.view.frame.size.width)
