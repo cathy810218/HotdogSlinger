@@ -23,6 +23,7 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
     var gameoverView = UIView()
     var soundBtn = UIButton()
     var musicBtn = UIButton()
+    var tutorialView = TutorialView()
     var interstitial: GADInterstitial?
     var hasInternet = true {
         didSet {
@@ -59,6 +60,10 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
         gameScene.gameSceneDelegate = self
         setupPauseView()
         setupGameOverView()
+        
+        tutorialView = TutorialView(frame: self.view.frame)
+        self.view.addSubview(tutorialView)
+        tutorialView.isHidden = true
     }
     
     func presentGameScene() {
@@ -156,14 +161,14 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
         
         // share button
         let shareBtn = UIButton(type: .custom)
-        shareBtn.setBackgroundImage(UIImage(named: "button_share"), for: .normal)
+        shareBtn.setBackgroundImage(UIImage(named: "button_info"), for: .normal)
         shareBtn.layer.cornerRadius = 5.0
         shareBtn.layer.masksToBounds = true
         buttonsView.addSubview(shareBtn)
         shareBtn.snp.makeConstraints { (make) in
             make.right.bottom.equalTo(buttonsView)
         }
-        shareBtn.addTarget(self, action: #selector(share), for: .touchUpInside)
+        shareBtn.addTarget(self, action: #selector(showTutorialView), for: .touchUpInside)
     }
     
     @objc func returnToMenu() {
@@ -194,6 +199,18 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
         gameScene.isMusicOn = !gameScene.isMusicOn
         UserDefaults.standard.set(gameScene.isMusicOn, forKey: "UserDefaultIsMusicOnKey")
         musicBtn.setBackgroundImage(UIImage(named: gameScene.isMusicOn ? "button_music" : "button_musicoff"), for: .normal)
+    }
+    
+    @objc func showTutorialView() {
+        tutorialView.isHidden = false
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapToDismiss))
+        tutorialView.addGestureRecognizer(tap)
+        
+    }
+    
+    @objc func tapToDismiss() {
+        tutorialView.isHidden = true
     }
     
     @objc func share() {
@@ -262,6 +279,7 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
         gameScene.createHotdog()
         gameScene.createBackground()
         gameScene.setupPaths()
+        gameScene.setupHighestScoreLabel()
         gameScene.isReset = true
         gameScene.speed = 1
         gameScene.physicsBody?.categoryBitMask = gameScene.sideboundsCategory
@@ -337,7 +355,7 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
         
         removeAdsBtn = UIButton(type: .custom)
         gameoverView.addSubview(removeAdsBtn)
-        removeAdsBtn.setBackgroundImage(UIImage(named: "backButton"), for: .normal)
+        removeAdsBtn.setBackgroundImage(UIImage(named: "remove_ads"), for: .normal)
         removeAdsBtn.snp.makeConstraints({ (make) in
             make.right.bottom.equalTo(-12)
             make.width.height.equalTo(50)
@@ -347,7 +365,7 @@ class GameViewController: UIViewController, GameSceneDelegate, GADInterstitialDe
         
         restoreIAPBtn = UIButton(type: .custom)
         gameoverView.addSubview(restoreIAPBtn)
-        restoreIAPBtn.setBackgroundImage(UIImage(named: "backButton"), for: .normal)
+        restoreIAPBtn.setBackgroundImage(UIImage(named: "restore"), for: .normal)
         restoreIAPBtn.snp.makeConstraints { (make) in
             make.right.equalTo(removeAdsBtn.snp.left).offset(-12)
             make.bottom.equalTo(-12)

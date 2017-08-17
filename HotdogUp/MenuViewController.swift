@@ -16,12 +16,6 @@ class MenuViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(hex: "#85C5B5")
-//        startButton.setImage(UIImage(named:"startClicked"), for: .highlighted)
-//        startButton.imageView?.contentMode = .scaleAspectFill
-        
-//        settingsButton.setImage(UIImage(named: "settingsClicked"), for: .highlighted)
-//        helpButton.setImage(UIImage(named:"helpClicked"), for: .highlighted)
     }
 
     @IBAction func startButtonPressed(_ sender: Any) {

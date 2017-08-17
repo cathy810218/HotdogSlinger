@@ -40,6 +40,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home_background" translatesAutoresizingMaskIntoConstraints="NO" id="90J-kR-ZYm">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5aM-Km-bwc">
                                 <rect key="frame" x="242.66666666666663" y="617" width="151.33333333333337" height="60.333333333333371"/>
                                 <constraints>
@@ -105,6 +108,7 @@
                         <constraints>
                             <constraint firstItem="LLg-Il-odk" firstAttribute="centerY" secondItem="O0S-20-wCx" secondAttribute="centerY" id="1yJ-YS-6zH"/>
                             <constraint firstItem="XG4-M7-pcV" firstAttribute="leading" secondItem="O0S-20-wCx" secondAttribute="leading" constant="20" id="3qw-6W-0AO"/>
+                            <constraint firstItem="90J-kR-ZYm" firstAttribute="leading" secondItem="O0S-20-wCx" secondAttribute="leading" id="5wA-OV-oUf"/>
                             <constraint firstItem="5aM-Km-bwc" firstAttribute="top" secondItem="GjO-8e-t0C" secondAttribute="bottom" constant="15" id="Ffl-IE-6Fm"/>
                             <constraint firstItem="3L4-61-j4p" firstAttribute="height" secondItem="GjO-8e-t0C" secondAttribute="height" id="Ja4-Aa-2MG"/>
                             <constraint firstItem="XG4-M7-pcV" firstAttribute="top" secondItem="gCY-sh-gdV" secondAttribute="bottom" constant="30" id="KPC-4p-evM"/>
@@ -116,8 +120,11 @@
                             <constraint firstItem="LLg-Il-odk" firstAttribute="centerX" secondItem="O0S-20-wCx" secondAttribute="centerX" id="bkL-bT-TsV"/>
                             <constraint firstItem="3L4-61-j4p" firstAttribute="leading" secondItem="XG4-M7-pcV" secondAttribute="leading" id="cxj-ux-fZa"/>
                             <constraint firstItem="3L4-61-j4p" firstAttribute="top" secondItem="GjO-8e-t0C" secondAttribute="bottom" constant="20" id="ewR-Gk-mG8"/>
+                            <constraint firstItem="dJB-Pl-XNM" firstAttribute="top" secondItem="90J-kR-ZYm" secondAttribute="bottom" id="fAW-8J-aF3"/>
                             <constraint firstItem="5aM-Km-bwc" firstAttribute="top" secondItem="GjO-8e-t0C" secondAttribute="bottom" constant="20" id="fwI-zD-jle"/>
                             <constraint firstItem="3L4-61-j4p" firstAttribute="top" secondItem="GjO-8e-t0C" secondAttribute="bottom" constant="15" id="gwJ-ob-f10"/>
+                            <constraint firstItem="90J-kR-ZYm" firstAttribute="top" secondItem="O0S-20-wCx" secondAttribute="top" id="i2H-oe-0Hq"/>
+                            <constraint firstAttribute="trailing" secondItem="90J-kR-ZYm" secondAttribute="trailing" id="j0b-Xy-xI6"/>
                             <constraint firstAttribute="trailing" secondItem="LLg-Il-odk" secondAttribute="trailing" constant="15" id="k13-dF-g1c"/>
                             <constraint firstItem="GjO-8e-t0C" firstAttribute="centerX" secondItem="O0S-20-wCx" secondAttribute="centerX" id="ox0-EI-vud"/>
                             <constraint firstItem="GjO-8e-t0C" firstAttribute="top" secondItem="LLg-Il-odk" secondAttribute="bottom" constant="30" id="qV7-zE-J4R"/>
@@ -171,11 +178,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pLc-qB-BhO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-255.19999999999999" y="176.76161919040482"/>
+            <point key="canvasLocation" x="-256.52173913043481" y="176.08695652173915"/>
         </scene>
     </scenes>
     <resources>
         <image name="help" width="153" height="60"/>
+        <image name="home_background" width="1080" height="1920"/>
         <image name="menu_hodog" width="1080" height="800"/>
         <image name="menu_name" width="1080" height="800"/>
         <image name="rate" width="153" height="60"/>

@@ -38,7 +38,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var initialBackground = SKSpriteNode()
     
     var scoreLabel = UILabel()
-    var highest = UILabel()
+    var highest = SKLabelNode()
     var reuseCount = 0
     var gamePaused = false {
         didSet {
@@ -53,7 +53,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     var hasInternet = true {
         didSet {
-            highest.textColor = hasInternet ? UIColor.white : UIColor.red
+            highest.fontColor = hasInternet ? UIColor.white : UIColor.red
         }
     }
     var score = 0 {
@@ -101,11 +101,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if !isGameOver {
             self.physicsWorld.contactDelegate = self
             self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -8.5)
-            createHotdog()
             createBackground()
             setupPaths()
             setupCounterLabel()
             setupHighestScoreLabel()
+            createHotdog()
         }
         MusicPlayer.loadBackgroundMusic()
         isMusicOn ? MusicPlayer.resumePlay() : MusicPlayer.player.stop()
@@ -194,31 +194,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         rightNode.physicsBody?.contactTestBitMask = hotdogCategory
     }
     
-    
-//    func createCactus() {
-//        let cactusTexture = SKTexture(imageNamed: "cactus")
-//
-//        for i in 0 ... 1 {
-//            let cactus = SKSpriteNode(texture: cactusTexture)
-//            cactus.anchorPoint = CGPoint.zero
-//            cactus.zPosition = -10 // so it won't block hotdog
-//            cactus.position = CGPoint(x: (cactusTexture.size().width * CGFloat(i)) - CGFloat(1 * i),
-//                                      y: -20)
-//
-//            let moveLeft = SKAction.moveBy(x: -cactusTexture.size().width, y: 0, duration: 15)
-//            let moveReset = SKAction.moveBy(x: cactusTexture.size().width, y: 0, duration: 0)
-//            let moveLoop = SKAction.sequence([moveLeft, moveReset])
-//            let moveForever = SKAction.repeatForever(moveLoop)
-//            cactus.run(moveForever)
-//            cactus.physicsBody = SKPhysicsBody(rectangleOf: cactus.size, center: CGPoint(x: size.width / 2.0,y: cactus.size.height / 2.0 - 30.0))
-//            cactus.physicsBody?.categoryBitMask = cactusCategory
-//            cactus.physicsBody?.contactTestBitMask = hotdogCategory
-//            cactus.physicsBody?.isDynamic = false
-//            cactus.physicsBody?.affectedByGravity = false
-//            addChild(cactus)
-//        }
-//    }
-    
     func createHotdog() {
         let hotdogTexture1 = SKTexture(imageNamed: "1")
         let hotdogTexture2 = SKTexture(imageNamed: "2")
@@ -303,7 +278,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             
             let y = Int(firstPath.frame.origin.y) + kMinJumpHeight + 30
-//            print("x: \(x) y: \(y)")
             let path = Path(position: CGPoint(x: x, y: y))
             lastPath = path
             path.tag = firstPath.tag + 1
@@ -356,36 +330,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         default:
             print("reach the highest level")
         }
-//        if reusePathCount == 2 {
-//            print("lvl 2")
-//            path.texture = SKTexture(imageNamed: "onion")
-//        } else if reusePathCount == 4 {
-//            print("lvl 3")
-//            path.texture = SKTexture(imageNamed: "ketchup")
-//        }
     }
     
     func setupHighestScoreLabel() {
-        let highestScoreLabel = UILabel()
-        highestScoreLabel.text = "Highest"
-        self.view?.addSubview(highestScoreLabel)
-        highestScoreLabel.snp.makeConstraints { (make) in
-            make.height.equalTo(20)
-            make.top.equalTo(30)
-            make.left.equalTo(scoreLabel.snp.right).offset(80)
-        }
-        highestScoreLabel.textAlignment = NSTextAlignment.center
-        highestScoreLabel.textColor = UIColor.white
+        let highestScoreLab = SKLabelNode()
+        highestScoreLab.text = "Highest"
+        addChild(highestScoreLab)
+        highestScoreLab.position = CGPoint(x: self.frame.width - 60, y: self.frame.height - 40)
+        highestScoreLab.fontColor = UIColor.white
+        highestScoreLab.fontSize = 18
+        highestScoreLab.fontName = "AmericanTypewriter"
+        highestScoreLab.verticalAlignmentMode = .center
+        highestScoreLab.horizontalAlignmentMode = .center
+        highestScoreLab.zPosition = 35
         
         highest.text = String(UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey"))
-        self.view?.addSubview(highest)
-        highest.snp.makeConstraints { (make) in
-            make.centerX.equalTo(highestScoreLabel)
-            make.top.equalTo(highestScoreLabel.snp.bottom)
-            make.height.equalTo(20)
-        }
-        highest.textColor = UIColor.white
-        highest.textAlignment = NSTextAlignment.center
+        addChild(highest)
+        highest.position = CGPoint(x: highestScoreLab.position.x, y: self.frame.height - 60)
+        highest.fontColor = UIColor.white
+        highest.fontSize = 16
+        highest.fontName = "AmericanTypewriter"
+        highest.verticalAlignmentMode = .center
+        highest.horizontalAlignmentMode = .center
+        highest.zPosition = 35
     }
     
     // ====================================================================================================
@@ -442,8 +409,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
-    
-    
     
     func touchDown(atPoint pos : CGPoint) {
         if pos.x < self.frame.size.width / 5.0 {
@@ -502,26 +467,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func touchMoved(toPoint pos : CGPoint) {
-//        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-//            n.position = pos
-//            n.strokeColor = SKColor.blue
-//            self.addChild(n)
-//        }
     }
     
     func touchUp(atPoint pos : CGPoint) {
-//        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-//            n.position = pos
-//            n.strokeColor = SKColor.red
-//            self.addChild(n)
-//        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        if let label = self.label {
-//            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-//        }
-//
         for t in touches {
             self.touchDown(atPoint: t.location(in: self))
         }
@@ -530,7 +481,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
             self.touchMoved(toPoint: t.location(in: self))
-//            print(t.location(in: self))
         }
     }
     
