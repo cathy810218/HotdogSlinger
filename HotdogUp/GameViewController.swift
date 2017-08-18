@@ -12,6 +12,7 @@ import GameplayKit
 import SnapKit
 import StoreKit
 import GoogleMobileAds
+import Crashlytics
 
 class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate, GameoverViewDelegate, GADInterstitialDelegate, SKPaymentTransactionObserver, SKProductsRequestDelegate {
     
@@ -326,7 +327,13 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
                 print("Succeed")
                 removeAdsBtn.isEnabled = false
                 restoreIAPBtn.isEnabled = false
-                
+                Answers.logPurchase(withPrice: 0.99,
+                                    currency: "USD",
+                                    success: true,
+                                    itemName: "RemoveAds",
+                                    itemType: "Ads",
+                                    itemId: "com.hotdogup.removeads",
+                                    customAttributes: nil)
                 UserDefaults.standard.set(true, forKey: "UserDefaultsPurchaseKey")
                 UserDefaults.standard.synchronize()
                 
@@ -342,6 +349,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
             }
         }
     }
+    
     
     func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
         let alert = UIAlertController(title: "Restore Failed",

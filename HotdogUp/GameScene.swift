@@ -207,13 +207,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsBody?.restitution = 0.0
         let leftNode = SKSpriteNode()
         addChild(leftNode)
-        leftNode.physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: 0, y: self.frame.size.height + CGFloat(kMaxJumpHeight)), to: CGPoint(x: 0, y: 0))
+        print(self.frame.size.width)
+        leftNode.physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: 0, y: self.frame.size.height + CGFloat(kMaxJumpHeight)), to: CGPoint(x: 0, y: CGFloat(-kMaxJumpHeight)))
         leftNode.physicsBody?.categoryBitMask = leftBoundCatrgory
         leftNode.physicsBody?.contactTestBitMask = hotdogCategory
         
         let rightNode = SKSpriteNode()
         addChild(rightNode)
-        rightNode.physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: self.frame.size.width, y: self.frame.size.height + CGFloat(kMaxJumpHeight)), to: CGPoint(x: self.frame.size.width, y: 0))
+        rightNode.physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: self.frame.size.width, y: self.frame.size.height + CGFloat(kMaxJumpHeight)), to: CGPoint(x: self.frame.size.width, y: CGFloat(-kMaxJumpHeight)))
         rightNode.physicsBody?.categoryBitMask = rightBoundCategory
         rightNode.physicsBody?.contactTestBitMask = hotdogCategory
         speed = 1
@@ -290,7 +291,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     private func generatePaths() {
-        var firstPath = Path(position: CGPoint(x: 320, y: 130))
+        var firstPath = Path(position: CGPoint(x: 320, y: kMinJumpHeight))
         paths.append(firstPath)
         var lastPath = firstPath
         for _ in 0 ... 3 {
@@ -461,9 +462,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if !hotdog.hasActions() {
                 hotdog.texture = SKTexture(imageNamed: "face")
             }
+            print(paths.first?.position.y)
             let diff = CGVector(dx: 0, dy: kMinJumpHeight)
             if isLanded {
-                hotdog.physicsBody?.applyImpulse(diff)
+//                hotdog.physicsBody?.applyImpulse(diff)
+                hotdog.physicsBody?.applyImpulse(diff, at: hotdog.anchorPoint)
+                print("min jump height \(kMinJumpHeight)")
                 if isSoundEffectOn {
                     run(jumpSound)
                 }
