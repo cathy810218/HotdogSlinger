@@ -19,7 +19,8 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     var pauseBtn = UIButton()
     var removeAdsBtn = UIButton()
     var restoreIAPBtn = UIButton()
-    
+    var tutorialView = TutorialView()
+
     var gameScene : GameScene!
     var skView = SKView()
     var gameoverView = GameoverView()
@@ -47,12 +48,12 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         // need to set the key value before init the GameScene
-        if UserDefaults.standard.object(forKey: "UserDefaultIsMusicOnKey") == nil {
-            UserDefaults.standard.set(true, forKey: "UserDefaultIsMusicOnKey")
+        if UserDefaults.standard.object(forKey: "UserDefaultsIsMusicOnKey") == nil {
+            UserDefaults.standard.set(true, forKey: "UserDefaultsIsMusicOnKey")
         }
         
-        if UserDefaults.standard.object(forKey: "UserDefaultIsSoundEffectOnKey") == nil {
-            UserDefaults.standard.set(true, forKey: "UserDefaultIsSoundEffectOnKey")
+        if UserDefaults.standard.object(forKey: "UserDefaultsIsSoundEffectOnKey") == nil {
+            UserDefaults.standard.set(true, forKey: "UserDefaultsIsSoundEffectOnKey")
         }
         
         gameScene = GameScene(size: view.bounds.size)
@@ -60,6 +61,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
         gameScene.gameSceneDelegate = self
         setupPauseView()
         setupGameOverView()
+        setupTutorialView()
         
         pauseBtn = UIButton(type: .custom)
         let pauseImg = UIImage(named: "button_pause")
@@ -73,6 +75,12 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
         
         SKPaymentQueue.default().add(self)
         getPurchaseInfo()
+        
+        if !UserDefaults.standard.bool(forKey: "UserDefaultsDoNotShowTutorialKey") {
+            tutorialView.isHidden = false
+            gameScene.isUserInteractionEnabled = false
+            tutorialView.showCheckbox = true
+        }
     }
     
     func presentGameScene() {
@@ -91,7 +99,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     }
     
     @objc func pauseButtonDidPressed() {
-        UserDefaults.standard.set(gameScene.speed, forKey: "UserDefaultResumeSpeedKey")
+        UserDefaults.standard.set(gameScene.speed, forKey: "UserDefaultsResumeSpeedKey")
         gameScene.gamePaused = true
         MusicPlayer.player.pause()
         pauseView.isHidden = false
@@ -99,16 +107,29 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
         pauseBtn.isEnabled = false // disable it
     }
     
+    func setupTutorialView() {
+        tutorialView = TutorialView(frame: self.view.frame)
+        self.view.addSubview(tutorialView)
+        tutorialView.isHidden = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapToDismissTutorialView))
+        tutorialView.addGestureRecognizer(tap)
+    }
+    
+    @objc func tapToDismissTutorialView() {
+        tutorialView.isHidden = true
+        gameScene.isUserInteractionEnabled = true
+    }
+
     //MARK: PauseViewDelegate
     func pauseViewDidPressHomeButton() {
         returnToMenu()
     }
     
     func pauseViewDidPressResumeButton() {
-        gameScene.speed = CGFloat(UserDefaults.standard.float(forKey: "UserDefaultResumeSpeedKey"))
+        gameScene.speed = CGFloat(UserDefaults.standard.float(forKey: "UserDefaultsResumeSpeedKey"))
         gameScene.gamePaused = false
         gameScene.isReset = false
-        gameScene.isMusicOn = UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey")
+        gameScene.isMusicOn = UserDefaults.standard.bool(forKey: "UserDefaultsIsMusicOnKey")
         pauseView.isHidden = true
         pauseBtn.isEnabled = true
         gameScene.isUserInteractionEnabled = true
@@ -121,14 +142,20 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     func pauseViewDidPressSoundButton() {
         // check if sound is on or off
         gameScene.isSoundEffectOn = !gameScene.isSoundEffectOn
-        UserDefaults.standard.set(gameScene.isSoundEffectOn, forKey: "UserDefaultIsSoundEffectOnKey")
+        UserDefaults.standard.set(gameScene.isSoundEffectOn, forKey: "UserDefaultsIsSoundEffectOnKey")
         pauseView.isSoundOn = gameScene.isSoundEffectOn
     }
     
     func pauseViewDidPressMusicButton() {
         gameScene.isMusicOn = !gameScene.isMusicOn
-        UserDefaults.standard.set(gameScene.isMusicOn, forKey: "UserDefaultIsMusicOnKey")
+        UserDefaults.standard.set(gameScene.isMusicOn, forKey: "UserDefaultsIsMusicOnKey")
         pauseView.isBackgroundMusicOn = gameScene.isMusicOn
+    }
+    
+    func pauseViewDidPressTutorialButton() {
+        tutorialView.isHidden = false
+        tutorialView.showCheckbox = false
+        gameScene.isUserInteractionEnabled = false
     }
     
     // ============================
@@ -170,7 +197,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     
     func gameoverViewDidPressReplayButton() {
         gameoverView.isHidden = true
-        if !UserDefaults.standard.bool(forKey: "UserDefaultPurchaseKey") && hasInternet {
+        if !UserDefaults.standard.bool(forKey: "UserDefaultsPurchaseKey") && hasInternet {
             interstitial = createInterstitial()
         } else {
             resetGame()
@@ -281,7 +308,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
         } else {
             product = products[0]
             print("title: \(product?.localizedTitle ?? "no title")")
-            removeAdsBtn.isEnabled = !UserDefaults.standard.bool(forKey: "UserDefaultPurchaseKey")
+            removeAdsBtn.isEnabled = !UserDefaults.standard.bool(forKey: "UserDefaultsPurchaseKey")
             restoreIAPBtn.isEnabled = removeAdsBtn.isEnabled
         }
         
@@ -300,7 +327,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
                 removeAdsBtn.isEnabled = false
                 restoreIAPBtn.isEnabled = false
                 
-                UserDefaults.standard.set(true, forKey: "UserDefaultPurchaseKey")
+                UserDefaults.standard.set(true, forKey: "UserDefaultsPurchaseKey")
                 UserDefaults.standard.synchronize()
                 
                 break
@@ -332,7 +359,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
                 removeAdsBtn.isEnabled = false
                 restoreIAPBtn.isEnabled = false
                 
-                UserDefaults.standard.set(true, forKey: "UserDefaultPurchaseKey")
+                UserDefaults.standard.set(true, forKey: "UserDefaultsPurchaseKey")
                 UserDefaults.standard.synchronize()
                 let alert = UIAlertController(title: "Restore Succeed",
                                               message: "Ads is now removed",

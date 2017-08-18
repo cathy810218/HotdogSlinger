@@ -61,9 +61,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var score = 0 {
         didSet {
             scoreLabel.text = String(score)
-            if (score > UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey") && hasInternet) {
+            if (score > UserDefaults.standard.integer(forKey: "UserDefaultsHighestScoreKey") && hasInternet) {
                 highest.text = String(score)
-                UserDefaults.standard.set(score, forKey: "UserDefaultHighestScoreKey")
+                UserDefaults.standard.set(score, forKey: "UserDefaultsHighestScoreKey")
             }
         }
     }
@@ -75,8 +75,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var isGameOver = false
     let jumpSound = SKAction.playSoundFileNamed("jumping", waitForCompletion: false)
     let fallingSound = SKAction.playSoundFileNamed("falling", waitForCompletion: true)
-    var isSoundEffectOn = UserDefaults.standard.bool(forKey: "UserDefaultIsSoundEffectOnKey")
-    var isMusicOn = UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey") {
+    var isSoundEffectOn = UserDefaults.standard.bool(forKey: "UserDefaultsIsSoundEffectOnKey")
+    var isMusicOn = UserDefaults.standard.bool(forKey: "UserDefaultsIsMusicOnKey") {
         didSet {
             if !gamePaused {
                 isMusicOn ? MusicPlayer.resumePlay() : MusicPlayer.player.pause()
@@ -85,7 +85,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     var isReset = false {
         didSet {
-            if isReset && UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey"){
+            if isReset && UserDefaults.standard.bool(forKey: "UserDefaultsIsMusicOnKey"){
                 print("did reset")
                 MusicPlayer.replay()
             }
@@ -371,7 +371,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         highestScoreLab.horizontalAlignmentMode = .center
         highestScoreLab.zPosition = 35
         
-        highest.text = String(UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey"))
+        highest.text = String(UserDefaults.standard.integer(forKey: "UserDefaultsHighestScoreKey"))
         addChild(highest)
         highest.position = CGPoint(x: highestScoreLab.position.x, y: self.frame.height - 60)
         highest.fontColor = UIColor.white
