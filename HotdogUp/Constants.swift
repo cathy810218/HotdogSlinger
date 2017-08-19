@@ -16,5 +16,5 @@ let kHotdogMoveVelocityIncrement: CGFloat = 10.0
 
 
 let kGameSpeed: CGFloat = 1.2
-let kSpeedIncrement: CGFloat = 0.15
+let kSpeedIncrement: CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 0.1 : 0.12
 let kLevel: Int = 10

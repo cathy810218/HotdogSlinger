@@ -244,6 +244,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     // this delegate method trigger when game is over
     func gameSceneGameEnded() {
         gameoverView.isHidden = false
+        pauseBtn.isEnabled = false
     }
     
     // ============================

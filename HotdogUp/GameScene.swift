@@ -240,13 +240,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hotdog.physicsBody?.affectedByGravity = true
         hotdog.physicsBody?.categoryBitMask = hotdogCategory
         hotdog.physicsBody?.collisionBitMask = sideboundsCategory | rightBoundCategory | leftBoundCatrgory
-        
         let run = SKAction.animate(with: [hotdogTexture1, hotdogTexture2, hotdogTexture3, hotdogTexture4, hotdogTexture5, hotdogTexture6, hotdogTexture7, hotdogTexture8, hotdogTexture9, hotdogTexture10], timePerFrame: 0.2)
         hotdogRunForever = SKAction.repeatForever(run)
         hotdog.physicsBody?.allowsRotation = false
         hotdog.physicsBody?.restitution = 0.0
         hotdogMoveVelocity = 100.0
-        
+        hotdog.physicsBody?.mass = 0.25
         self.addChild(hotdog)
     }
     
@@ -462,11 +461,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if !hotdog.hasActions() {
                 hotdog.texture = SKTexture(imageNamed: "face")
             }
-            print("hotdog size: \(hotdog.size)")
-            let diff = CGVector(dx: 0, dy: UIDevice.current.userInterfaceIdiom == .pad ? 360 : kMinJumpHeight)
+//            print("hotdog size: \(hotdog.size)")
+////            let ratio = hotdog.size.width / hotdog.size.height * kScale
+//            let ptu = 1.0 / sqrt((hotdog.physicsBody?.mass)!)
+////            print("ptu: \(ptu)")
+//            print("hotdog mass: \((hotdog.physicsBody?.mass)!)")
+////            print("gravity: \(self.physicsWorld.gravity.dy)")
+//            let dy = (hotdog.physicsBody?.mass)! * sqrt(-self.physicsWorld.gravity.dy * ptu)
+//            print("dy: \(dy)")
+//
+            let diff = CGVector(dx: 0, dy: CGFloat(kMinJumpHeight))
             if isLanded {
                 hotdog.physicsBody?.applyImpulse(diff)
-                print("min jump height \(kMinJumpHeight)")
+                print("min jump height \(CGFloat(kMinJumpHeight) * 0.45 / 0.20)")
                 if isSoundEffectOn {
                     run(jumpSound)
                 }

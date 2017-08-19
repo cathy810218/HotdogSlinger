@@ -39,7 +39,8 @@ class GameoverView: UIView {
         self.addSubview(gameoverBackgroundView)
         gameoverBackgroundView.snp.makeConstraints { (make) in
             make.center.equalTo(self)
-            make.height.width.equalTo(gameoverHotdogView.frame.size.height * 2)
+            make.width.equalTo((gameoverImg?.size.width)!)
+            make.height.equalTo(gameoverHotdogView.frame.size.height * 2)
         }
         gameoverBackgroundView.layer.cornerRadius = 10.0
         gameoverBackgroundView.layer.masksToBounds = true
@@ -49,7 +50,7 @@ class GameoverView: UIView {
         self.addSubview(gameoverTitleView)
         gameoverTitleView.snp.makeConstraints { (make) in
             make.centerX.equalTo(gameoverBackgroundView)
-//            make.top.left.equalTo(gameoverBackgroundView).offset(10)
+            make.top.left.equalTo(gameoverBackgroundView).offset(10)
 //            make.right.equalTo(gameoverBackgroundView).offset(-10)
         }
         
