@@ -80,6 +80,10 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
             gameScene.isUserInteractionEnabled = false
             tutorialView.showCheckbox = true
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(pauseButtonDidPressed), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(pauseButtonDidPressed), name: Notification.Name.UIApplicationWillResignActive, object: nil)
     }
     
     func presentGameScene() {
@@ -398,6 +402,11 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
 
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.UIApplicationWillResignActive, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
     }
 }
 

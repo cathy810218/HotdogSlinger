@@ -480,6 +480,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             isLanded = false
             
+            // Start moving background
             if hotdog.position.y > self.frame.size.height / 2.0 && background.speed == 0 {
                 // move the background up
                 initialBackground.speed = kGameSpeed
