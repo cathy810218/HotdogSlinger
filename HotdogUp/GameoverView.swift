@@ -33,23 +33,24 @@ class GameoverView: UIView {
         self.backgroundColor = UIColor(hex: "#000000", alpha: 0.5)
         
         let gameoverHotdogView = UIImageView(image: UIImage(named: "gameover_hotdog"))
+        let gameoverImg = UIImage(named: "gameover")
         
         let gameoverBackgroundView = UIImageView(image: UIImage(named: "gameover_background"))
         self.addSubview(gameoverBackgroundView)
         gameoverBackgroundView.snp.makeConstraints { (make) in
             make.center.equalTo(self)
-            make.width.equalTo(self.frame.size.width)
-            make.height.equalTo(gameoverHotdogView.frame.size.height * 2)
+            make.height.width.equalTo(gameoverHotdogView.frame.size.height * 2)
         }
         gameoverBackgroundView.layer.cornerRadius = 10.0
         gameoverBackgroundView.layer.masksToBounds = true
         
         
-        let gameoverTitleView = UIImageView(image: UIImage(named: "gameover"))
+        let gameoverTitleView = UIImageView(image: gameoverImg)
         self.addSubview(gameoverTitleView)
         gameoverTitleView.snp.makeConstraints { (make) in
-            make.top.left.equalTo(gameoverBackgroundView).offset(10)
-            make.right.equalTo(gameoverBackgroundView).offset(-10)
+            make.centerX.equalTo(gameoverBackgroundView)
+//            make.top.left.equalTo(gameoverBackgroundView).offset(10)
+//            make.right.equalTo(gameoverBackgroundView).offset(-10)
         }
         
         self.addSubview(gameoverHotdogView)
