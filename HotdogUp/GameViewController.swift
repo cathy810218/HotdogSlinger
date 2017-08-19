@@ -95,6 +95,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     func setupPauseView() {
         pauseView = PauseView(frame: self.view.frame)
         self.view.addSubview(pauseView)
+        
         pauseView.isHidden = true
         pauseView.delegate = self
     }
@@ -336,7 +337,6 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
                                     customAttributes: nil)
                 UserDefaults.standard.set(true, forKey: "UserDefaultsPurchaseKey")
                 UserDefaults.standard.synchronize()
-                
                 break
             case .failed:
                 queue.finishTransaction(transaction)
