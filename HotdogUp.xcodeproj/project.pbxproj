@@ -26,6 +26,7 @@
 		3DB575A31F46A830004F9616 /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB575A21F46A82F004F9616 /* Checkbox.swift */; };
 		3DB6C2181F484739005C86C9 /* CharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB6C2171F484739005C86C9 /* CharacterView.swift */; };
 		3DB6C21A1F486008005C86C9 /* CharacterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB6C2191F486008005C86C9 /* CharacterCell.swift */; };
+		3DB6C21C1F487BC3005C86C9 /* Hotdog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB6C21B1F487BC3005C86C9 /* Hotdog.swift */; };
 		3DCB1D3C1F46519E00FF6423 /* PauseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB1D3B1F46519E00FF6423 /* PauseView.swift */; };
 		3DCB1D3E1F465B3700FF6423 /* GameoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB1D3D1F465B3700FF6423 /* GameoverView.swift */; };
 		3DDD00781F482B2300198865 /* StoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDD00771F482B2300198865 /* StoreViewController.swift */; };
@@ -68,6 +69,7 @@
 		3DB575A21F46A82F004F9616 /* Checkbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Checkbox.swift; path = "../../../Downloads/SimpleCheckbox-master/checkbox/Checkbox.swift"; sourceTree = "<group>"; };
 		3DB6C2171F484739005C86C9 /* CharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterView.swift; sourceTree = "<group>"; };
 		3DB6C2191F486008005C86C9 /* CharacterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCell.swift; sourceTree = "<group>"; };
+		3DB6C21B1F487BC3005C86C9 /* Hotdog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hotdog.swift; sourceTree = "<group>"; };
 		3DCB1D3B1F46519E00FF6423 /* PauseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseView.swift; sourceTree = "<group>"; };
 		3DCB1D3D1F465B3700FF6423 /* GameoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameoverView.swift; sourceTree = "<group>"; };
 		3DDD00771F482B2300198865 /* StoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreViewController.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				3DEF5CCB1F31C1A900BFA806 /* Path.swift */,
+				3DB6C21B1F487BC3005C86C9 /* Hotdog.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -458,6 +461,7 @@
 				3DCB1D3E1F465B3700FF6423 /* GameoverView.swift in Sources */,
 				3D07A29C1ED1B1B600BFCE3A /* AppDelegate.swift in Sources */,
 				3DB575A31F46A830004F9616 /* Checkbox.swift in Sources */,
+				3DB6C21C1F487BC3005C86C9 /* Hotdog.swift in Sources */,
 				3DCB1D3C1F46519E00FF6423 /* PauseView.swift in Sources */,
 				3D07A2C51ED1B2F000BFCE3A /* MenuViewController.swift in Sources */,
 				3D857D791F2F2466001C8E28 /* Constants.swift in Sources */,

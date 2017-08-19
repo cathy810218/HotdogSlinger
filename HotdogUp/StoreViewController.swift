@@ -23,6 +23,15 @@ class StoreViewController: UIViewController, UICollectionViewDelegate, UICollect
         updateCellsLayout()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let item = UserDefaults.standard.integer(forKey: "UserDefaultsSelectCharacterKey")
+        print(item)
+        let indexPath = IndexPath(item: item, section: 0)
+        collectionView.selectItem(at: indexPath, animated: true, scrollPosition: UICollectionViewScrollPosition(rawValue: 0))
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,6 +41,7 @@ class StoreViewController: UIViewController, UICollectionViewDelegate, UICollect
         collectionView.contentInset = UIEdgeInsetsMake(0, 70, 0, 70)
         collectionView.allowsMultipleSelection = false
         collectionView.allowsSelection = true
+        
         if UIDevice.current.userInterfaceIdiom == .pad {
             titleLabel.font = UIFont(name: "BradleyHandITCTT-Bold", size: 30)
         } else if UIDevice.current.userInterfaceIdiom == .phone {
@@ -84,15 +94,6 @@ class StoreViewController: UIViewController, UICollectionViewDelegate, UICollect
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func selectWomanHotdog(_ sender: Any) {
-        UserDefaults.standard.set(1, forKey: "UserDefaultsSelectCharacterKey")
-    }
-    
-    
-    @IBAction func selectManHotdog(_ sender: Any) {
-        UserDefaults.standard.set(0, forKey: "UserDefaultsSelectCharacterKey")
-    }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return characterImages.count
     }
@@ -117,6 +118,6 @@ class StoreViewController: UIViewController, UICollectionViewDelegate, UICollect
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        UserDefaults.standard.set(indexPath.item, forKey: "UserDefaultsSelectCharacterKey")
     }
 }
