@@ -32,7 +32,8 @@ class GameoverView: UIView {
 //        }
         self.backgroundColor = UIColor(hex: "#000000", alpha: 0.5)
         
-        let gameoverHotdogView = UIImageView(image: UIImage(named: "gameover_hotdog"))
+        let currentHotdogType = Hotdog.HotdogType(rawValue: UserDefaults.standard.integer(forKey: "UserDefaultsSelectCharacterKey"))!
+        let gameoverHotdogView = UIImageView(image: UIImage(named: "\(currentHotdogType.name)_gameover"))
         let gameoverImg = UIImage(named: "gameover")
         
         let gameoverBackgroundView = UIImageView(image: UIImage(named: "gameover_background"))

@@ -50,7 +50,7 @@ class StoreViewController: UIViewController, UICollectionViewDelegate, UICollect
         collectionView.backgroundColor = UIColor.clear
 //        createCTAButton()
         let img = UIImage(named: "mrjj")!
-        let img2 = UIImage(named: "store_jane_image")!
+        let img2 = UIImage(named: "jane")!
         characterImages = [img, img2]
     }
     

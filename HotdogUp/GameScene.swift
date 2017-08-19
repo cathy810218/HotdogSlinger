@@ -24,7 +24,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     weak var gameSceneDelegate: GameSceneDelegate?
     
-    var hotdog = SKSpriteNode()
+    var hotdog = Hotdog(hotdogType: .mrjj)
     var hotdogRunForever = SKAction()
     
     let hotdogCategory: UInt32 = 0x1 << 0;
@@ -220,31 +220,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func createHotdog() {
-        var hotdogTexture1 = SKTexture(imageNamed: "1")
-        var hotdogTexture2 = SKTexture(imageNamed: "2")
-        var hotdogTexture3 = SKTexture(imageNamed: "3")
-        var hotdogTexture4 = SKTexture(imageNamed: "4")
-        var hotdogTexture5 = SKTexture(imageNamed: "5")
-        var hotdogTexture6 = SKTexture(imageNamed: "6")
-        var hotdogTexture7 = SKTexture(imageNamed: "7")
-        var hotdogTexture8 = SKTexture(imageNamed: "8")
-        var hotdogTexture9 = SKTexture(imageNamed: "9")
-        var hotdogTexture10 = SKTexture(imageNamed: "10")
-        if UserDefaults.standard.integer(forKey: "UserDefaultsSelectCharacterKey") == 1 {
-            hotdogTexture1 = SKTexture(imageNamed: "girl_1")
-            hotdogTexture2 = SKTexture(imageNamed: "girl_2")
-            hotdogTexture3 = SKTexture(imageNamed: "girl_3")
-            hotdogTexture4 = SKTexture(imageNamed: "girl_4")
-            hotdogTexture5 = SKTexture(imageNamed: "girl_5")
-            hotdogTexture6 = SKTexture(imageNamed: "girl_6")
-            hotdogTexture7 = SKTexture(imageNamed: "girl_7")
-            hotdogTexture8 = SKTexture(imageNamed: "girl_8")
-            hotdogTexture9 = SKTexture(imageNamed: "girl_9")
-            hotdogTexture10 = SKTexture(imageNamed: "girl_10")
-        }
-        
-        
-        hotdog = SKSpriteNode(texture: SKTexture(imageNamed: "face"))
+        hotdog = Hotdog(hotdogType: Hotdog.HotdogType(rawValue: UserDefaults.standard.integer(forKey: "UserDefaultsSelectCharacterKey"))!)
         hotdog.zPosition = 30
         hotdog.position = CGPoint(x: self.frame.size.width/2.0, y: hotdog.size.height/2.0)
         hotdog.anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -252,13 +228,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hotdog.physicsBody?.affectedByGravity = true
         hotdog.physicsBody?.categoryBitMask = hotdogCategory
         hotdog.physicsBody?.collisionBitMask = sideboundsCategory | rightBoundCategory | leftBoundCatrgory
-        let run = SKAction.animate(with: [hotdogTexture1, hotdogTexture2, hotdogTexture3, hotdogTexture4, hotdogTexture5, hotdogTexture6, hotdogTexture7, hotdogTexture8, hotdogTexture9, hotdogTexture10], timePerFrame: 0.2)
+        let run = SKAction.animate(with: hotdog.actions, timePerFrame: 0.2)
         hotdogRunForever = SKAction.repeatForever(run)
         hotdog.physicsBody?.allowsRotation = false
         hotdog.physicsBody?.restitution = 0.0
         hotdogMoveVelocity = 80.0
         self.addChild(hotdog)
-        
+        print("mass: \(hotdog.physicsBody?.mass)")
     }
     
     func setupCounterLabel() {
@@ -471,7 +447,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         } else {
             // middle
             if !hotdog.hasActions() {
-                hotdog.texture = SKTexture(imageNamed: "face")
+                hotdog.texture = hotdog.hotdogTexture
             }
 //            print("hotdog size: \(hotdog.size)")
 ////            let ratio = hotdog.size.width / hotdog.size.height * kScale
