@@ -180,12 +180,58 @@
             </objects>
             <point key="canvasLocation" x="-256.52173913043481" y="176.08695652173915"/>
         </scene>
+        <!--Character View Controller-->
+        <scene sceneID="ZT3-nI-FYJ">
+            <objects>
+                <viewController storyboardIdentifier="CharacterViewController" id="cSW-S6-bxL" customClass="CharacterViewController" customModule="HotdogUp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="lac-SP-DtQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="V2S-yf-y08"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kP9-QL-kfD">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home_background" translatesAutoresizingMaskIntoConstraints="NO" id="O53-sH-49u">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XGc-R0-P6L">
+                                <rect key="frame" x="132.33333333333331" y="656.66666666666652" width="149.99999999999994" height="59.333333333333371"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="XGc-R0-P6L" secondAttribute="height" multiplier="230:91" id="Crd-Um-Lg0"/>
+                                    <constraint firstAttribute="width" constant="150" id="GrI-cK-emo"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="done"/>
+                                <connections>
+                                    <action selector="doneButtonPressed:" destination="cSW-S6-bxL" eventType="touchUpInside" id="TEx-Lb-hdA"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="V2S-yf-y08" firstAttribute="top" secondItem="XGc-R0-P6L" secondAttribute="bottom" constant="20" id="3Tm-5n-vqx"/>
+                            <constraint firstItem="O53-sH-49u" firstAttribute="top" secondItem="kP9-QL-kfD" secondAttribute="top" id="ECa-6v-Haj"/>
+                            <constraint firstItem="V2S-yf-y08" firstAttribute="top" secondItem="O53-sH-49u" secondAttribute="bottom" id="eQJ-hB-Vsy"/>
+                            <constraint firstItem="O53-sH-49u" firstAttribute="leading" secondItem="kP9-QL-kfD" secondAttribute="leading" id="tdM-S2-miB"/>
+                            <constraint firstAttribute="trailing" secondItem="O53-sH-49u" secondAttribute="trailing" id="u6f-54-FLk"/>
+                            <constraint firstItem="XGc-R0-P6L" firstAttribute="centerX" secondItem="kP9-QL-kfD" secondAttribute="centerX" id="x1p-GC-60J"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="doneBtn" destination="XGc-R0-P6L" id="aht-uG-5I5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PKx-SM-Cgr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-256.52173913043481" y="840.48913043478262"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="done" width="460" height="182"/>
         <image name="help" width="153" height="60"/>
-        <image name="home_background" width="1080" height="1920"/>
-        <image name="menu_hodog" width="1080" height="800"/>
-        <image name="menu_name" width="1080" height="800"/>
+        <image name="home_background" width="360" height="640"/>
+        <image name="menu_hodog" width="360" height="266"/>
+        <image name="menu_name" width="360" height="266"/>
         <image name="rate" width="153" height="60"/>
         <image name="start" width="153" height="60"/>
     </resources>

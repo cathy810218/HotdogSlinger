@@ -24,8 +24,10 @@
 		3D82D2EA1F4564B300A5C55A /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D82D2E91F4564B300A5C55A /* TutorialView.swift */; };
 		3D857D791F2F2466001C8E28 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D857D781F2F2466001C8E28 /* Constants.swift */; };
 		3DB575A31F46A830004F9616 /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB575A21F46A82F004F9616 /* Checkbox.swift */; };
+		3DB6C2181F484739005C86C9 /* CharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB6C2171F484739005C86C9 /* CharacterView.swift */; };
 		3DCB1D3C1F46519E00FF6423 /* PauseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB1D3B1F46519E00FF6423 /* PauseView.swift */; };
 		3DCB1D3E1F465B3700FF6423 /* GameoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB1D3D1F465B3700FF6423 /* GameoverView.swift */; };
+		3DDD00781F482B2300198865 /* CharacterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDD00771F482B2300198865 /* CharacterViewController.swift */; };
 		3DE3B7691F3935AE0037FC18 /* Brother_Jack.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3DE3B7681F3935AD0037FC18 /* Brother_Jack.mp3 */; };
 		3DE3B76B1F393B4C0037FC18 /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE3B76A1F393B4C0037FC18 /* MusicPlayer.swift */; };
 		3DEF5CCC1F31C1A900BFA806 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEF5CCB1F31C1A900BFA806 /* Path.swift */; };
@@ -63,8 +65,10 @@
 		3D857D781F2F2466001C8E28 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3D8E75341F349BE10019035A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = HotdogUp/Assets.xcassets; sourceTree = SOURCE_ROOT; };
 		3DB575A21F46A82F004F9616 /* Checkbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Checkbox.swift; path = "../../../Downloads/SimpleCheckbox-master/checkbox/Checkbox.swift"; sourceTree = "<group>"; };
+		3DB6C2171F484739005C86C9 /* CharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterView.swift; sourceTree = "<group>"; };
 		3DCB1D3B1F46519E00FF6423 /* PauseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseView.swift; sourceTree = "<group>"; };
 		3DCB1D3D1F465B3700FF6423 /* GameoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameoverView.swift; sourceTree = "<group>"; };
+		3DDD00771F482B2300198865 /* CharacterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterViewController.swift; sourceTree = "<group>"; };
 		3DE3B7681F3935AD0037FC18 /* Brother_Jack.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Brother_Jack.mp3; path = ../../../Downloads/Brother_Jack.mp3; sourceTree = "<group>"; };
 		3DE3B76A1F393B4C0037FC18 /* MusicPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
 		3DEF5CCB1F31C1A900BFA806 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
@@ -167,6 +171,7 @@
 				3D82D2E91F4564B300A5C55A /* TutorialView.swift */,
 				3DCB1D3B1F46519E00FF6423 /* PauseView.swift */,
 				3DCB1D3D1F465B3700FF6423 /* GameoverView.swift */,
+				3DB6C2171F484739005C86C9 /* CharacterView.swift */,
 				3D07A2AA1ED1B1B600BFCE3A /* LaunchScreen.storyboard */,
 			);
 			name = View;
@@ -176,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				3D07A2C41ED1B2F000BFCE3A /* MenuViewController.swift */,
+				3DDD00771F482B2300198865 /* CharacterViewController.swift */,
 				3D07A2A31ED1B1B600BFCE3A /* GameViewController.swift */,
 				3D07A2A11ED1B1B600BFCE3A /* GameScene.swift */,
 				3D857D781F2F2466001C8E28 /* Constants.swift */,
@@ -440,8 +446,10 @@
 				3D07A2A21ED1B1B600BFCE3A /* GameScene.swift in Sources */,
 				3D42BBDE1F34934D00EA722C /* Keys.swift in Sources */,
 				3D82D2EA1F4564B300A5C55A /* TutorialView.swift in Sources */,
+				3DDD00781F482B2300198865 /* CharacterViewController.swift in Sources */,
 				3DE3B76B1F393B4C0037FC18 /* MusicPlayer.swift in Sources */,
 				3DEF5CCC1F31C1A900BFA806 /* Path.swift in Sources */,
+				3DB6C2181F484739005C86C9 /* CharacterView.swift in Sources */,
 				3D07A2A41ED1B1B600BFCE3A /* GameViewController.swift in Sources */,
 				3DCB1D3E1F465B3700FF6423 /* GameoverView.swift in Sources */,
 				3D07A29C1ED1B1B600BFCE3A /* AppDelegate.swift in Sources */,
@@ -610,6 +618,7 @@
 				PRODUCT_NAME = HotdogUp;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -626,6 +635,7 @@
 				PRODUCT_NAME = HotdogUp;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

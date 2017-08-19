@@ -60,7 +60,6 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
         gameScene.gameSceneDelegate = self
         setupPauseView()
         setupGameOverView()
-        setupTutorialView()
         
         pauseBtn = UIButton(type: .custom)
         let pauseImg = UIImage(named: "button_pause")
@@ -71,12 +70,13 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
             make.top.left.equalTo(30)
             make.width.height.equalTo((pauseImg?.size.width)!)
         }
-        
+        setupTutorialView()
         SKPaymentQueue.default().add(self)
         getPurchaseInfo()
         
         if !UserDefaults.standard.bool(forKey: "UserDefaultsDoNotShowTutorialKey") {
             tutorialView.isHidden = false
+            
             gameScene.isUserInteractionEnabled = false
             tutorialView.showCheckbox = true
         }
@@ -261,7 +261,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
         
         let request = GADRequest()
         //TODO: Remove this before shipping
-        request.testDevices = [kGADSimulatorID, kCathyDeviceID, kShellyDeviceID]
+        request.testDevices = [kGADSimulatorID, kCathyDeviceID, kShellyDeviceID, "ad8874fc8d181c031955fe3c07e5c7e7"]
         interstitial.load(request)
         
         interstitial.delegate = self

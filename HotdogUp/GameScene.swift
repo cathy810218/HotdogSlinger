@@ -34,14 +34,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let rightBoundCategory: UInt32 = 0x1 << 4;
     let pathCategory: UInt32 = 0x1 << 5;
     
+    var diff = CGVector(dx: 0, dy: 0)
+    
     var background = SKSpriteNode()
     var initialBackground = SKSpriteNode()
     
     var scoreLabel = UILabel()
     var highest = SKLabelNode()
     var reuseCount = 0
-    var hotdogMoveVelocity: CGFloat = 100.0
-
+    var hotdogMoveVelocity: CGFloat = 80.0
     var gamePaused = false {
         didSet {
             isPaused = gamePaused
@@ -221,16 +222,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func createHotdog() {
-        let hotdogTexture1 = SKTexture(imageNamed: "1")
-        let hotdogTexture2 = SKTexture(imageNamed: "2")
-        let hotdogTexture3 = SKTexture(imageNamed: "3")
-        let hotdogTexture4 = SKTexture(imageNamed: "4")
-        let hotdogTexture5 = SKTexture(imageNamed: "5")
-        let hotdogTexture6 = SKTexture(imageNamed: "6")
-        let hotdogTexture7 = SKTexture(imageNamed: "7")
-        let hotdogTexture8 = SKTexture(imageNamed: "8")
-        let hotdogTexture9 = SKTexture(imageNamed: "9")
-        let hotdogTexture10 = SKTexture(imageNamed: "10")
+        var hotdogTexture1 = SKTexture(imageNamed: "1")
+        var hotdogTexture2 = SKTexture(imageNamed: "2")
+        var hotdogTexture3 = SKTexture(imageNamed: "3")
+        var hotdogTexture4 = SKTexture(imageNamed: "4")
+        var hotdogTexture5 = SKTexture(imageNamed: "5")
+        var hotdogTexture6 = SKTexture(imageNamed: "6")
+        var hotdogTexture7 = SKTexture(imageNamed: "7")
+        var hotdogTexture8 = SKTexture(imageNamed: "8")
+        var hotdogTexture9 = SKTexture(imageNamed: "9")
+        var hotdogTexture10 = SKTexture(imageNamed: "10")
+        if UserDefaults.standard.integer(forKey: "UserDefaultsSelectCharacterKey") == 1 {
+            hotdogTexture1 = SKTexture(imageNamed: "girl_1")
+            hotdogTexture2 = SKTexture(imageNamed: "girl_2")
+            hotdogTexture3 = SKTexture(imageNamed: "girl_3")
+            hotdogTexture4 = SKTexture(imageNamed: "girl_4")
+            hotdogTexture5 = SKTexture(imageNamed: "girl_5")
+            hotdogTexture6 = SKTexture(imageNamed: "girl_6")
+            hotdogTexture7 = SKTexture(imageNamed: "girl_7")
+            hotdogTexture8 = SKTexture(imageNamed: "girl_8")
+            hotdogTexture9 = SKTexture(imageNamed: "girl_9")
+            hotdogTexture10 = SKTexture(imageNamed: "girl_10")
+        }
+        
         
         hotdog = SKSpriteNode(texture: SKTexture(imageNamed: "face"))
         hotdog.zPosition = 30
@@ -244,9 +258,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hotdogRunForever = SKAction.repeatForever(run)
         hotdog.physicsBody?.allowsRotation = false
         hotdog.physicsBody?.restitution = 0.0
-        hotdogMoveVelocity = 100.0
-        hotdog.physicsBody?.mass = 0.25
+        hotdogMoveVelocity = 80.0
         self.addChild(hotdog)
+        diff = CGVector(dx: 0, dy: UIDevice.current.userInterfaceIdiom == .pad ? CGFloat(kMinJumpHeight) * 1.9 : CGFloat(kMinJumpHeight))
     }
     
     func setupCounterLabel() {
@@ -470,10 +484,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //            let dy = (hotdog.physicsBody?.mass)! * sqrt(-self.physicsWorld.gravity.dy * ptu)
 //            print("dy: \(dy)")
 //
-            let diff = CGVector(dx: 0, dy: CGFloat(kMinJumpHeight))
+            
+            
             if isLanded {
                 hotdog.physicsBody?.applyImpulse(diff)
-                print("min jump height \(CGFloat(kMinJumpHeight) * 0.45 / 0.20)")
                 if isSoundEffectOn {
                     run(jumpSound)
                 }
@@ -493,7 +507,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.physicsBody?.categoryBitMask = hotdogCategory
             }
             
-            if score % kLevel == 0 && score > 0 {
+            if score % kLevel == 0 && score > 0 {                
                 for bg in backgrounds {
                     bg.speed += kSpeedIncrement
                 }

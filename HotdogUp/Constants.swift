@@ -10,9 +10,9 @@ import UIKit
 import SpriteKit
 
 let kMinJumpHeight: Int = Int(UIScreen.main.bounds.size.height / 5.0)
-let kMaxJumpHeight: Int = 200
+let kMaxJumpHeight: Int = 180
 let kJumpIntensity: Int = 30
-let kHotdogMoveVelocityIncrement: CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 7.0 : 10.0
+let kHotdogMoveVelocityIncrement: CGFloat = 8.0
 
 
 let kGameSpeed: CGFloat = 1.2
