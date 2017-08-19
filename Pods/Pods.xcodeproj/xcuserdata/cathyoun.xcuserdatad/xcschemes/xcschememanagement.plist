@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>FAPaginationLayout.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-HotdogUp.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -21,22 +26,6 @@
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
-	<dict>
-		<key>0B36241045FF75443CEEF6346F2B86EF</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>126FD0525CE96AFFDB54874040FC864B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>5A08AAF56F8D0D97071293CB6DF0816C</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-	</dict>
+	<dict/>
 </dict>
 </plist>

@@ -11,7 +11,7 @@ import Crashlytics
 
 class MenuViewController: UIViewController {
     var gameVC: GameViewController?
-    var characterVC: CharacterViewController?
+    var characterVC: StoreViewController?
     @IBOutlet weak var startButton: UIButton!
     
     
@@ -26,7 +26,7 @@ class MenuViewController: UIViewController {
         self.present(gameVC!, animated: true, completion: nil)
     }
     @IBAction func helpButtonPressed(_ sender: UIButton) {
-        characterVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CharacterViewController") as? CharacterViewController
+        characterVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CharacterViewController") as? StoreViewController
         self.present(characterVC!, animated: true, completion: nil)
     }
     

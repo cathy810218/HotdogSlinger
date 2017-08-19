@@ -34,8 +34,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let rightBoundCategory: UInt32 = 0x1 << 4;
     let pathCategory: UInt32 = 0x1 << 5;
     
-    var diff = CGVector(dx: 0, dy: 0)
-    
     var background = SKSpriteNode()
     var initialBackground = SKSpriteNode()
     
@@ -260,7 +258,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hotdog.physicsBody?.restitution = 0.0
         hotdogMoveVelocity = 80.0
         self.addChild(hotdog)
-        diff = CGVector(dx: 0, dy: UIDevice.current.userInterfaceIdiom == .pad ? CGFloat(kMinJumpHeight) * 1.9 : CGFloat(kMinJumpHeight))
+        
     }
     
     func setupCounterLabel() {
@@ -484,7 +482,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //            let dy = (hotdog.physicsBody?.mass)! * sqrt(-self.physicsWorld.gravity.dy * ptu)
 //            print("dy: \(dy)")
 //
-            
+            let diff = CGVector(dx: 0, dy: CGFloat(kMinJumpHeight))
             
             if isLanded {
                 hotdog.physicsBody?.applyImpulse(diff)
