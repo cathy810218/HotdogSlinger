@@ -14,25 +14,24 @@ protocol PauseViewDelegate: class {
     func pauseViewDidPressMusicButton()
     func pauseViewDidPressHomeButton()
     func pauseViewDidPressSoundButton()
+    func pauseViewDidPressTutorialButton()
 }
 
 class PauseView: UIView {
     weak var delegate: PauseViewDelegate?
     private var musicBtn = UIButton()
     private var soundBtn = UIButton()
-    var isBackgroundMusicOn = UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey") {
+    var isBackgroundMusicOn = UserDefaults.standard.bool(forKey: "UserDefaultsIsMusicOnKey") {
         didSet {
             musicBtn.setBackgroundImage(UIImage(named: isBackgroundMusicOn ? "button_music" : "button_musicoff"), for: .normal)
         }
     }
-    var isSoundOn = UserDefaults.standard.bool(forKey: "UserDefaultIsSoundEffectOnKey") {
+    var isSoundOn = UserDefaults.standard.bool(forKey: "UserDefaultsIsSoundEffectOnKey") {
         didSet {
             soundBtn.setBackgroundImage(UIImage(named: isSoundOn ? "button_sound" : "button_soundoff"), for: .normal)
         }
     }
-    
-    var tutorialView = TutorialView()
-    
+        
     override init(frame: CGRect) {
         super.init(frame: frame)
         let img = UIImage(named: "button_resume")
@@ -82,7 +81,7 @@ class PauseView: UIView {
         replayBtn.addTarget(self, action: #selector(resetGame), for: .touchUpInside)
         // sound button
         soundBtn = UIButton(type: .custom)
-        soundBtn.setBackgroundImage(UIImage(named: UserDefaults.standard.bool(forKey: "UserDefaultIsSoundEffectOnKey") ? "button_sound" : "button_soundoff"), for: .normal)
+        soundBtn.setBackgroundImage(UIImage(named: UserDefaults.standard.bool(forKey: "UserDefaultsIsSoundEffectOnKey") ? "button_sound" : "button_soundoff"), for: .normal)
         soundBtn.layer.cornerRadius = 5.0
         soundBtn.layer.masksToBounds = true
         buttonsView.addSubview(soundBtn)
@@ -93,7 +92,7 @@ class PauseView: UIView {
         
         // music button
         musicBtn = UIButton(type: .custom)
-        musicBtn.setBackgroundImage(UIImage(named: UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey") ? "button_music" : "button_musicoff"), for: .normal)
+        musicBtn.setBackgroundImage(UIImage(named: UserDefaults.standard.bool(forKey: "UserDefaultsIsMusicOnKey") ? "button_music" : "button_musicoff"), for: .normal)
         musicBtn.layer.cornerRadius = 5.0
         musicBtn.layer.masksToBounds = true
         buttonsView.addSubview(musicBtn)
@@ -112,11 +111,6 @@ class PauseView: UIView {
             make.right.bottom.equalTo(buttonsView)
         }
         shareBtn.addTarget(self, action: #selector(showTutorialView), for: .touchUpInside)
-        
-        
-        tutorialView = TutorialView(frame: self.frame)
-        self.addSubview(tutorialView)
-        tutorialView.isHidden = true
     }
     
     @objc func returnToMenu() {
@@ -140,16 +134,9 @@ class PauseView: UIView {
     }
     
     @objc func showTutorialView() {
-        tutorialView.isHidden = false
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(tapToDismiss))
-        tutorialView.addGestureRecognizer(tap)
-        
+        delegate?.pauseViewDidPressTutorialButton()
     }
-    
-    @objc func tapToDismiss() {
-        tutorialView.isHidden = true
-    }
+
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

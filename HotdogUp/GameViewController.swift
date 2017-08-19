@@ -12,14 +12,14 @@ import GameplayKit
 import SnapKit
 import StoreKit
 import GoogleMobileAds
+import Crashlytics
 
 class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate, GameoverViewDelegate, GADInterstitialDelegate, SKPaymentTransactionObserver, SKProductsRequestDelegate {
     
     var pauseView = PauseView()
     var pauseBtn = UIButton()
-    var removeAdsBtn = UIButton()
-    var restoreIAPBtn = UIButton()
-    
+    var tutorialView = TutorialView()
+
     var gameScene : GameScene!
     var skView = SKView()
     var gameoverView = GameoverView()
@@ -47,12 +47,12 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         // need to set the key value before init the GameScene
-        if UserDefaults.standard.object(forKey: "UserDefaultIsMusicOnKey") == nil {
-            UserDefaults.standard.set(true, forKey: "UserDefaultIsMusicOnKey")
+        if UserDefaults.standard.object(forKey: "UserDefaultsIsMusicOnKey") == nil {
+            UserDefaults.standard.set(true, forKey: "UserDefaultsIsMusicOnKey")
         }
         
-        if UserDefaults.standard.object(forKey: "UserDefaultIsSoundEffectOnKey") == nil {
-            UserDefaults.standard.set(true, forKey: "UserDefaultIsSoundEffectOnKey")
+        if UserDefaults.standard.object(forKey: "UserDefaultsIsSoundEffectOnKey") == nil {
+            UserDefaults.standard.set(true, forKey: "UserDefaultsIsSoundEffectOnKey")
         }
         
         gameScene = GameScene(size: view.bounds.size)
@@ -60,6 +60,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
         gameScene.gameSceneDelegate = self
         setupPauseView()
         setupGameOverView()
+        setupTutorialView()
         
         pauseBtn = UIButton(type: .custom)
         let pauseImg = UIImage(named: "button_pause")
@@ -73,6 +74,16 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
         
         SKPaymentQueue.default().add(self)
         getPurchaseInfo()
+        
+        if !UserDefaults.standard.bool(forKey: "UserDefaultsDoNotShowTutorialKey") {
+            tutorialView.isHidden = false
+            gameScene.isUserInteractionEnabled = false
+            tutorialView.showCheckbox = true
+        }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(pauseButtonDidPressed), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(pauseButtonDidPressed), name: Notification.Name.UIApplicationWillResignActive, object: nil)
     }
     
     func presentGameScene() {
@@ -91,7 +102,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     }
     
     @objc func pauseButtonDidPressed() {
-        UserDefaults.standard.set(gameScene.speed, forKey: "UserDefaultResumeSpeedKey")
+        UserDefaults.standard.set(gameScene.speed, forKey: "UserDefaultsResumeSpeedKey")
         gameScene.gamePaused = true
         MusicPlayer.player.pause()
         pauseView.isHidden = false
@@ -99,16 +110,29 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
         pauseBtn.isEnabled = false // disable it
     }
     
+    func setupTutorialView() {
+        tutorialView = TutorialView(frame: self.view.frame)
+        self.view.addSubview(tutorialView)
+        tutorialView.isHidden = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapToDismissTutorialView))
+        tutorialView.addGestureRecognizer(tap)
+    }
+    
+    @objc func tapToDismissTutorialView() {
+        tutorialView.isHidden = true
+        gameScene.isUserInteractionEnabled = true
+    }
+
     //MARK: PauseViewDelegate
     func pauseViewDidPressHomeButton() {
         returnToMenu()
     }
     
     func pauseViewDidPressResumeButton() {
-        gameScene.speed = CGFloat(UserDefaults.standard.float(forKey: "UserDefaultResumeSpeedKey"))
+        gameScene.speed = CGFloat(UserDefaults.standard.float(forKey: "UserDefaultsResumeSpeedKey"))
         gameScene.gamePaused = false
         gameScene.isReset = false
-        gameScene.isMusicOn = UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey")
+        gameScene.isMusicOn = UserDefaults.standard.bool(forKey: "UserDefaultsIsMusicOnKey")
         pauseView.isHidden = true
         pauseBtn.isEnabled = true
         gameScene.isUserInteractionEnabled = true
@@ -121,14 +145,20 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     func pauseViewDidPressSoundButton() {
         // check if sound is on or off
         gameScene.isSoundEffectOn = !gameScene.isSoundEffectOn
-        UserDefaults.standard.set(gameScene.isSoundEffectOn, forKey: "UserDefaultIsSoundEffectOnKey")
+        UserDefaults.standard.set(gameScene.isSoundEffectOn, forKey: "UserDefaultsIsSoundEffectOnKey")
         pauseView.isSoundOn = gameScene.isSoundEffectOn
     }
     
     func pauseViewDidPressMusicButton() {
         gameScene.isMusicOn = !gameScene.isMusicOn
-        UserDefaults.standard.set(gameScene.isMusicOn, forKey: "UserDefaultIsMusicOnKey")
+        UserDefaults.standard.set(gameScene.isMusicOn, forKey: "UserDefaultsIsMusicOnKey")
         pauseView.isBackgroundMusicOn = gameScene.isMusicOn
+    }
+    
+    func pauseViewDidPressTutorialButton() {
+        tutorialView.isHidden = false
+        tutorialView.showCheckbox = false
+        gameScene.isUserInteractionEnabled = false
     }
     
     // ============================
@@ -170,7 +200,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     
     func gameoverViewDidPressReplayButton() {
         gameoverView.isHidden = true
-        if !UserDefaults.standard.bool(forKey: "UserDefaultPurchaseKey") && hasInternet {
+        if !UserDefaults.standard.bool(forKey: "UserDefaultsPurchaseKey") && hasInternet {
             interstitial = createInterstitial()
         } else {
             resetGame()
@@ -218,6 +248,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     // this delegate method trigger when game is over
     func gameSceneGameEnded() {
         gameoverView.isHidden = false
+        pauseBtn.isEnabled = false
     }
     
     // ============================
@@ -281,8 +312,8 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
         } else {
             product = products[0]
             print("title: \(product?.localizedTitle ?? "no title")")
-            removeAdsBtn.isEnabled = !UserDefaults.standard.bool(forKey: "UserDefaultPurchaseKey")
-            restoreIAPBtn.isEnabled = removeAdsBtn.isEnabled
+            gameoverView.removeAdsBtn.isEnabled = !UserDefaults.standard.bool(forKey: "UserDefaultsPurchaseKey")
+            gameoverView.restoreIAPBtn.isEnabled = gameoverView.removeAdsBtn.isEnabled
         }
         
         let invalids = response.invalidProductIdentifiers
@@ -297,16 +328,21 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
             case .purchased:
                 queue.finishTransaction(transaction)
                 print("Succeed")
-                removeAdsBtn.isEnabled = false
-                restoreIAPBtn.isEnabled = false
-                
-                UserDefaults.standard.set(true, forKey: "UserDefaultPurchaseKey")
+                gameoverView.removeAdsBtn.isEnabled = false
+                gameoverView.restoreIAPBtn.isEnabled = false
+                Answers.logPurchase(withPrice: 0.99,
+                                    currency: "USD",
+                                    success: true,
+                                    itemName: "RemoveAds",
+                                    itemType: "Ads",
+                                    itemId: "com.hotdogup.removeads",
+                                    customAttributes: nil)
+                UserDefaults.standard.set(true, forKey: "UserDefaultsPurchaseKey")
                 UserDefaults.standard.synchronize()
-                
                 break
             case .failed:
                 queue.finishTransaction(transaction)
-                removeAdsBtn.isEnabled = true
+                gameoverView.removeAdsBtn.isEnabled = true
                 print("Failed")
                 break
             default:
@@ -315,6 +351,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
             }
         }
     }
+    
     
     func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
         let alert = UIAlertController(title: "Restore Failed",
@@ -329,10 +366,10 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
             if transaction.transactionState == .restored {
                 queue.finishTransaction(transaction)
                 print("Restore")
-                removeAdsBtn.isEnabled = false
-                restoreIAPBtn.isEnabled = false
+                gameoverView.removeAdsBtn.isEnabled = false
+                gameoverView.restoreIAPBtn.isEnabled = false
                 
-                UserDefaults.standard.set(true, forKey: "UserDefaultPurchaseKey")
+                UserDefaults.standard.set(true, forKey: "UserDefaultsPurchaseKey")
                 UserDefaults.standard.synchronize()
                 let alert = UIAlertController(title: "Restore Succeed",
                                               message: "Ads is now removed",
@@ -365,6 +402,11 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
 
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.UIApplicationWillResignActive, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
     }
 }
 

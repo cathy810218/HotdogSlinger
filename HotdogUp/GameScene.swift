@@ -61,9 +61,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var score = 0 {
         didSet {
             scoreLabel.text = String(score)
-            if (score > UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey") && hasInternet) {
+            if (score > UserDefaults.standard.integer(forKey: "UserDefaultsHighestScoreKey") && hasInternet) {
                 highest.text = String(score)
-                UserDefaults.standard.set(score, forKey: "UserDefaultHighestScoreKey")
+                UserDefaults.standard.set(score, forKey: "UserDefaultsHighestScoreKey")
             }
         }
     }
@@ -75,8 +75,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var isGameOver = false
     let jumpSound = SKAction.playSoundFileNamed("jumping", waitForCompletion: false)
     let fallingSound = SKAction.playSoundFileNamed("falling", waitForCompletion: true)
-    var isSoundEffectOn = UserDefaults.standard.bool(forKey: "UserDefaultIsSoundEffectOnKey")
-    var isMusicOn = UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey") {
+    var isSoundEffectOn = UserDefaults.standard.bool(forKey: "UserDefaultsIsSoundEffectOnKey")
+    var isMusicOn = UserDefaults.standard.bool(forKey: "UserDefaultsIsMusicOnKey") {
         didSet {
             if !gamePaused {
                 isMusicOn ? MusicPlayer.resumePlay() : MusicPlayer.player.pause()
@@ -85,7 +85,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     var isReset = false {
         didSet {
-            if isReset && UserDefaults.standard.bool(forKey: "UserDefaultIsMusicOnKey"){
+            if isReset && UserDefaults.standard.bool(forKey: "UserDefaultsIsMusicOnKey"){
                 print("did reset")
                 MusicPlayer.replay()
             }
@@ -207,13 +207,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsBody?.restitution = 0.0
         let leftNode = SKSpriteNode()
         addChild(leftNode)
-        leftNode.physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: 0, y: self.frame.size.height + CGFloat(kMaxJumpHeight)), to: CGPoint(x: 0, y: 0))
+        print(self.frame.size.width)
+        leftNode.physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: 0, y: self.frame.size.height + CGFloat(kMaxJumpHeight)), to: CGPoint(x: 0, y: CGFloat(-kMaxJumpHeight)))
         leftNode.physicsBody?.categoryBitMask = leftBoundCatrgory
         leftNode.physicsBody?.contactTestBitMask = hotdogCategory
         
         let rightNode = SKSpriteNode()
         addChild(rightNode)
-        rightNode.physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: self.frame.size.width, y: self.frame.size.height + CGFloat(kMaxJumpHeight)), to: CGPoint(x: self.frame.size.width, y: 0))
+        rightNode.physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: self.frame.size.width, y: self.frame.size.height + CGFloat(kMaxJumpHeight)), to: CGPoint(x: self.frame.size.width, y: CGFloat(-kMaxJumpHeight)))
         rightNode.physicsBody?.categoryBitMask = rightBoundCategory
         rightNode.physicsBody?.contactTestBitMask = hotdogCategory
         speed = 1
@@ -239,13 +240,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hotdog.physicsBody?.affectedByGravity = true
         hotdog.physicsBody?.categoryBitMask = hotdogCategory
         hotdog.physicsBody?.collisionBitMask = sideboundsCategory | rightBoundCategory | leftBoundCatrgory
-        
         let run = SKAction.animate(with: [hotdogTexture1, hotdogTexture2, hotdogTexture3, hotdogTexture4, hotdogTexture5, hotdogTexture6, hotdogTexture7, hotdogTexture8, hotdogTexture9, hotdogTexture10], timePerFrame: 0.2)
         hotdogRunForever = SKAction.repeatForever(run)
         hotdog.physicsBody?.allowsRotation = false
         hotdog.physicsBody?.restitution = 0.0
         hotdogMoveVelocity = 100.0
-        
+        hotdog.physicsBody?.mass = 0.25
         self.addChild(hotdog)
     }
     
@@ -290,7 +290,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     private func generatePaths() {
-        var firstPath = Path(position: CGPoint(x: 320, y: 130))
+        var firstPath = Path(position: CGPoint(x: 320, y: kMinJumpHeight))
         paths.append(firstPath)
         var lastPath = firstPath
         for _ in 0 ... 3 {
@@ -371,7 +371,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         highestScoreLab.horizontalAlignmentMode = .center
         highestScoreLab.zPosition = 35
         
-        highest.text = String(UserDefaults.standard.integer(forKey: "UserDefaultHighestScoreKey"))
+        highest.text = String(UserDefaults.standard.integer(forKey: "UserDefaultsHighestScoreKey"))
         addChild(highest)
         highest.position = CGPoint(x: highestScoreLab.position.x, y: self.frame.height - 60)
         highest.fontColor = UIColor.white
@@ -461,15 +461,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if !hotdog.hasActions() {
                 hotdog.texture = SKTexture(imageNamed: "face")
             }
-            let diff = CGVector(dx: 0, dy: kMinJumpHeight)
+//            print("hotdog size: \(hotdog.size)")
+////            let ratio = hotdog.size.width / hotdog.size.height * kScale
+//            let ptu = 1.0 / sqrt((hotdog.physicsBody?.mass)!)
+////            print("ptu: \(ptu)")
+//            print("hotdog mass: \((hotdog.physicsBody?.mass)!)")
+////            print("gravity: \(self.physicsWorld.gravity.dy)")
+//            let dy = (hotdog.physicsBody?.mass)! * sqrt(-self.physicsWorld.gravity.dy * ptu)
+//            print("dy: \(dy)")
+//
+            let diff = CGVector(dx: 0, dy: CGFloat(kMinJumpHeight))
             if isLanded {
                 hotdog.physicsBody?.applyImpulse(diff)
+                print("min jump height \(CGFloat(kMinJumpHeight) * 0.45 / 0.20)")
                 if isSoundEffectOn {
                     run(jumpSound)
                 }
             }
             isLanded = false
             
+            // Start moving background
             if hotdog.position.y > self.frame.size.height / 2.0 && background.speed == 0 {
                 // move the background up
                 initialBackground.speed = kGameSpeed

@@ -23,6 +23,7 @@
 		3D79C3691F43A64200013DAE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D79C3681F43A64200013DAE /* StoreKit.framework */; };
 		3D82D2EA1F4564B300A5C55A /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D82D2E91F4564B300A5C55A /* TutorialView.swift */; };
 		3D857D791F2F2466001C8E28 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D857D781F2F2466001C8E28 /* Constants.swift */; };
+		3DB575A31F46A830004F9616 /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB575A21F46A82F004F9616 /* Checkbox.swift */; };
 		3DCB1D3C1F46519E00FF6423 /* PauseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB1D3B1F46519E00FF6423 /* PauseView.swift */; };
 		3DCB1D3E1F465B3700FF6423 /* GameoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB1D3D1F465B3700FF6423 /* GameoverView.swift */; };
 		3DE3B7691F3935AE0037FC18 /* Brother_Jack.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3DE3B7681F3935AD0037FC18 /* Brother_Jack.mp3 */; };
@@ -42,10 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00103EA6DDADC9843B79DAA7 /* Pods-HotdogSlinger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HotdogSlinger.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HotdogSlinger/Pods-HotdogSlinger.debug.xcconfig"; sourceTree = "<group>"; };
-		014CCCCB14F9EA00DA861068 /* Pods-HotdogSlingerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HotdogSlingerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HotdogSlingerTests/Pods-HotdogSlingerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		06471FCEC9D047D778F4ACC9 /* Pods-HotdogUp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HotdogUp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HotdogUp/Pods-HotdogUp.debug.xcconfig"; sourceTree = "<group>"; };
-		3C2375A49694432129E27F24 /* Pods-HotdogSlingerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HotdogSlingerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HotdogSlingerTests/Pods-HotdogSlingerTests.release.xcconfig"; sourceTree = "<group>"; };
 		3D07A2981ED1B1B600BFCE3A /* HotdogUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HotdogUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D07A29B1ED1B1B600BFCE3A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3D07A2A11ED1B1B600BFCE3A /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -64,6 +62,7 @@
 		3D82D2E91F4564B300A5C55A /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
 		3D857D781F2F2466001C8E28 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3D8E75341F349BE10019035A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = HotdogUp/Assets.xcassets; sourceTree = SOURCE_ROOT; };
+		3DB575A21F46A82F004F9616 /* Checkbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Checkbox.swift; path = "../../../Downloads/SimpleCheckbox-master/checkbox/Checkbox.swift"; sourceTree = "<group>"; };
 		3DCB1D3B1F46519E00FF6423 /* PauseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseView.swift; sourceTree = "<group>"; };
 		3DCB1D3D1F465B3700FF6423 /* GameoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameoverView.swift; sourceTree = "<group>"; };
 		3DE3B7681F3935AD0037FC18 /* Brother_Jack.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Brother_Jack.mp3; path = ../../../Downloads/Brother_Jack.mp3; sourceTree = "<group>"; };
@@ -74,7 +73,6 @@
 		7A15E83946CC332815BCA320 /* Pods-HotdogUpTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HotdogUpTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HotdogUpTests/Pods-HotdogUpTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7A99EF62718219B8EF6FF4B5 /* Pods_HotdogUp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HotdogUp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		82BBDCA2F9A926A70404BFA5 /* Pods_HotdogSlingerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HotdogSlingerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C695ECA072516579A592FFCB /* Pods-HotdogSlinger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HotdogSlinger.release.xcconfig"; path = "Pods/Target Support Files/Pods-HotdogSlinger/Pods-HotdogSlinger.release.xcconfig"; sourceTree = "<group>"; };
 		CE67EC77FA7DC6F89927725D /* Pods_HotdogUpTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HotdogUpTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4917E70842A13899FEB1F03 /* Pods-HotdogUp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HotdogUp.release.xcconfig"; path = "Pods/Target Support Files/Pods-HotdogUp/Pods-HotdogUp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -164,6 +162,7 @@
 		3D07A2C21ED1B2A000BFCE3A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				3DB575A21F46A82F004F9616 /* Checkbox.swift */,
 				3D07A2A51ED1B1B600BFCE3A /* Main.storyboard */,
 				3D82D2E91F4564B300A5C55A /* TutorialView.swift */,
 				3DCB1D3B1F46519E00FF6423 /* PauseView.swift */,
@@ -202,10 +201,6 @@
 		9608E25D061C7B33E83A072F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				00103EA6DDADC9843B79DAA7 /* Pods-HotdogSlinger.debug.xcconfig */,
-				C695ECA072516579A592FFCB /* Pods-HotdogSlinger.release.xcconfig */,
-				014CCCCB14F9EA00DA861068 /* Pods-HotdogSlingerTests.debug.xcconfig */,
-				3C2375A49694432129E27F24 /* Pods-HotdogSlingerTests.release.xcconfig */,
 				06471FCEC9D047D778F4ACC9 /* Pods-HotdogUp.debug.xcconfig */,
 				E4917E70842A13899FEB1F03 /* Pods-HotdogUp.release.xcconfig */,
 				7A15E83946CC332815BCA320 /* Pods-HotdogUpTests.debug.xcconfig */,
@@ -450,6 +445,7 @@
 				3D07A2A41ED1B1B600BFCE3A /* GameViewController.swift in Sources */,
 				3DCB1D3E1F465B3700FF6423 /* GameoverView.swift in Sources */,
 				3D07A29C1ED1B1B600BFCE3A /* AppDelegate.swift in Sources */,
+				3DB575A31F46A830004F9616 /* Checkbox.swift in Sources */,
 				3DCB1D3C1F46519E00FF6423 /* PauseView.swift in Sources */,
 				3D07A2C51ED1B2F000BFCE3A /* MenuViewController.swift in Sources */,
 				3D857D791F2F2466001C8E28 /* Constants.swift in Sources */,
