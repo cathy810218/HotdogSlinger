@@ -462,11 +462,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if !hotdog.hasActions() {
                 hotdog.texture = SKTexture(imageNamed: "face")
             }
-            print(paths.first?.position.y)
             let diff = CGVector(dx: 0, dy: kMinJumpHeight)
             if isLanded {
-//                hotdog.physicsBody?.applyImpulse(diff)
-                hotdog.physicsBody?.applyImpulse(diff, at: hotdog.anchorPoint)
+                hotdog.physicsBody?.applyImpulse(diff)
                 print("min jump height \(kMinJumpHeight)")
                 if isSoundEffectOn {
                     run(jumpSound)
