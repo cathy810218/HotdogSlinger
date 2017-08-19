@@ -18,8 +18,6 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     
     var pauseView = PauseView()
     var pauseBtn = UIButton()
-    var removeAdsBtn = UIButton()
-    var restoreIAPBtn = UIButton()
     var tutorialView = TutorialView()
 
     var gameScene : GameScene!
@@ -309,8 +307,8 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
         } else {
             product = products[0]
             print("title: \(product?.localizedTitle ?? "no title")")
-            removeAdsBtn.isEnabled = !UserDefaults.standard.bool(forKey: "UserDefaultsPurchaseKey")
-            restoreIAPBtn.isEnabled = removeAdsBtn.isEnabled
+            gameoverView.removeAdsBtn.isEnabled = !UserDefaults.standard.bool(forKey: "UserDefaultsPurchaseKey")
+            gameoverView.restoreIAPBtn.isEnabled = gameoverView.removeAdsBtn.isEnabled
         }
         
         let invalids = response.invalidProductIdentifiers
@@ -325,8 +323,8 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
             case .purchased:
                 queue.finishTransaction(transaction)
                 print("Succeed")
-                removeAdsBtn.isEnabled = false
-                restoreIAPBtn.isEnabled = false
+                gameoverView.removeAdsBtn.isEnabled = false
+                gameoverView.restoreIAPBtn.isEnabled = false
                 Answers.logPurchase(withPrice: 0.99,
                                     currency: "USD",
                                     success: true,
@@ -339,7 +337,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
                 break
             case .failed:
                 queue.finishTransaction(transaction)
-                removeAdsBtn.isEnabled = true
+                gameoverView.removeAdsBtn.isEnabled = true
                 print("Failed")
                 break
             default:
@@ -363,8 +361,8 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
             if transaction.transactionState == .restored {
                 queue.finishTransaction(transaction)
                 print("Restore")
-                removeAdsBtn.isEnabled = false
-                restoreIAPBtn.isEnabled = false
+                gameoverView.removeAdsBtn.isEnabled = false
+                gameoverView.restoreIAPBtn.isEnabled = false
                 
                 UserDefaults.standard.set(true, forKey: "UserDefaultsPurchaseKey")
                 UserDefaults.standard.synchronize()

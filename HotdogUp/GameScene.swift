@@ -462,7 +462,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if !hotdog.hasActions() {
                 hotdog.texture = SKTexture(imageNamed: "face")
             }
-            let diff = CGVector(dx: 0, dy: kMinJumpHeight)
+            print("hotdog size: \(hotdog.size)")
+            let diff = CGVector(dx: 0, dy: UIDevice.current.userInterfaceIdiom == .pad ? 360 : kMinJumpHeight)
             if isLanded {
                 hotdog.physicsBody?.applyImpulse(diff)
                 print("min jump height \(kMinJumpHeight)")
