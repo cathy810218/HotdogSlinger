@@ -21,7 +21,7 @@ class GameoverView: UIView {
     weak var delegate: GameoverViewDelegate?
     var removeAdsBtn = UIButton()
     var restoreIAPBtn = UIButton()
-    
+    var shareBtn = UIButton()
     override init(frame: CGRect) {
         super.init(frame: frame)
 //        gameoverView = UIView()
@@ -79,7 +79,7 @@ class GameoverView: UIView {
         replayBtn.addTarget(self, action: #selector(resetGameToShowAds), for: .touchUpInside)
         replayBtn.tag = 0 // dead
         
-        let shareBtn = UIButton(type: .custom)
+        shareBtn = UIButton(type: .custom)
         shareBtn.setBackgroundImage(UIImage(named: "gameover_share"), for: .normal)
         self.addSubview(shareBtn)
         shareBtn.snp.makeConstraints { (make) in

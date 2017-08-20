@@ -186,6 +186,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
             sharingItems.append(image)
         }
         
+        
         let activityVC = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
         activityVC.excludedActivityTypes = [.addToReadingList,
                                             .airDrop,
@@ -195,8 +196,18 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
                                             .postToVimeo,
                                             .saveToCameraRoll,
                                             .print]
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            self.present(activityVC, animated: true, completion: nil)
+        } else {
+            activityVC.popoverPresentationController?.sourceView = gameoverView.shareBtn
+            activityVC.popoverPresentationController?.sourceRect = CGRect(x: gameoverView.shareBtn.bounds.width / 2,
+                                                                          y: gameoverView.shareBtn.bounds.height,
+                                                                          width: 0,
+                                                                          height: 0)
+            activityVC.popoverPresentationController?.permittedArrowDirections = .up
+            self.present(activityVC, animated: true, completion: nil)
+        }
         
-        self.present(activityVC, animated: true, completion: nil)
     }
     
     func gameoverViewDidPressReplayButton() {
@@ -222,7 +233,6 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     }
     
     // ===================================
-    
     
     func returnToMenu() {
         gameScene.removeAllChildren()
