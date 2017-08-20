@@ -29,7 +29,7 @@ class StoreViewController: UIViewController, UICollectionViewDelegate, UICollect
         print(item)
         let indexPath = IndexPath(item: item, section: 0)
         collectionView.selectItem(at: indexPath, animated: true, scrollPosition: UICollectionViewScrollPosition(rawValue: 0))
-        
+        collectionView.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition(rawValue: 0), animated: true)
     }
     
     override func viewDidLoad() {
@@ -41,7 +41,6 @@ class StoreViewController: UIViewController, UICollectionViewDelegate, UICollect
         collectionView.contentInset = UIEdgeInsetsMake(0, 70, 0, 70)
         collectionView.allowsMultipleSelection = false
         collectionView.allowsSelection = true
-        
         if UIDevice.current.userInterfaceIdiom == .pad {
             titleLabel.font = UIFont(name: "BradleyHandITCTT-Bold", size: 30)
         } else if UIDevice.current.userInterfaceIdiom == .phone {
@@ -51,7 +50,8 @@ class StoreViewController: UIViewController, UICollectionViewDelegate, UICollect
 //        createCTAButton()
         let img = UIImage(named: "mrjj")!
         let img2 = UIImage(named: "jane")!
-        characterImages = [img, img2]
+        let img3 = UIImage(named: "han")!
+        characterImages = [img, img2, img3]
     }
     
     func createCTAButton() {

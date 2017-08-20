@@ -223,18 +223,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hotdog = Hotdog(hotdogType: Hotdog.HotdogType(rawValue: UserDefaults.standard.integer(forKey: "UserDefaultsSelectCharacterKey"))!)
         hotdog.zPosition = 30
         hotdog.position = CGPoint(x: self.frame.size.width/2.0, y: hotdog.size.height/2.0)
-        hotdog.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        hotdog.physicsBody = SKPhysicsBody(rectangleOf: hotdog.size)
-        hotdog.physicsBody?.affectedByGravity = true
         hotdog.physicsBody?.categoryBitMask = hotdogCategory
         hotdog.physicsBody?.collisionBitMask = sideboundsCategory | rightBoundCategory | leftBoundCatrgory
         let run = SKAction.animate(with: hotdog.actions, timePerFrame: 0.2)
         hotdogRunForever = SKAction.repeatForever(run)
-        hotdog.physicsBody?.allowsRotation = false
-        hotdog.physicsBody?.restitution = 0.0
         hotdogMoveVelocity = 80.0
         self.addChild(hotdog)
-        print("mass: \(hotdog.physicsBody?.mass)")
     }
     
     func setupCounterLabel() {
@@ -249,10 +243,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func update(_ currentTime: TimeInterval) {
-        
         if let body = hotdog.physicsBody {
             let dy = body.velocity.dy
-            if dy > 0 {
+            if dy > 0 && !isLanded {
+                print("its jumping")
                 // Prevent collisions if the hotdog is jumping -> no pathCategory
                 body.collisionBitMask = sideboundsCategory | rightBoundCategory | leftBoundCatrgory
             }
@@ -318,7 +312,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                                       max: Int(self.frame.size.width - path.size.width))
                 }
                 let y = Int(paths.last!.frame.origin.y) + kMinJumpHeight + 30
-                print("x: \(x) y: \(y)")
+//                print("x: \(x) y: \(y)")
                 path.position = CGPoint(x: x, y: y)
                 paths.remove(at: paths.index(of: path)!) // remove the old path
                 if path.tag == 0 {
@@ -387,8 +381,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         let bodyA = contact.bodyA
         let bodyB = contact.bodyB
-        
-        isLanded = hotdog.physicsBody?.velocity.dy == 0.0
+        print("hotdog dy: \(hotdog.physicsBody?.velocity.dy)")
+        isLanded = (hotdog.physicsBody?.velocity.dy)! <= 1
         
         if bodyA.categoryBitMask == leftBoundCatrgory || bodyB.categoryBitMask == leftBoundCatrgory {
             hotdog.xScale *= hotdog.xScale > 0 ? 1 : -1
@@ -409,8 +403,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if dy > 0 {
                 // go up
                 hotdog.physicsBody?.collisionBitMask = sideboundsCategory | rightBoundCategory | leftBoundCatrgory
-            } else if dy < 0 {
+            } else {
                 // if current hotdog position is greater than current path
+                print("hotdog: \(hotdog.position.y - hotdog.size.height / 2.0)")
+                print("path: \(currPath.position.y + currPath.size.height / 2 - 20)")
                 if (hotdog.position.y - hotdog.size.height / 2.0 >= currPath.position.y + currPath.size.height / 2 - 20) {
                     hotdog.physicsBody?.contactTestBitMask = pathCategory
                     hotdog.physicsBody?.collisionBitMask = pathCategory | sideboundsCategory | rightBoundCategory | leftBoundCatrgory
@@ -449,18 +445,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if !hotdog.hasActions() {
                 hotdog.texture = hotdog.hotdogTexture
             }
-//            print("hotdog size: \(hotdog.size)")
-////            let ratio = hotdog.size.width / hotdog.size.height * kScale
-//            let ptu = 1.0 / sqrt((hotdog.physicsBody?.mass)!)
-////            print("ptu: \(ptu)")
-//            print("hotdog mass: \((hotdog.physicsBody?.mass)!)")
-////            print("gravity: \(self.physicsWorld.gravity.dy)")
-//            let dy = (hotdog.physicsBody?.mass)! * sqrt(-self.physicsWorld.gravity.dy * ptu)
-//            print("dy: \(dy)")
-//
+            print("jump")
             let diff = CGVector(dx: 0, dy: CGFloat(kMinJumpHeight))
-            
+            print(isLanded ? "islanded" : "not landed")
             if isLanded {
+                print("is landed")
                 hotdog.physicsBody?.applyImpulse(diff)
                 if isSoundEffectOn {
                     run(jumpSound)

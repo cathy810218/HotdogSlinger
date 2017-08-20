@@ -24,7 +24,6 @@
 		3D82D2EA1F4564B300A5C55A /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D82D2E91F4564B300A5C55A /* TutorialView.swift */; };
 		3D857D791F2F2466001C8E28 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D857D781F2F2466001C8E28 /* Constants.swift */; };
 		3DB575A31F46A830004F9616 /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB575A21F46A82F004F9616 /* Checkbox.swift */; };
-		3DB6C2181F484739005C86C9 /* CharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB6C2171F484739005C86C9 /* CharacterView.swift */; };
 		3DB6C21A1F486008005C86C9 /* CharacterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB6C2191F486008005C86C9 /* CharacterCell.swift */; };
 		3DB6C21E1F48F79C005C86C9 /* Hotdog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB6C21D1F48F79C005C86C9 /* Hotdog.swift */; };
 		3DCB1D3C1F46519E00FF6423 /* PauseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB1D3B1F46519E00FF6423 /* PauseView.swift */; };
@@ -67,7 +66,6 @@
 		3D857D781F2F2466001C8E28 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3D8E75341F349BE10019035A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = HotdogUp/Assets.xcassets; sourceTree = SOURCE_ROOT; };
 		3DB575A21F46A82F004F9616 /* Checkbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Checkbox.swift; path = "../../../Downloads/SimpleCheckbox-master/checkbox/Checkbox.swift"; sourceTree = "<group>"; };
-		3DB6C2171F484739005C86C9 /* CharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterView.swift; sourceTree = "<group>"; };
 		3DB6C2191F486008005C86C9 /* CharacterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCell.swift; sourceTree = "<group>"; };
 		3DB6C21D1F48F79C005C86C9 /* Hotdog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hotdog.swift; sourceTree = "<group>"; };
 		3DCB1D3B1F46519E00FF6423 /* PauseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseView.swift; sourceTree = "<group>"; };
@@ -177,7 +175,6 @@
 				3D82D2E91F4564B300A5C55A /* TutorialView.swift */,
 				3DCB1D3B1F46519E00FF6423 /* PauseView.swift */,
 				3DCB1D3D1F465B3700FF6423 /* GameoverView.swift */,
-				3DB6C2171F484739005C86C9 /* CharacterView.swift */,
 				3D07A2AA1ED1B1B600BFCE3A /* LaunchScreen.storyboard */,
 			);
 			name = View;
@@ -456,7 +453,6 @@
 				3DDD00781F482B2300198865 /* StoreViewController.swift in Sources */,
 				3DE3B76B1F393B4C0037FC18 /* MusicPlayer.swift in Sources */,
 				3DEF5CCC1F31C1A900BFA806 /* Path.swift in Sources */,
-				3DB6C2181F484739005C86C9 /* CharacterView.swift in Sources */,
 				3D07A2A41ED1B1B600BFCE3A /* GameViewController.swift in Sources */,
 				3DCB1D3E1F465B3700FF6423 /* GameoverView.swift in Sources */,
 				3D07A29C1ED1B1B600BFCE3A /* AppDelegate.swift in Sources */,
