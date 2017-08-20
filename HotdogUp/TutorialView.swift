@@ -54,7 +54,7 @@ class TutorialView: UIView {
         checkbox.snp.makeConstraints { (make) in
             make.centerX.equalTo(self).offset(-80)
             make.centerY.equalTo(self)
-            make.height.width.equalTo(25)
+            make.height.width.equalTo(UIDevice.current.userInterfaceIdiom == .pad ? 30 : 25)
         }
         checkbox.addTarget(self, action: #selector(checkboxValueChanged(sender:)), for: .valueChanged)
         
@@ -68,7 +68,7 @@ class TutorialView: UIView {
         label.text = "Do not show this again"
         checkbox.isHidden = false
         label.isHidden = false
-        label.font = UIFont(name: "BradleyHandITCTT-Bold", size: 18)
+        label.font = UIFont(name: "BradleyHandITCTT-Bold", size: UIDevice.current.userInterfaceIdiom == .pad ? 22 : 18)
     }
     
     @objc func checkboxValueChanged(sender: Checkbox) {

@@ -10,7 +10,7 @@ target 'HotdogUp' do
   pod 'Google-Mobile-Ads-SDK'
   pod 'Fabric'
   pod 'Crashlytics'
-
+  pod 'FAPaginationLayout'
 
   target 'HotdogUpTests' do
     inherit! :search_paths

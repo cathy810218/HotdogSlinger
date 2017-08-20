@@ -60,7 +60,6 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
         gameScene.gameSceneDelegate = self
         setupPauseView()
         setupGameOverView()
-        setupTutorialView()
         
         pauseBtn = UIButton(type: .custom)
         let pauseImg = UIImage(named: "button_pause")
@@ -71,12 +70,13 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
             make.top.left.equalTo(30)
             make.width.height.equalTo((pauseImg?.size.width)!)
         }
-        
+        setupTutorialView()
         SKPaymentQueue.default().add(self)
         getPurchaseInfo()
         
         if !UserDefaults.standard.bool(forKey: "UserDefaultsDoNotShowTutorialKey") {
             tutorialView.isHidden = false
+            
             gameScene.isUserInteractionEnabled = false
             tutorialView.showCheckbox = true
         }
@@ -89,6 +89,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     func presentGameScene() {
         skView = view as! SKView
         skView.showsFPS = true
+        skView.showsPhysics = true
         skView.showsNodeCount = true
         skView.ignoresSiblingOrder = true
         skView.presentScene(gameScene)
@@ -185,6 +186,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
             sharingItems.append(image)
         }
         
+        
         let activityVC = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
         activityVC.excludedActivityTypes = [.addToReadingList,
                                             .airDrop,
@@ -194,8 +196,18 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
                                             .postToVimeo,
                                             .saveToCameraRoll,
                                             .print]
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            self.present(activityVC, animated: true, completion: nil)
+        } else {
+            activityVC.popoverPresentationController?.sourceView = gameoverView.shareBtn
+            activityVC.popoverPresentationController?.sourceRect = CGRect(x: gameoverView.shareBtn.bounds.width / 2,
+                                                                          y: gameoverView.shareBtn.bounds.height,
+                                                                          width: 0,
+                                                                          height: 0)
+            activityVC.popoverPresentationController?.permittedArrowDirections = .up
+            self.present(activityVC, animated: true, completion: nil)
+        }
         
-        self.present(activityVC, animated: true, completion: nil)
     }
     
     func gameoverViewDidPressReplayButton() {
@@ -221,7 +233,6 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     }
     
     // ===================================
-    
     
     func returnToMenu() {
         gameScene.removeAllChildren()
@@ -261,7 +272,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
         
         let request = GADRequest()
         //TODO: Remove this before shipping
-        request.testDevices = [kGADSimulatorID, kCathyDeviceID, kShellyDeviceID]
+        request.testDevices = [kGADSimulatorID, kCathyDeviceID, kShellyDeviceID, "ad8874fc8d181c031955fe3c07e5c7e7"]
         interstitial.load(request)
         
         interstitial.delegate = self
