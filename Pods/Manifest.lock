@@ -1,4 +1,5 @@
 PODS:
+  - Armchair (0.3.0)
   - Crashlytics (3.8.5):
     - Fabric (~> 1.6.3)
   - Fabric (1.6.12)
@@ -7,29 +8,21 @@ PODS:
   - SnapKit (3.2.0)
 
 DEPENDENCIES:
+  - Armchair
   - Crashlytics
   - Fabric
   - FAPaginationLayout
   - Google-Mobile-Ads-SDK
-  - SnapKit (from `https://github.com/SnapKit/SnapKit.git`, branch `swift-4`)
-
-EXTERNAL SOURCES:
-  SnapKit:
-    :branch: swift-4
-    :git: https://github.com/SnapKit/SnapKit.git
-
-CHECKOUT OPTIONS:
-  SnapKit:
-    :commit: d31148f449abe819fd1a58d5e07e94874c7e6003
-    :git: https://github.com/SnapKit/SnapKit.git
+  - SnapKit (~> 3.2.0)
 
 SPEC CHECKSUMS:
+  Armchair: c8eca9bdca868fd6f7155eee73ba70a1278b0655
   Crashlytics: dfbae35ef22ca189240d230ad501feea4ee85d2d
   Fabric: f050464eac45a2ce5a8e6e6a07e977c0df32fe28
   FAPaginationLayout: 4dbd7e2907a6202dddb5fe714d4f7396e58299b3
   Google-Mobile-Ads-SDK: 4a6f1b43c8cc0e1e95a3b59d9f52a01671c6f9f3
-  SnapKit: c71c530b73cedd2a8b998098687001baff265086
+  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
 
-PODFILE CHECKSUM: 82622d6c9ed915c171d6efb177d2a1e459be48ac
+PODFILE CHECKSUM: 3217a9e1f35896411a69e78a23880be06069af59
 
 COCOAPODS: 1.2.1

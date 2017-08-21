@@ -10,6 +10,7 @@ import UIKit
 import GoogleMobileAds
 import Fabric
 import Crashlytics
+import Armchair
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Fabric.with([Crashlytics.self])
         GADMobileAds.configure(withApplicationID: kAdMobAppID)
+        Armchair.appID(kAppID)
+        Armchair.usesUntilPrompt(5)
+        Armchair.daysUntilPrompt(3)
         return true
     }
 

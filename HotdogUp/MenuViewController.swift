@@ -27,13 +27,18 @@ class MenuViewController: UIViewController {
     }
     
     @IBAction func rateButtonPressed(_ sender: UIButton) {
-        
+        CLSLogv("User hits rate button", getVaList([]))
         if let checkURL = URL(string: reviewUrlString) {
-            UIApplication.shared.open(checkURL, options: [:], completionHandler: { (success) in
-                if !success {
-                    print("Fail to go to the App Store")
-                }
-            })
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(checkURL, options: [:], completionHandler: { (success) in
+                    if !success {
+                        print("Fail to go to the App Store")
+                    }
+                })
+            } else {
+                // Fallback on earlier versions
+                UIApplication.shared.openURL(checkURL)
+            }
         } else {
             print("invalid url")
         }

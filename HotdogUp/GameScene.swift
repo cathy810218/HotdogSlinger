@@ -91,17 +91,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    override func sceneDidLoad() {
-        super.sceneDidLoad()
-        
-    }
-    
     override func didMove(to view: SKView) {
         super.didMove(to: view)
         
         if !isGameOver {
             self.physicsWorld.contactDelegate = self
-            self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -8.5)
+            self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -9.8)
             createBackground()
             setupPaths()
             setupCounterLabel()
@@ -402,8 +397,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 hotdog.physicsBody?.collisionBitMask = sideboundsCategory | rightBoundCategory | leftBoundCatrgory
             } else {
                 // if current hotdog position is greater than current path
-                print("hotdog: \(hotdog.position.y - hotdog.size.height / 2.0)")
-                print("path: \(currPath.position.y + currPath.size.height / 2 - 20)")
                 if (hotdog.position.y - hotdog.size.height / 2.0 >= currPath.position.y + currPath.size.height / 2 - 20) {
                     hotdog.physicsBody?.contactTestBitMask = pathCategory
                     hotdog.physicsBody?.collisionBitMask = pathCategory | sideboundsCategory | rightBoundCategory | leftBoundCatrgory
@@ -442,11 +435,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if !hotdog.hasActions() {
                 hotdog.texture = hotdog.hotdogTexture
             }
-            print("jump")
             let diff = CGVector(dx: 0, dy: CGFloat(kMinJumpHeight))
-            print(isLanded ? "islanded" : "not landed")
             if isLanded {
-                print("is landed")
                 hotdog.physicsBody?.applyImpulse(diff)
                 if isSoundEffectOn {
                     run(jumpSound)
@@ -467,7 +457,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.physicsBody?.categoryBitMask = hotdogCategory
             }
             
-            if score % kLevel == 0 && score > 0 {                
+            if score % kLevel == 0 && score > 0 {
+                hotdog.physicsBody?.mass += 0.001
                 for bg in backgrounds {
                     bg.speed += kSpeedIncrement
                 }

@@ -33,10 +33,10 @@ class Hotdog: SKSpriteNode {
         super.init(texture: hotdogTexture, color: UIColor.clear, size: (hotdogTexture?.size())!)
         self.hotdogType = hotdogType
         self.physicsBody = SKPhysicsBody(rectangleOf: self.size)
-        self.physicsBody?.mass = 0.2
+        self.physicsBody?.mass = 0.18
         
         if UIDevice.current.userInterfaceIdiom == .pad {
-            self.physicsBody?.mass = 0.24
+            self.physicsBody?.mass = 0.23
         }
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         self.physicsBody?.affectedByGravity = true

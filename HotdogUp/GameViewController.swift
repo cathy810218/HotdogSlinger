@@ -103,6 +103,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     }
     
     @objc func pauseButtonDidPressed() {
+        print("pause view shown")
         UserDefaults.standard.set(gameScene.speed, forKey: "UserDefaultsResumeSpeedKey")
         gameScene.gamePaused = true
         MusicPlayer.player.pause()
@@ -422,6 +423,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     }
     
     deinit {
+        SKPaymentQueue.default().remove(self)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.UIApplicationWillResignActive, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
     }
