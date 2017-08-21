@@ -103,13 +103,14 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     }
     
     @objc func pauseButtonDidPressed() {
-        print("pause view shown")
-        UserDefaults.standard.set(gameScene.speed, forKey: "UserDefaultsResumeSpeedKey")
-        gameScene.gamePaused = true
-        MusicPlayer.player.pause()
-        pauseView.isHidden = false
-        gameScene.isUserInteractionEnabled = false
-        pauseBtn.isEnabled = false // disable it
+        if gameoverView.isHidden == true {
+            UserDefaults.standard.set(gameScene.speed, forKey: "UserDefaultsResumeSpeedKey")
+            gameScene.gamePaused = true
+            MusicPlayer.player.pause()
+            pauseView.isHidden = false
+            gameScene.isUserInteractionEnabled = false
+            pauseBtn.isEnabled = false // disable it
+        }
     }
     
     func setupTutorialView() {
