@@ -29,23 +29,16 @@ class StoreViewController: UIViewController, UICollectionViewDelegate, UICollect
         print(item)
         let indexPath = IndexPath(item: item, section: 0)
         collectionView.selectItem(at: indexPath, animated: true, scrollPosition: UICollectionViewScrollPosition(rawValue: 0))
-        collectionView.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition(rawValue: 0), animated: true)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        titleLabel.text = "Select your hotdog"
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.contentInset = UIEdgeInsetsMake(0, 70, 0, 70)
         collectionView.allowsMultipleSelection = false
         collectionView.allowsSelection = true
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            titleLabel.font = UIFont(name: "BradleyHandITCTT-Bold", size: 30)
-        } else if UIDevice.current.userInterfaceIdiom == .phone {
-            titleLabel.font = UIFont(name: "BradleyHandITCTT-Bold", size: 24)
-        }
         collectionView.backgroundColor = UIColor.clear
 //        createCTAButton()
         let img = UIImage(named: "mrjj")!

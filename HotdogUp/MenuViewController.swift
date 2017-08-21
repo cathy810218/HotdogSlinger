@@ -11,14 +11,10 @@ import Crashlytics
 
 class MenuViewController: UIViewController {
     var gameVC: GameViewController?
-    var characterVC: StoreViewController?
-    @IBOutlet weak var startButton: UIButton!
-    
+    var characterVC: StoreViewController?    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActive) name:UIApplicationWillResignActiveNotification object:nil];
-        //
     }
     
     @IBAction func startButtonPressed(_ sender: Any) {

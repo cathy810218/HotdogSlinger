@@ -40,7 +40,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var scoreLabel = UILabel()
     var highest = SKLabelNode()
     var reuseCount = 0
-    var hotdogMoveVelocity: CGFloat = 80.0
+    var hotdogMoveVelocity: CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 100.0 : 80.0
     var gamePaused = false {
         didSet {
             isPaused = gamePaused
@@ -246,7 +246,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if let body = hotdog.physicsBody {
             let dy = body.velocity.dy
             if dy > 0 && !isLanded {
-                print("its jumping")
                 // Prevent collisions if the hotdog is jumping -> no pathCategory
                 body.collisionBitMask = sideboundsCategory | rightBoundCategory | leftBoundCatrgory
             }
@@ -312,7 +311,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                                       max: Int(self.frame.size.width - path.size.width))
                 }
                 let y = Int(paths.last!.frame.origin.y) + kMinJumpHeight + 30
-//                print("x: \(x) y: \(y)")
                 path.position = CGPoint(x: x, y: y)
                 paths.remove(at: paths.index(of: path)!) // remove the old path
                 if path.tag == 0 {
@@ -381,8 +379,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         let bodyA = contact.bodyA
         let bodyB = contact.bodyB
-        print("hotdog dy: \(hotdog.physicsBody?.velocity.dy)")
-        isLanded = (hotdog.physicsBody?.velocity.dy)! <= 1
+        isLanded = (hotdog.physicsBody?.velocity.dy)! <= 1 && (hotdog.physicsBody?.velocity.dy)! >= 0
         
         if bodyA.categoryBitMask == leftBoundCatrgory || bodyB.categoryBitMask == leftBoundCatrgory {
             hotdog.xScale *= hotdog.xScale > 0 ? 1 : -1
