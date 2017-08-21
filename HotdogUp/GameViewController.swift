@@ -88,9 +88,9 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     
     func presentGameScene() {
         skView = view as! SKView
-        skView.showsFPS = true
+//        skView.showsFPS = true
 //        skView.showsPhysics = true
-        skView.showsNodeCount = true
+//        skView.showsNodeCount = true
         skView.ignoresSiblingOrder = true
         skView.presentScene(gameScene)
     }
@@ -175,6 +175,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
         let screenshot = view.takeSnapshot()
         socialShare(sharingText: "🌭 I just hit \(score) on HotdogUp! Beat it! 🌭\n\n\n\(shareToAppStoreURL)",
             sharingImage: screenshot)
+        CLSLogv("User pressed share", getVaList([]))
     }
     private func socialShare(sharingText: String?, sharingImage: UIImage?) {
         var sharingItems = [Any]()
@@ -224,8 +225,14 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     }
     
     func gameoverViewDidPressRemoveAds() {
-        let payment = SKPayment(product: product!)
-        SKPaymentQueue.default().add(payment)
+        if let product = product {
+            let payment = SKPayment(product: product)
+            SKPaymentQueue.default().add(payment)
+        } else {
+            let alert = UIAlertController(title: "Error", message: "Something is wrong! Please try again.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     func gameoverViewDidPressRestore() {
@@ -279,9 +286,6 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
         
         return interstitial
     }
-    func interstitialWillPresentScreen(_ ad: GADInterstitial) {
-        print("will present ads")
-    }
     
     func interstitialDidReceiveAd(_ ad: GADInterstitial) {
         print("Interstitial loaded successfully")
@@ -290,6 +294,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     
     func interstitialDidFail(toPresentScreen ad: GADInterstitial) {
         print("Fail to receive interstitial")
+        resetGame()
     }
     
     func interstitialDidDismissScreen(_ ad: GADInterstitial) {
@@ -305,8 +310,9 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
             request.delegate = self
             request.start()
         } else {
-            print("Can't make payments check settings")
-            //TODO: Show alert
+            let alert = UIAlertController(title: "Error", message: "Can't make payment. Please check Settings.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
     }
     func request(_ request: SKRequest, didFailWithError error: Error) {
@@ -322,7 +328,6 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
             print("No product found")
         } else {
             product = products[0]
-            print("title: \(product?.localizedTitle ?? "no title")")
             gameoverView.removeAdsBtn.isEnabled = !UserDefaults.standard.bool(forKey: "UserDefaultsPurchaseKey")
             gameoverView.restoreIAPBtn.isEnabled = gameoverView.removeAdsBtn.isEnabled
         }
@@ -354,6 +359,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
             case .failed:
                 queue.finishTransaction(transaction)
                 gameoverView.removeAdsBtn.isEnabled = true
+                CLSLogv("User failed to purchase removeAds", getVaList([]))
                 print("Failed")
                 break
             default:
@@ -366,7 +372,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     
     func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
         let alert = UIAlertController(title: "Restore Failed",
-                                      message: "You have not purchased RemoveAds feature or please check the internet connections",
+                                      message: "We are unable to restore your purchase.",
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
