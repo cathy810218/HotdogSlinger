@@ -72,8 +72,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var paths = [Path]()
     var backgrounds = [SKSpriteNode]()
     var isGameOver = false
-    let jumpSound = SKAction.playSoundFileNamed("jumping", waitForCompletion: false)
-    let fallingSound = SKAction.playSoundFileNamed("falling", waitForCompletion: true)
+    var jumpSound = SKAction()
+    var fallingSound = SKAction()
     var isSoundEffectOn = UserDefaults.standard.bool(forKey: "UserDefaultsIsSoundEffectOnKey")
     var isMusicOn = UserDefaults.standard.bool(forKey: "UserDefaultsIsMusicOnKey") {
         didSet {
@@ -102,6 +102,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             setupCounterLabel()
             setupHighestScoreLabel()
             createHotdog()
+            jumpSound = SKAction.playSoundFileNamed("\(hotdog.hotdogType.name)_hop", waitForCompletion: false)
+            fallingSound = SKAction.playSoundFileNamed("\(hotdog.hotdogType.name)_fall", waitForCompletion: true)
         }
         MusicPlayer.loadBackgroundMusic()
         isMusicOn ? MusicPlayer.resumePlay() : MusicPlayer.player.stop()
@@ -361,7 +363,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func gameOver() {
         isGameOver = true // needs to set this first to prevent updating getting called again
-        let fallingSound = SKAction.playSoundFileNamed("falling", waitForCompletion: true)
         if isSoundEffectOn {
             run(fallingSound)
         }

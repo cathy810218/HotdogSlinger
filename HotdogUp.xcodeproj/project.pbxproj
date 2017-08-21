@@ -11,8 +11,6 @@
 		2E81EE5DA125EC716465FB5D /* Pods_HotdogUpTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE67EC77FA7DC6F89927725D /* Pods_HotdogUpTests.framework */; };
 		3D023F7A1F4942C60099BCA9 /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D023F791F49406E0099BCA9 /* Checkbox.swift */; };
 		3D023F7E1F49436B0099BCA9 /* Brother_Jack.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D023F7B1F4943220099BCA9 /* Brother_Jack.mp3 */; };
-		3D023F7F1F49436D0099BCA9 /* jumping.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3D023F7D1F4943480099BCA9 /* jumping.wav */; };
-		3D023F801F49436F0099BCA9 /* falling.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D023F7C1F49432A0099BCA9 /* falling.mp3 */; };
 		3D07A29C1ED1B1B600BFCE3A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07A29B1ED1B1B600BFCE3A /* AppDelegate.swift */; };
 		3D07A2A21ED1B1B600BFCE3A /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07A2A11ED1B1B600BFCE3A /* GameScene.swift */; };
 		3D07A2A41ED1B1B600BFCE3A /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07A2A31ED1B1B600BFCE3A /* GameViewController.swift */; };
@@ -25,6 +23,12 @@
 		3D79C3691F43A64200013DAE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D79C3681F43A64200013DAE /* StoreKit.framework */; };
 		3D82D2EA1F4564B300A5C55A /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D82D2E91F4564B300A5C55A /* TutorialView.swift */; };
 		3D857D791F2F2466001C8E28 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D857D781F2F2466001C8E28 /* Constants.swift */; };
+		3D9F41951F4B8574005CDE44 /* mrjj_fall.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3D9F41931F4B8574005CDE44 /* mrjj_fall.wav */; };
+		3D9F41961F4B8574005CDE44 /* mrjj_hop.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3D9F41941F4B8574005CDE44 /* mrjj_hop.wav */; };
+		3D9F41991F4B8580005CDE44 /* han_fall.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3D9F41971F4B8580005CDE44 /* han_fall.wav */; };
+		3D9F419A1F4B8580005CDE44 /* han_hop.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3D9F41981F4B8580005CDE44 /* han_hop.wav */; };
+		3D9F419D1F4B858B005CDE44 /* jane_hop.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3D9F419B1F4B858B005CDE44 /* jane_hop.wav */; };
+		3D9F419E1F4B858B005CDE44 /* jane_fall.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3D9F419C1F4B858B005CDE44 /* jane_fall.wav */; };
 		3DB6C21A1F486008005C86C9 /* CharacterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB6C2191F486008005C86C9 /* CharacterCell.swift */; };
 		3DB6C21E1F48F79C005C86C9 /* Hotdog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB6C21D1F48F79C005C86C9 /* Hotdog.swift */; };
 		3DCB1D3C1F46519E00FF6423 /* PauseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB1D3B1F46519E00FF6423 /* PauseView.swift */; };
@@ -49,8 +53,6 @@
 		06471FCEC9D047D778F4ACC9 /* Pods-HotdogUp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HotdogUp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HotdogUp/Pods-HotdogUp.debug.xcconfig"; sourceTree = "<group>"; };
 		3D023F791F49406E0099BCA9 /* Checkbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checkbox.swift; sourceTree = "<group>"; };
 		3D023F7B1F4943220099BCA9 /* Brother_Jack.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Brother_Jack.mp3; sourceTree = "<group>"; };
-		3D023F7C1F49432A0099BCA9 /* falling.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = falling.mp3; sourceTree = "<group>"; };
-		3D023F7D1F4943480099BCA9 /* jumping.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = jumping.wav; sourceTree = "<group>"; };
 		3D07A2981ED1B1B600BFCE3A /* HotdogUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HotdogUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D07A29B1ED1B1B600BFCE3A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3D07A2A11ED1B1B600BFCE3A /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -67,6 +69,12 @@
 		3D82D2E91F4564B300A5C55A /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
 		3D857D781F2F2466001C8E28 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3D8E75341F349BE10019035A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = HotdogUp/Assets.xcassets; sourceTree = SOURCE_ROOT; };
+		3D9F41931F4B8574005CDE44 /* mrjj_fall.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = mrjj_fall.wav; sourceTree = "<group>"; };
+		3D9F41941F4B8574005CDE44 /* mrjj_hop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = mrjj_hop.wav; sourceTree = "<group>"; };
+		3D9F41971F4B8580005CDE44 /* han_fall.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = han_fall.wav; sourceTree = "<group>"; };
+		3D9F41981F4B8580005CDE44 /* han_hop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = han_hop.wav; sourceTree = "<group>"; };
+		3D9F419B1F4B858B005CDE44 /* jane_hop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = jane_hop.wav; sourceTree = "<group>"; };
+		3D9F419C1F4B858B005CDE44 /* jane_fall.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = jane_fall.wav; sourceTree = "<group>"; };
 		3DB6C2191F486008005C86C9 /* CharacterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCell.swift; sourceTree = "<group>"; };
 		3DB6C21D1F48F79C005C86C9 /* Hotdog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hotdog.swift; sourceTree = "<group>"; };
 		3DCB1D3B1F46519E00FF6423 /* PauseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseView.swift; sourceTree = "<group>"; };
@@ -199,9 +207,13 @@
 			children = (
 				3D07A29B1ED1B1B600BFCE3A /* AppDelegate.swift */,
 				3D07A2AD1ED1B1B600BFCE3A /* Info.plist */,
+				3D9F419B1F4B858B005CDE44 /* jane_hop.wav */,
+				3D9F419C1F4B858B005CDE44 /* jane_fall.wav */,
 				3D023F7B1F4943220099BCA9 /* Brother_Jack.mp3 */,
-				3D023F7D1F4943480099BCA9 /* jumping.wav */,
-				3D023F7C1F49432A0099BCA9 /* falling.mp3 */,
+				3D9F41971F4B8580005CDE44 /* han_fall.wav */,
+				3D9F41981F4B8580005CDE44 /* han_hop.wav */,
+				3D9F41931F4B8574005CDE44 /* mrjj_fall.wav */,
+				3D9F41941F4B8574005CDE44 /* mrjj_hop.wav */,
 				3D8E75341F349BE10019035A /* Assets.xcassets */,
 			);
 			name = "Supporting Files";
@@ -317,12 +329,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3D023F7F1F49436D0099BCA9 /* jumping.wav in Resources */,
 				3D023F7E1F49436B0099BCA9 /* Brother_Jack.mp3 in Resources */,
-				3D023F801F49436F0099BCA9 /* falling.mp3 in Resources */,
+				3D9F41991F4B8580005CDE44 /* han_fall.wav in Resources */,
 				3D07A2A71ED1B1B600BFCE3A /* Main.storyboard in Resources */,
+				3D9F419E1F4B858B005CDE44 /* jane_fall.wav in Resources */,
+				3D9F41961F4B8574005CDE44 /* mrjj_hop.wav in Resources */,
+				3D9F419D1F4B858B005CDE44 /* jane_hop.wav in Resources */,
+				3D9F419A1F4B8580005CDE44 /* han_hop.wav in Resources */,
 				3D3430D31F349D8A00B71BDC /* Assets.xcassets in Resources */,
 				3D07A2AC1ED1B1B600BFCE3A /* LaunchScreen.storyboard in Resources */,
+				3D9F41951F4B8574005CDE44 /* mrjj_fall.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

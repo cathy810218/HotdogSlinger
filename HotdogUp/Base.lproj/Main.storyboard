@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.19" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Q7m-vQ-pb3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Q7m-vQ-pb3">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.16"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -80,7 +79,6 @@
                                 </variation>
                                 <connections>
                                     <action selector="startButtonPressed:" destination="Q7m-vQ-pb3" eventType="touchUpInside" id="BAV-9n-9Xu"/>
-                                    <segue destination="BV1-FR-VrT" kind="show" id="sl9-Ad-Nxx"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="menu_hodog" translatesAutoresizingMaskIntoConstraints="NO" id="LLg-Il-odk">
@@ -90,7 +88,7 @@
                                 </constraints>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="menu_name" translatesAutoresizingMaskIntoConstraints="NO" id="XG4-M7-pcV">
-                                <rect key="frame" x="20" y="50" width="374" height="277.33333333333331"/>
+                                <rect key="frame" x="20" y="30" width="374" height="277.33333333333331"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="XG4-M7-pcV" secondAttribute="height" multiplier="375:278" id="D3j-EU-m6R"/>
                                 </constraints>

@@ -23,7 +23,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     var gameScene : GameScene!
     var skView = SKView()
     var gameoverView = GameoverView()
-    
+    var activityIndicator = UIActivityIndicatorView()
     var interstitial: GADInterstitial?
     var hasInternet = true {
         didSet {
@@ -79,6 +79,15 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
             
             gameScene.isUserInteractionEnabled = false
             tutorialView.showCheckbox = true
+        }
+        
+        // set up activity indicator
+        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        self.view.addSubview(activityIndicator)
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.stopAnimating()
+        activityIndicator.snp.makeConstraints { (make) in
+            make.center.equalTo(self.view)
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(pauseButtonDidPressed), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
@@ -228,6 +237,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     
     func gameoverViewDidPressRemoveAds() {
         if let product = product {
+            activityIndicator.startAnimating()
             let payment = SKPayment(product: product)
             SKPaymentQueue.default().add(payment)
         } else {
@@ -238,6 +248,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     }
     
     func gameoverViewDidPressRestore() {
+        activityIndicator.startAnimating()
         SKPaymentQueue.default().restoreCompletedTransactions()
     }
     
@@ -281,7 +292,9 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
         
         let request = GADRequest()
 //        //TODO: Remove this before shipping
-//        request.testDevices = [kGADSimulatorID, kCathyDeviceID, kShellyDeviceID, "ad8874fc8d181c031955fe3c07e5c7e7"]
+        #if DEBUG
+        request.testDevices = [kGADSimulatorID, kCathyDeviceID, kShellyDeviceID, "ad8874fc8d181c031955fe3c07e5c7e7"]
+        #endif
         interstitial.load(request)
         
         interstitial.delegate = self
@@ -311,15 +324,16 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
             let request = SKProductsRequest(productIdentifiers: NSSet(object: self.productID) as! Set<String>)
             request.delegate = self
             request.start()
-        } else {
-            let alert = UIAlertController(title: "Error", message: "Can't make payment. Please check Settings.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
         }
     }
+    
     func request(_ request: SKRequest, didFailWithError error: Error) {
+        activityIndicator.stopAnimating()
         hasInternet = false
         gameScene.hasInternet = false
+        let alert = UIAlertController(title: "Error", message: "Can't make payment. Please check the Internet connection.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
@@ -357,8 +371,10 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
                                     customAttributes: nil)
                 UserDefaults.standard.set(true, forKey: "UserDefaultsPurchaseKey")
                 UserDefaults.standard.synchronize()
+                activityIndicator.stopAnimating()
                 break
             case .failed:
+                activityIndicator.stopAnimating()
                 queue.finishTransaction(transaction)
                 gameoverView.removeAdsBtn.isEnabled = true
                 CLSLogv("User failed to purchase removeAds", getVaList([]))
@@ -373,6 +389,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     
     
     func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
+        activityIndicator.stopAnimating()
         let alert = UIAlertController(title: "Restore Failed",
                                       message: "We are unable to restore your purchase.",
                                       preferredStyle: .alert)
@@ -381,6 +398,14 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     }
     
     func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
+        activityIndicator.stopAnimating()
+        if queue.transactions.count == 0 {
+            let alert = UIAlertController(title: "Restore Failed",
+                                          message: "You have not purchased RemoveAds.",
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
         for transaction in queue.transactions {
             if transaction.transactionState == .restored {
                 queue.finishTransaction(transaction)
