@@ -10,7 +10,7 @@
     },
     {
       "idiom" : "iphone",
-      "filename" : "game_night_background_first.png",
+      "filename" : "night_background_first.png",
       "scale" : "3x"
     },
     {
@@ -19,7 +19,7 @@
     },
     {
       "idiom" : "ipad",
-      "filename" : "ipad_game_night_background_first.png",
+      "filename" : "ipad_night_background_first.png",
       "scale" : "2x"
     }
   ],

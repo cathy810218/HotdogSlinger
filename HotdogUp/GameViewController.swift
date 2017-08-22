@@ -19,7 +19,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     var pauseView = PauseView()
     var pauseBtn = UIButton()
     var tutorialView = TutorialView()
-
+    
     var gameScene : GameScene!
     var skView = SKView()
     var gameoverView = GameoverView()
@@ -90,7 +90,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
             make.center.equalTo(self.view)
         }
         interstitial = createInterstitial()
-
+        
         NotificationCenter.default.addObserver(self, selector: #selector(pauseButtonDidPressed), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(pauseButtonDidPressed), name: Notification.Name.UIApplicationWillResignActive, object: nil)
@@ -98,9 +98,9 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     
     func presentGameScene() {
         skView = view as! SKView
-//        skView.showsFPS = true
-//        skView.showsPhysics = true
-//        skView.showsNodeCount = true
+        //        skView.showsFPS = true
+        //        skView.showsPhysics = true
+        //        skView.showsNodeCount = true
         skView.ignoresSiblingOrder = true
         skView.presentScene(gameScene)
     }
@@ -135,7 +135,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
         tutorialView.isHidden = true
         gameScene.isUserInteractionEnabled = true
     }
-
+    
     //MARK: PauseViewDelegate
     func pauseViewDidPressHomeButton() {
         returnToMenu()
@@ -294,7 +294,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
         
         let request = GADRequest()
         #if DEBUG
-        request.testDevices = [kGADSimulatorID, kCathyDeviceID, kShellyDeviceID, "ad8874fc8d181c031955fe3c07e5c7e7"]
+            request.testDevices = [kGADSimulatorID, kCathyDeviceID, kShellyDeviceID, "ad8874fc8d181c031955fe3c07e5c7e7"]
         #endif
         interstitial.load(request)
         
@@ -304,7 +304,6 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     }
     
     func interstitialDidFail(toPresentScreen ad: GADInterstitial) {
-        print("Fail to receive interstitial")
         resetGame()
     }
     
@@ -426,7 +425,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     override var shouldAutorotate: Bool {
         return true
     }
-
+    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
             return .allButUpsideDown
@@ -434,12 +433,12 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
             return .all
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Release any cached data, images, etc that aren't in use.
     }
-
+    
     override var prefersStatusBarHidden: Bool {
         return true
     }

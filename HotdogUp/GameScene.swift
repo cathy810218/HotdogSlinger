@@ -85,7 +85,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var isReset = false {
         didSet {
             if isReset && UserDefaults.standard.bool(forKey: "UserDefaultsIsMusicOnKey"){
-                print("did reset")
                 MusicPlayer.replay()
             }
         }
@@ -93,7 +92,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
-        
+        highest.fontColor = hasInternet ? UIColor.white : UIColor.red
+
         if !isGameOver {
             self.physicsWorld.contactDelegate = self
             self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -9.8)
@@ -109,12 +109,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         isMusicOn ? MusicPlayer.resumePlay() : MusicPlayer.player.stop()
         
 //        let longPress = UILongPressGestureRecognizer(target: self,
-//                                                     action: #selector(moveDirection(longPress:)))
-//        let tap = UITapGestureRecognizer(target: self,
-//                                         action: #selector(tapJump))
-//        self.view?.addGestureRecognizer(tap)
+//                                                     action: #selector(springJump(longPress:)))
 //        self.view?.addGestureRecognizer(longPress)
     }
+    
 //    @objc func springJump(longPress: UILongPressGestureRecognizer) {
 //        switch longPress.state {
 //        case .began:
@@ -128,19 +126,54 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //        case .ended:
 //            print("end")
 //            timer.invalidate()
-//            let diff = CGVector(dx: hotdog.xScale > 0.0 ? 20 : -20,
-//                                dy: timeCounter > kMaxJumpHeight ? kMaxJumpHeight : timeCounter)
-//            if isLanded {
-//                hotdog.physicsBody?.applyImpulse(diff)
-//            }
-//            isLanded = false
+//            let pos = longPress.location(in: self.view)
+//            jump(pos: pos)
 //            timeCounter = kMinJumpHeight
 //            break
 //        default:
 //            break
 //        }
 //    }
-        
+    
+//    func jump(pos: CGPoint) {
+//        if !hotdog.hasActions() {
+//            hotdog.texture = hotdog.hotdogTexture
+//        }
+//        let diff = CGVector(dx: hotdog.xScale > 0.0 ? 20 : -20,
+//                            dy: timeCounter > kMaxJumpHeight ? kMaxJumpHeight : timeCounter)
+//        if isLanded {
+//            hotdog.physicsBody?.applyImpulse(diff)
+//            if isSoundEffectOn {
+//                run(jumpSound)
+//            }
+//        }
+//        isLanded = false
+//        
+//        // Start moving background
+//        if hotdog.position.y > self.frame.size.height / 2.0 && background.speed == 0 {
+//            // move the background up
+//            initialBackground.speed = kGameSpeed
+//            for bg in backgrounds {
+//                bg.speed = kGameSpeed
+//            }
+//            for path in paths {
+//                path.speed = kGameSpeed
+//            }
+//            self.physicsBody?.categoryBitMask = hotdogCategory
+//        }
+//        
+//        if score % kLevel == 0 && score > 0 {
+//            hotdog.physicsBody?.mass += 0.001
+//            for bg in backgrounds {
+//                bg.speed += kSpeedIncrement
+//            }
+//            hotdogMoveVelocity += kHotdogMoveVelocityIncrement
+//            for path in paths {
+//                path.speed += kSpeedIncrement
+//            }
+//        }
+//    }
+//    
 //    @objc func incrementTimer() {
 //        timeCounter += kJumpIntensity
 //        print(timeCounter)
@@ -436,7 +469,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if !hotdog.hasActions() {
                 hotdog.texture = hotdog.hotdogTexture
             }
-            let diff = CGVector(dx: 0, dy: CGFloat(kMinJumpHeight))
+            let diff = CGVector(dx: 0, dy: CGFloat(kMinJumpHeight + 10))
             if isLanded {
                 hotdog.physicsBody?.applyImpulse(diff)
                 if isSoundEffectOn {
@@ -470,30 +503,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
-    
-    func touchMoved(toPoint pos : CGPoint) {
-    }
-    
-    func touchUp(atPoint pos : CGPoint) {
-    }
-    
+
+//    func touchMoved(toPoint pos : CGPoint) {
+//    }
+//    
+//    func touchUp(atPoint pos : CGPoint) {
+//    }
+//    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
             self.touchDown(atPoint: t.location(in: self))
         }
     }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches {
-            self.touchMoved(toPoint: t.location(in: self))
-        }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
+//
+//    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        for t in touches {
+//            self.touchMoved(toPoint: t.location(in: self))
+//        }
+//    }
+//    
+//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+//    }
+//    
+//    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+//    }
 }
