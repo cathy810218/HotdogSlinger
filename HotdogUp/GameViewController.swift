@@ -89,7 +89,8 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
         activityIndicator.snp.makeConstraints { (make) in
             make.center.equalTo(self.view)
         }
-        
+        interstitial = createInterstitial()
+
         NotificationCenter.default.addObserver(self, selector: #selector(pauseButtonDidPressed), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(pauseButtonDidPressed), name: Notification.Name.UIApplicationWillResignActive, object: nil)
@@ -224,8 +225,8 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     
     func gameoverViewDidPressReplayButton() {
         gameoverView.isHidden = true
-        if !UserDefaults.standard.bool(forKey: "UserDefaultsPurchaseKey") && hasInternet {
-            interstitial = createInterstitial()
+        if !UserDefaults.standard.bool(forKey: "UserDefaultsPurchaseKey") && hasInternet && interstitial != nil {
+            interstitial?.present(fromRootViewController: self)
         } else {
             resetGame()
         }
@@ -263,6 +264,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     }
     
     func resetGame() {
+        interstitial = createInterstitial()
         gameScene.resetGameScene()
         pauseView.isHidden = true
         pauseBtn.isEnabled = true
@@ -291,7 +293,6 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
         }
         
         let request = GADRequest()
-//        //TODO: Remove this before shipping
         #if DEBUG
         request.testDevices = [kGADSimulatorID, kCathyDeviceID, kShellyDeviceID, "ad8874fc8d181c031955fe3c07e5c7e7"]
         #endif
@@ -300,11 +301,6 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
         interstitial.delegate = self
         
         return interstitial
-    }
-    
-    func interstitialDidReceiveAd(_ ad: GADInterstitial) {
-        print("Interstitial loaded successfully")
-        ad.present(fromRootViewController: self)
     }
     
     func interstitialDidFail(toPresentScreen ad: GADInterstitial) {
