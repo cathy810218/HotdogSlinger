@@ -32,8 +32,8 @@ class Station: SKSpriteNode {
         }
     }
     var isShooting = false
+    
     init(stationType: StationType) {
-        
         let stationTexture = SKTexture(imageNamed: stationType.name)
         super.init(texture: stationTexture, color: .clear, size: stationTexture.size())
         self.stationType = stationType
@@ -70,12 +70,15 @@ class Station: SKSpriteNode {
         isShooting = true
         let sauce = Sauce(type: stationType)
         addChild(sauce)
+//        let moveAcross = SKAction.move(by: CGVector(dx: UIScreen.main.bounds.width + sauce.size.width, dy: -UIScreen.main.bounds.height/4.0), duration: 3)
 
         let moveAcross = SKAction.moveTo(x: UIScreen.main.bounds.width + sauce.size.width, duration: 3)
+        let moveDown = SKAction.moveBy(x: 0, y: -UIScreen.main.bounds.height/4.0, duration: 3)
+        let group = SKAction.group([moveAcross, moveDown])
         let reset = SKAction.run {
             self.isShooting = false
             sauce.removeFromParent()
         }
-        sauce.run(SKAction.sequence([moveAcross, reset]))
+        sauce.run(SKAction.sequence([group, reset]))
     }
 }

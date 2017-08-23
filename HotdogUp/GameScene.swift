@@ -222,7 +222,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hotdog.physicsBody?.collisionBitMask = ContactCategory.sidebounds.rawValue
                                             | ContactCategory.rightbound.rawValue
                                             | ContactCategory.leftbound.rawValue
-                                            | ContactCategory.sauce.rawValue
         let run = SKAction.animate(with: hotdog.actions, timePerFrame: 0.2)
         hotdogRunForever = SKAction.repeatForever(run)
         hotdogMoveVelocity = 80.0
@@ -324,11 +323,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     let level = reuseCount / kNumOfStairsToUpdate
                     updatePathTexture(path: path, level: level)
                     
-                    if level == 3 || level == 4 {
+                    if level >= 2 && level < 5 {
                         stations.forEach({ (station) in
                             station.isHidden = false
                             station.stationType = StationType(rawValue: level)!
-//                            station.texture = SKTexture(imageNamed: "stationName")
                         })
                     }
                 }
@@ -361,7 +359,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             station.tag = i
             stations.append(station)
             addChild(station)
-//            station.isHidden = true
+            station.isHidden = true
             if i == 1 {
                 station.animateRightLeft(duration: 3)
             } else {
@@ -369,12 +367,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
-    
-//    func updateStationTexture() {
-//        stations.forEach { (station) in
-//            station.texture = SKTexture
-//        }
-//    }
     
     func hideKetchupStation() {
         stations.forEach { (station) in
@@ -443,12 +435,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let dy = hotdog.physicsBody!.velocity.dy
             if dy > 0 {
                 // go up
-                hotdog.physicsBody?.collisionBitMask = ContactCategory.sidebounds.rawValue | ContactCategory.rightbound.rawValue | ContactCategory.leftbound.rawValue | ContactCategory.sauce.rawValue
+                hotdog.physicsBody?.collisionBitMask = ContactCategory.sidebounds.rawValue | ContactCategory.rightbound.rawValue | ContactCategory.leftbound.rawValue
             } else {
                 // if current hotdog position is greater than current path
                 if (hotdog.position.y - hotdog.size.height / 2.0 >= currPath.position.y + currPath.size.height / 2 - 20) {
-                    hotdog.physicsBody?.contactTestBitMask = ContactCategory.path.rawValue
-                    hotdog.physicsBody?.collisionBitMask = ContactCategory.path.rawValue | ContactCategory.sidebounds.rawValue | ContactCategory.leftbound.rawValue | ContactCategory.rightbound.rawValue | ContactCategory.sauce.rawValue
+                    hotdog.physicsBody?.contactTestBitMask = ContactCategory.path.rawValue | ContactCategory.sauce.rawValue
+                    hotdog.physicsBody?.collisionBitMask = ContactCategory.path.rawValue | ContactCategory.sidebounds.rawValue | ContactCategory.leftbound.rawValue | ContactCategory.rightbound.rawValue
                     
                     if !currPath.isVisited {
                         score += 1
@@ -463,7 +455,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             // update hotdog texture
             print("Got shot")
             hotdog.shotCount += 1
+            bodyA.velocity.dx = 0
             if hotdog.shotCount >= 3 {
+                
 //                gameOver()
             }
         }
