@@ -27,7 +27,7 @@ class Hotdog: SKSpriteNode {
     var actions: [SKTexture] = []
     var hotdogType = HotdogType.mrjj
     var hotdogTexture: SKTexture?
-    
+    var shotCount = 0
     init(hotdogType: HotdogType) {
         
         hotdogTexture = SKTexture(imageNamed: "\(hotdogType.name)_11")

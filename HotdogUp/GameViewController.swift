@@ -98,9 +98,9 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     
     func presentGameScene() {
         skView = view as! SKView
-        //        skView.showsFPS = true
-        //        skView.showsPhysics = true
-        //        skView.showsNodeCount = true
+        skView.showsFPS = true
+        skView.showsPhysics = true
+        skView.showsNodeCount = true
         skView.ignoresSiblingOrder = true
         skView.presentScene(gameScene)
     }
