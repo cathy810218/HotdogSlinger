@@ -70,8 +70,7 @@ class Station: SKSpriteNode {
         isShooting = true
         let sauce = Sauce(type: stationType)
         addChild(sauce)
-//        let moveAcross = SKAction.move(by: CGVector(dx: UIScreen.main.bounds.width + sauce.size.width, dy: -UIScreen.main.bounds.height/4.0), duration: 3)
-
+        sauce.position = CGPoint(x: sauce.size.width, y: 0)
         let moveAcross = SKAction.moveTo(x: UIScreen.main.bounds.width + sauce.size.width, duration: 3)
         let moveDown = SKAction.moveBy(x: 0, y: -UIScreen.main.bounds.height/4.0, duration: 3)
         let group = SKAction.group([moveAcross, moveDown])
