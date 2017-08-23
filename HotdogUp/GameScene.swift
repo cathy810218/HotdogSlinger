@@ -37,15 +37,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var hotdog = Hotdog(hotdogType: .mrjj)
     var hotdogRunForever = SKAction()
     
-//    let hotdogCategory: UInt32 = 0x1 << 0
-//    let cactusCategory: UInt32 = 0x1 << 1
-//    var sideboundsCategory: UInt32 = 0x1 << 2
-//    let leftBoundCatrgory: UInt32 = 0x1 << 3
-//    let rightBoundCategory: UInt32 = 0x1 << 4
-//    let pathCategory: UInt32 = 0x1 << 5
-//    let sauceCategory: UInt32 = 0x1 >> 6
-//    let stationCategory: UInt32 = 0x1 >> 7
-    
     var background = SKSpriteNode()
     var initialBackground = SKSpriteNode()
     
@@ -81,7 +72,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var timer = Timer()
     var timeCounter = kMinJumpHeight
     var isLanded = true
-    var isStationStarted = false
     var paths = [Path]()
     var stations = [Station]()
     var backgrounds = [SKSpriteNode]()
@@ -116,7 +106,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             setupCounterLabel()
             setupHighestScoreLabel()
             createHotdog()
-            createKetchupStation()
+            createStation()
             jumpSound = SKAction.playSoundFileNamed("\(hotdog.hotdogType.name)_hop", waitForCompletion: false)
             fallingSound = SKAction.playSoundFileNamed("\(hotdog.hotdogType.name)_fall", waitForCompletion: true)
         }
@@ -160,13 +150,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         removeAllChildren()
         paths.removeAll()
         stations.removeAll()
-//        sauces.removeAll()
         
         setupPaths()
         setupHighestScoreLabel()
         createHotdog()
         createBackground()
-        createKetchupStation()
+        createStation()
 
         score = 0
         reuseCount = 0
@@ -176,7 +165,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         isGameOver = false
         isLanded = true
         isReset = true
-        isStationStarted = false
         isUserInteractionEnabled = true
     }
     
@@ -267,7 +255,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         for i in 0...2 {
             if stations[i].position.x >= -10 && !stations[i].isHidden && !stations[i].isShooting {
-                stations[i].shootKetchup()
+                stations[i].shootSauce()
             }
         }
     }
@@ -333,7 +321,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     reuseCount += 1
                 }
                 if reuseCount % kNumOfStairsToUpdate == 0 { // every 25 stairs change the stair style
-                    updatePathTexture(path: path, level: reuseCount / kNumOfStairsToUpdate)
+                    let level = reuseCount / kNumOfStairsToUpdate
+                    updatePathTexture(path: path, level: level)
+                    
+                    if level == 3 || level == 4 {
+                        stations.forEach({ (station) in
+                            station.isHidden = false
+                            station.stationType = StationType(rawValue: level)!
+//                            station.texture = SKTexture(imageNamed: "stationName")
+                        })
+                    }
                 }
                 paths.append(path) // append new path
             }
@@ -344,12 +341,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         switch level {
         case 1:
             path.texture = SKTexture(imageNamed: "onion")
-            startShootingKetchup()
         case 2:
             path.texture = SKTexture(imageNamed: "tomato")
         case 3:
             path.texture = SKTexture(imageNamed: "mustard")
-            hideKetchupStation()
         case 4:
             path.texture = SKTexture(imageNamed: "fire")
         default:
@@ -357,35 +352,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    func createKetchupStation() {
+    func createStation() {
         // generates
         for i in 0...2 {
-            let ketchup = Station(stationType: .ketchup)
+            let station = Station(stationType: .ketchup)
             let y = Int((self.view?.bounds.height)! / 4.0) * (i + 1)
-            ketchup.position = CGPoint(x: i == 1 ? -ketchup.size.width/2.0 : 0, y: CGFloat(y))
-            ketchup.tag = i
-            stations.append(ketchup)
-            addChild(ketchup)
-            ketchup.isHidden = true
+            station.position = CGPoint(x: i == 1 ? -station.size.width/2.0 : 0, y: CGFloat(y))
+            station.tag = i
+            stations.append(station)
+            addChild(station)
+//            station.isHidden = true
+            if i == 1 {
+                station.animateRightLeft(duration: 3)
+            } else {
+                station.animateLeftRight(duration: 3)
+            }
         }
     }
     
-    func startShootingKetchup() {
-        if isStationStarted == false {
-            for station in stations {
-                station.isHidden = false
-                if station.tag == 1 {
-                    station.animateRightLeft(duration: 3)
-                } else {
-                    station.animateLeftRight(duration: 3)
-                }
-            }
-            isStationStarted = true
-        }
-    }
+//    func updateStationTexture() {
+//        stations.forEach { (station) in
+//            station.texture = SKTexture
+//        }
+//    }
     
     func hideKetchupStation() {
-        isStationStarted = false
         stations.forEach { (station) in
             station.isHidden = true
         }
@@ -424,6 +415,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         speed = 0
         gameSceneDelegate?.gameSceneGameEnded()
         isMusicOn = false
+        isUserInteractionEnabled = false
+        hotdog.speed = 0
     }
     
     //MARK: Collision Detection
@@ -471,7 +464,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             print("Got shot")
             hotdog.shotCount += 1
             if hotdog.shotCount >= 3 {
-                gameOver()
+//                gameOver()
             }
         }
     }

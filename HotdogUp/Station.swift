@@ -9,26 +9,32 @@
 import UIKit
 import SpriteKit
 
-class Station: SKSpriteNode {
-    public enum StationType: Int {
-        case ketchup = 0 //default
-        case mustard = 1
-        
-        
-        var name : String {
-            switch self {
-            case .ketchup: return "ketchup"
-            case .mustard: return "mustard"
-            }
+enum StationType: Int {
+    case ketchup = 2 //default level 2
+    case wasabi = 3
+    case water = 4
+    
+    var name : String {
+        switch self {
+        case .ketchup: return "ketchup"
+        case .wasabi: return "wasabi"
+        case .water: return "water"
         }
     }
-    var tag = 0
-    var stationType = StationType.ketchup
-    var isShooting = false
+}
+
+class Station: SKSpriteNode {
     
+    var tag = 0
+    var stationType = StationType.ketchup {
+        didSet {
+            self.texture = SKTexture(imageNamed: stationType.name)
+        }
+    }
+    var isShooting = false
     init(stationType: StationType) {
         
-        let stationTexture = SKTexture(imageNamed: "\(stationType.name)")
+        let stationTexture = SKTexture(imageNamed: stationType.name)
         super.init(texture: stationTexture, color: .clear, size: stationTexture.size())
         self.stationType = stationType
         self.physicsBody = SKPhysicsBody(texture: stationTexture, size: self.size)
@@ -60,13 +66,11 @@ class Station: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func shootKetchup() {
+    func shootSauce() {
         isShooting = true
         let sauce = Sauce(type: stationType)
         addChild(sauce)
-        sauce.physicsBody?.contactTestBitMask = ContactCategory.hotdog.rawValue
-        sauce.physicsBody?.categoryBitMask = ContactCategory.sauce.rawValue
-        sauce.physicsBody?.collisionBitMask = ContactCategory.hotdog.rawValue
+
         let moveAcross = SKAction.moveTo(x: UIScreen.main.bounds.width + sauce.size.width, duration: 3)
         let reset = SKAction.run {
             self.isShooting = false

@@ -11,7 +11,7 @@ import SpriteKit
 
 class Sauce: SKSpriteNode {
     var tag = 0
-    init(type: Station.StationType) {
+    init(type: StationType) {
         let sauceTexture = SKTexture(imageNamed: "\(type.name)_short")
         super.init(texture: sauceTexture, color: .clear, size: sauceTexture.size())
 
@@ -19,6 +19,9 @@ class Sauce: SKSpriteNode {
         self.physicsBody?.affectedByGravity = false
         self.physicsBody?.allowsRotation = false
         self.physicsBody?.isDynamic = false
+        self.physicsBody?.contactTestBitMask = ContactCategory.hotdog.rawValue
+        self.physicsBody?.categoryBitMask = ContactCategory.sauce.rawValue
+//        self.physicsBody?.collisionBitMask = ContactCategory.hotdog.rawValue
     }
     
     required init?(coder aDecoder: NSCoder) {
