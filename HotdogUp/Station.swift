@@ -21,6 +21,17 @@ enum StationType: Int {
         case .water: return "water"
         }
     }
+    
+    var shootSpeed: TimeInterval {
+        switch self {
+        case .ketchup:
+            return 4
+        case .wasabi:
+            return 3
+        case .water:
+            return 2
+        }
+    }
 }
 
 class Station: SKSpriteNode {
@@ -48,16 +59,16 @@ class Station: SKSpriteNode {
     }
 
     
-    func animateLeftRight(duration: TimeInterval) {
-        let moveLeft = SKAction.moveTo(x: -self.size.width/2.0, duration: duration)
-        let moveRight = SKAction.moveTo(x: 0, duration: duration)
+    func animateLeftRight() {
+        let moveLeft = SKAction.moveTo(x: -self.size.width/2.0, duration: stationType.shootSpeed)
+        let moveRight = SKAction.moveTo(x: 0, duration: stationType.shootSpeed)
         let seq = SKAction.sequence([moveLeft, moveRight])
         self.run(SKAction.repeatForever(seq))
     }
     
-    func animateRightLeft(duration: TimeInterval) {
-        let moveLeft = SKAction.moveTo(x: 0, duration: duration)
-        let moveRight = SKAction.moveTo(x: -self.size.width/2.0, duration: duration)
+    func animateRightLeft() {
+        let moveLeft = SKAction.moveTo(x: 0, duration: stationType.shootSpeed)
+        let moveRight = SKAction.moveTo(x: -self.size.width/2.0, duration: stationType.shootSpeed)
         let seq = SKAction.sequence([moveLeft, moveRight])
         self.run(SKAction.repeatForever(seq))
     }
@@ -71,8 +82,8 @@ class Station: SKSpriteNode {
         let sauce = Sauce(type: stationType)
         addChild(sauce)
         sauce.position = CGPoint(x: sauce.size.width, y: 0)
-        let moveAcross = SKAction.moveTo(x: UIScreen.main.bounds.width + sauce.size.width, duration: 3)
-        let moveDown = SKAction.moveBy(x: 0, y: -UIScreen.main.bounds.height/4.0, duration: 3)
+        let moveAcross = SKAction.moveTo(x: UIScreen.main.bounds.width + sauce.size.width, duration: stationType.shootSpeed)
+        let moveDown = SKAction.moveBy(x: 0, y: -UIScreen.main.bounds.height/4.0, duration: stationType.shootSpeed)
         let group = SKAction.group([moveAcross, moveDown])
         let reset = SKAction.run {
             self.isShooting = false

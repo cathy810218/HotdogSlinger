@@ -74,6 +74,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var isLanded = true
     var paths = [Path]()
     var stations = [Station]()
+    var healths = [SKSpriteNode]()
     var backgrounds = [SKSpriteNode]()
     var isGameOver = false
     var jumpSound = SKAction()
@@ -156,7 +157,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         createHotdog()
         createBackground()
         createStation()
-
+//        createHealth()
+        
         score = 0
         reuseCount = 0
         scoreLabel.text = "0"
@@ -319,11 +321,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if path.tag == 0 {
                     reuseCount += 1
                 }
-                if reuseCount % kNumOfStairsToUpdate == 0 { // every 25 stairs change the stair style
+                if reuseCount % kNumOfStairsToUpdate == 0 { // every kNumOfStairsToUpdate * 5 stairs change the stair style
                     let level = reuseCount / kNumOfStairsToUpdate
                     updatePathTexture(path: path, level: level)
                     
-                    if level >= 2 && level < 5 {
+                    if level >= 2 && level < 5 && path.tag == 3 {
                         stations.forEach({ (station) in
                             station.isHidden = false
                             station.stationType = StationType(rawValue: level)!
@@ -361,18 +363,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             addChild(station)
             station.isHidden = true
             if i == 1 {
-                station.animateRightLeft(duration: 3)
+                station.animateRightLeft()
             } else {
-                station.animateLeftRight(duration: 3)
+                station.animateLeftRight()
             }
         }
     }
     
-    func hideKetchupStation() {
-        stations.forEach { (station) in
-            station.isHidden = true
-        }
-    }
+//    func createHealth() {
+//        for _ in 0...2 {
+//            let texture = SKTexture(imageNamed: "")
+//            let health = SKSpriteNode(texture: texture)
+//            addChild(health)
+//            healths.append(health)
+//            health.position = CGPoint(x: highest.position.x, y: highest.position.y - 40)
+//        }
+//    }
     
     func setupHighestScoreLabel() {
         let highestScoreLab = SKLabelNode()
@@ -451,15 +457,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-        if bodyA.categoryBitMask == ContactCategory.sauce.rawValue || bodyB.categoryBitMask == ContactCategory.sauce.rawValue {
+        if bodyA.categoryBitMask == ContactCategory.sauce.rawValue || bodyB.categoryBitMask == ContactCategory.sauce.rawValue && !isGameOver {
             // update hotdog texture
             print("Got shot")
-            hotdog.shotCount += 1
-            bodyA.velocity.dx = 0
-            if hotdog.shotCount >= 3 {
-                
-//                gameOver()
-            }
+            bodyA.isResting = true
+//            hotdog.shotCount += 1
+//            bodyA.velocity.dx = 0
+//            if hotdog.shotCount >= 3 {
+                gameOver()
+//            }
         }
     }
     
