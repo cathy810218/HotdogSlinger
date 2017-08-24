@@ -305,6 +305,15 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
         return interstitial
     }
     
+    func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
+        Answers.logCustomEvent(withName: "interstitial fail to receive ads", customAttributes: nil)
+        resetGame()
+    }
+    func interstitialWillLeaveApplication(_ ad: GADInterstitial) {
+        let id = ad.adUnitID ?? "unknow"
+        Answers.logCustomEvent(withName: "interstitial will leave app", customAttributes: ["AdUnitID" : id])
+    }
+    
     func interstitialDidFail(toPresentScreen ad: GADInterstitial) {
         resetGame()
     }

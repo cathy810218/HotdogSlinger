@@ -13,7 +13,7 @@ target 'HotdogUp' do
   pod 'Crashlytics'
   pod 'FAPaginationLayout'
   pod 'Armchair'
-  
+
   target 'HotdogUpTests' do
     inherit! :search_paths
     # Pods for testing

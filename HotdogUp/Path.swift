@@ -16,10 +16,6 @@ class Path: SKSpriteNode {
         self.isVisited = false
         super.init(texture: texture, color: UIColor.clear, size: texture.size())
         self.position = position
-//        self.physicsBody = SKPhysicsBody(texture: texture, alphaThreshold: 0, size: self.size)
-        
-//        self.physicsBody = SKPhysicsBody(circleOfRadius: max(self.size.width/2, self.size.height/2))
-//        self.physicsBody = SKPhysicsBody(texture: texture, size: self.size)
         self.physicsBody = SKPhysicsBody(rectangleOf: self.size)
         self.physicsBody?.allowsRotation = false
         self.physicsBody?.affectedByGravity = false
