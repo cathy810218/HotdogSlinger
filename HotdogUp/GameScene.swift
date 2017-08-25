@@ -285,7 +285,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                                   max: Int(self.frame.size.width - firstPath.size.width))
             
             // if the distance between two paths (center to center) is greater than 1.5 paths
-            while abs(Int(lastPath.position.x) - x) > Int(1.5 * firstPath.size.width) {
+            while abs(Int(lastPath.position.x) - x) > Int(1.8 * firstPath.size.width) {
                 x = p_randomPoint(min: Int(firstPath.size.width / 2.0),
                                   max: Int(self.frame.size.width - firstPath.size.width))
             }
@@ -307,48 +307,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for path in paths {
             if path.position.y < 0 {
                 path.reset()
-                var x = p_randomPoint(min: Int(path.size.width / 2.0),
-                                      max: Int(self.frame.size.width - path.size.width))
                 
-                // if the distance between two paths (center to center) is greater than 1.5 paths
-                while abs(Int(paths.last!.position.x) - x) > Int(1.5 * path.size.width) {
-                    x = p_randomPoint(min: Int(path.size.width / 2.0),
-                                      max: Int(self.frame.size.width - path.size.width))
-                }
-                let y = Int(paths.last!.frame.origin.y) + kMinJumpHeight + 30
-                path.position = CGPoint(x: x, y: y)
-                paths.remove(at: paths.index(of: path)!) // remove the old path
+                var minLeft = 0
                 if path.tag == 0 {
                     reuseCount += 1
                 }
                 if reuseCount % kNumOfStairsToUpdate == 0 { // every kNumOfStairsToUpdate * 5 stairs change the stair style
-                    let level = reuseCount / kNumOfStairsToUpdate
-                    updatePathTexture(path: path, level: level)
+                    let level = reuseCount / kNumOfStairsToUpdate > 4 ? 4 : reuseCount / kNumOfStairsToUpdate
+                    path.type = PathType(rawValue: level)!
                     
-                    if level >= 2 && level < 5 && path.tag == 3 {
-                        stations.forEach({ (station) in
-                            station.isHidden = false
-                            station.stationType = StationType(rawValue: level)!
-                        })
+                    if level >= 2 && level < 5 {
+                        minLeft = Int(stations[0].size.width)
+                        if path.tag >= 3 {
+                            stations.forEach({ (station) in
+                                station.isHidden = false
+                                station.stationType = StationType(rawValue: level)!
+                            })
+                        }
                     }
                 }
-                paths.append(path) // append new path
+
+                
+                
+                var x = p_randomPoint(min: Int(path.size.width / 2.0),
+                                      max: Int(self.frame.size.width - path.size.width))
+                
+                // if the distance between two paths (center to center) is greater than 1.8 paths
+                while abs(Int(paths.last!.position.x) - x) > Int(1.8 * path.size.width) || x <= minLeft {
+                    x = p_randomPoint(min: Int(path.size.width / 2.0),
+                                      max: Int(self.frame.size.width - path.size.width))
+                }
+                print("current x: \(x) with minLeft: \(minLeft)")
+                let y = Int(paths.last!.frame.origin.y) + kMinJumpHeight + 30
+                path.position = CGPoint(x: x, y: y)
+                paths.remove(at: paths.index(of: path)!) // remove the old path
+                                paths.append(path) // append new path
             }
-        }
-    }
-    
-    private func updatePathTexture(path: Path, level: Int) {
-        switch level {
-        case 1:
-            path.texture = SKTexture(imageNamed: "onion")
-        case 2:
-            path.texture = SKTexture(imageNamed: "tomato")
-        case 3:
-            path.texture = SKTexture(imageNamed: "mustard")
-        case 4:
-            path.texture = SKTexture(imageNamed: "fire")
-        default:
-            print("reach the highest level")
         }
     }
     
@@ -384,7 +378,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let highestScoreLab = SKLabelNode()
         highestScoreLab.text = "Highest"
         addChild(highestScoreLab)
-        highestScoreLab.position = CGPoint(x: self.frame.width - 60, y: self.frame.height - 40)
+        highestScoreLab.position = CGPoint(x: self.frame.width - 60, y: self.frame.height - 45)
         highestScoreLab.fontColor = UIColor.white
         highestScoreLab.fontSize = 18
         highestScoreLab.fontName = "AmericanTypewriter"
@@ -394,7 +388,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         highest.text = String(UserDefaults.standard.integer(forKey: "UserDefaultsHighestScoreKey"))
         addChild(highest)
-        highest.position = CGPoint(x: highestScoreLab.position.x, y: self.frame.height - 60)
+        highest.position = CGPoint(x: highestScoreLab.position.x, y: self.frame.height - 65)
         highest.fontColor = UIColor.white
         highest.fontSize = 16
         highest.fontName = "AmericanTypewriter"

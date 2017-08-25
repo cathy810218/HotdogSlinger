@@ -81,7 +81,9 @@ class Station: SKSpriteNode {
         isShooting = true
         let sauce = Sauce(type: stationType)
         addChild(sauce)
-        sauce.position = CGPoint(x: sauce.size.width, y: 0)
+        sauce.zPosition = -1
+        sauce.position = CGPoint(x: sauce.size.width/2.0 - 5, y: 0)
+        let wait = SKAction.wait(forDuration: 1.5)
         let moveAcross = SKAction.moveTo(x: UIScreen.main.bounds.width + sauce.size.width, duration: stationType.shootSpeed)
         let moveDown = SKAction.moveBy(x: 0, y: -UIScreen.main.bounds.height/4.0, duration: stationType.shootSpeed)
         let group = SKAction.group([moveAcross, moveDown])
@@ -89,6 +91,6 @@ class Station: SKSpriteNode {
             self.isShooting = false
             sauce.removeFromParent()
         }
-        sauce.run(SKAction.sequence([group, reset]))
+        sauce.run(SKAction.sequence([wait, group, reset]))
     }
 }

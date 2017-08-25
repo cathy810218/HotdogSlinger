@@ -8,9 +8,33 @@
 
 import UIKit
 import SpriteKit
+enum PathType: Int {
+    case pickle = 0
+    case onion = 1
+    case tomato = 2
+    case mustard = 3
+    case fire = 4
+    
+    
+    var name : String {
+        switch self {
+        case .pickle: return "pickle"
+        case .onion: return "onion"
+        case .tomato: return "tomato"
+        case .mustard: return "mustard"
+        case .fire: return "fire"
+        }
+    }
+}
 class Path: SKSpriteNode {
     var isVisited: Bool
     var tag = 0
+    var type: PathType = PathType.pickle {
+        didSet {
+            self.texture = SKTexture(imageNamed: "\(type.name)")
+        }
+    }
+    
     init(position: CGPoint) {
         let texture = SKTexture(imageNamed: "pickle")
         self.isVisited = false

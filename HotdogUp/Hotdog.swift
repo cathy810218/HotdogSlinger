@@ -33,7 +33,10 @@ class Hotdog: SKSpriteNode {
         hotdogTexture = SKTexture(imageNamed: "\(hotdogType.name)_11")
         super.init(texture: hotdogTexture, color: UIColor.clear, size: (hotdogTexture?.size())!)
         self.hotdogType = hotdogType
-        self.physicsBody = SKPhysicsBody(rectangleOf: self.size)
+//        self.physicsBody = SKPhysicsBody(rectangleOf: self.size)
+        self.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: self.size.width-20, height: self.size.height))
+//        self.physicsBody = SKPhysicsBody(texture: hotdogTexture!, size: self.size)
+//        self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.height/2.0)
         self.physicsBody?.mass = 0.18
         
         if UIDevice.current.userInterfaceIdiom == .pad {
