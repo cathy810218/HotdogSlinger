@@ -285,7 +285,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                                   max: Int(self.frame.size.width - firstPath.size.width))
             
             // if the distance between two paths (center to center) is greater than 1.5 paths
-            while abs(Int(lastPath.position.x) - x) > Int(1.8 * firstPath.size.width) {
+            while abs(Int(lastPath.position.x) - x) > Int(1.65 * firstPath.size.width) {
                 x = p_randomPoint(min: Int(firstPath.size.width / 2.0),
                                   max: Int(self.frame.size.width - firstPath.size.width))
             }
@@ -333,11 +333,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                                       max: Int(self.frame.size.width - path.size.width))
                 
                 // if the distance between two paths (center to center) is greater than 1.8 paths
-                while abs(Int(paths.last!.position.x) - x) > Int(1.8 * path.size.width) || x <= minLeft {
+                while abs(Int(paths.last!.position.x) - x) > Int(1.65 * path.size.width) || x <= minLeft {
                     x = p_randomPoint(min: Int(path.size.width / 2.0),
                                       max: Int(self.frame.size.width - path.size.width))
                 }
-                print("current x: \(x) with minLeft: \(minLeft)")
                 let y = Int(paths.last!.frame.origin.y) + kMinJumpHeight + 30
                 path.position = CGPoint(x: x, y: y)
                 paths.remove(at: paths.index(of: path)!) // remove the old path
