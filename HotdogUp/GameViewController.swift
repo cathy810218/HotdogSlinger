@@ -98,9 +98,11 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     
     func presentGameScene() {
         skView = view as! SKView
-        //        skView.showsFPS = true
-        //        skView.showsPhysics = true
-        //        skView.showsNodeCount = true
+        if _isDebugAssertConfiguration() {
+//            skView.showsFPS = true
+//            skView.showsPhysics = true
+//            skView.showsNodeCount = true
+        }
         skView.ignoresSiblingOrder = true
         skView.presentScene(gameScene)
     }
@@ -293,14 +295,23 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
         }
         
         let request = GADRequest()
-        #if DEBUG
+        if _isDebugAssertConfiguration() {
             request.testDevices = [kGADSimulatorID, kCathyDeviceID, kShellyDeviceID, "ad8874fc8d181c031955fe3c07e5c7e7"]
-        #endif
+        }
         interstitial.load(request)
         
         interstitial.delegate = self
         
         return interstitial
+    }
+    
+    func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
+        Answers.logCustomEvent(withName: "interstitial fail to receive ads", customAttributes: nil)
+        resetGame()
+    }
+    func interstitialWillLeaveApplication(_ ad: GADInterstitial) {
+        let id = ad.adUnitID ?? "unknow"
+        Answers.logCustomEvent(withName: "interstitial will leave app", customAttributes: ["AdUnitID" : id])
     }
     
     func interstitialDidFail(toPresentScreen ad: GADInterstitial) {

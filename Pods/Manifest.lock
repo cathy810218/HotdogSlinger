@@ -4,7 +4,7 @@ PODS:
     - Fabric (~> 1.6.3)
   - Fabric (1.6.12)
   - FAPaginationLayout (0.0.4)
-  - Google-Mobile-Ads-SDK (7.21.0)
+  - Google-Mobile-Ads-SDK (7.22.0)
   - SnapKit (3.2.0)
 
 DEPENDENCIES:
@@ -20,9 +20,9 @@ SPEC CHECKSUMS:
   Crashlytics: dfbae35ef22ca189240d230ad501feea4ee85d2d
   Fabric: f050464eac45a2ce5a8e6e6a07e977c0df32fe28
   FAPaginationLayout: 4dbd7e2907a6202dddb5fe714d4f7396e58299b3
-  Google-Mobile-Ads-SDK: 4a6f1b43c8cc0e1e95a3b59d9f52a01671c6f9f3
+  Google-Mobile-Ads-SDK: 1bdf1a4244d0553b1840239874c209c01aef055f
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
 
-PODFILE CHECKSUM: 3217a9e1f35896411a69e78a23880be06069af59
+PODFILE CHECKSUM: 747404b9404f97e451d0f8c6f405c166b1452e9d
 
 COCOAPODS: 1.2.1
