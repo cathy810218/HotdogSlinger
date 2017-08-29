@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import Flurry_iOS_SDK
 
 class StoreViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -112,5 +113,6 @@ class StoreViewController: UIViewController, UICollectionViewDelegate, UICollect
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         UserDefaults.standard.set(indexPath.item, forKey: "UserDefaultsSelectCharacterKey")
+        Flurry.logEvent("Did Select Hotdog from Store View Controller");
     }
 }

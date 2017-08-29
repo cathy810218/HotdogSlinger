@@ -13,6 +13,7 @@ target 'HotdogUp' do
   pod 'Crashlytics'
   pod 'FAPaginationLayout'
   pod 'Armchair'
+  pod 'Flurry-iOS-SDK/FlurrySDK'
 
   target 'HotdogUpTests' do
     inherit! :search_paths

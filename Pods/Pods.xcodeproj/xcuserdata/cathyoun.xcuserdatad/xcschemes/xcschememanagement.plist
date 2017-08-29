@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Flurry-iOS-SDK.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-HotdogUp.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -37,6 +42,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>4646576BAE3511AC833E41713263F74A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>5A08AAF56F8D0D97071293CB6DF0816C</key>
 		<dict>
 			<key>primary</key>
@@ -47,12 +57,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B587F4D5FB8E40CF32465D90D8E709AC</key>
+		<key>C553D5096AF9EA377E4AC1187C6FBF77</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C5D69EECF3F88C20D6DB7525105FD105</key>
+		<key>DD761169489713624BAA52A5B69921D6</key>
 		<dict>
 			<key>primary</key>
 			<true/>

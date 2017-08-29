@@ -13,6 +13,7 @@ import SnapKit
 import StoreKit
 import GoogleMobileAds
 import Crashlytics
+import Flurry_iOS_SDK
 
 class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate, GameoverViewDelegate, GADInterstitialDelegate, SKPaymentTransactionObserver, SKProductsRequestDelegate {
     
@@ -189,7 +190,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
         let screenshot = view.takeSnapshot()
         socialShare(sharingText: "🌭 I just hit \(score) on HotdogUp! Beat it! 🌭\n\n\n\(shareToAppStoreURL)",
             sharingImage: screenshot)
-        CLSLogv("User pressed share", getVaList([]))
+        Flurry.logEvent("User tapped Share");
     }
     private func socialShare(sharingText: String?, sharingImage: UIImage?) {
         var sharingItems = [Any]()
@@ -296,7 +297,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
         
         let request = GADRequest()
         if _isDebugAssertConfiguration() {
-            request.testDevices = [kGADSimulatorID, kCathyDeviceID, kShellyDeviceID, "ad8874fc8d181c031955fe3c07e5c7e7"]
+//            request.testDevices = [kGADSimulatorID, kCathyDeviceID, kShellyDeviceID, "ad8874fc8d181c031955fe3c07e5c7e7"]
         }
         interstitial.load(request)
         
@@ -311,6 +312,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     }
     func interstitialWillLeaveApplication(_ ad: GADInterstitial) {
         let id = ad.adUnitID ?? "unknow"
+        Flurry.logEvent("Interstitial will leave the app");
         Answers.logCustomEvent(withName: "interstitial will leave app", customAttributes: ["AdUnitID" : id])
     }
     
@@ -377,13 +379,15 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
                                     customAttributes: nil)
                 UserDefaults.standard.set(true, forKey: "UserDefaultsPurchaseKey")
                 UserDefaults.standard.synchronize()
+                Flurry.logEvent("User purchased RemoveAds");
                 activityIndicator.stopAnimating()
                 break
             case .failed:
                 activityIndicator.stopAnimating()
                 queue.finishTransaction(transaction)
                 gameoverView.removeAdsBtn.isEnabled = true
-                CLSLogv("User failed to purchase removeAds", getVaList([]))
+                Flurry.logEvent("User failed to purchase RemoveAds");
+
                 print("Failed")
                 break
             default:

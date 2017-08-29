@@ -71,7 +71,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     var timer = Timer()
     var timeCounter = kMinJumpHeight
-    var isLanded = true
+    var isLanded = true {
+        didSet {
+            print("island: \(isLanded)")
+        }
+    }
     var paths = [Path]()
     var stations = [Station]()
     var healths = [SKSpriteNode]()
@@ -198,7 +202,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         initialBackground.speed = 0
         
         // Add boundries physics body
-        physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
+        physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: 0, y: 0), to: CGPoint(x: self.frame.size.width, y: 0))
         physicsBody?.categoryBitMask = ContactCategory.sidebounds.rawValue
         physicsBody?.contactTestBitMask = ContactCategory.hotdog.rawValue
         physicsBody?.restitution = 0.0
@@ -276,7 +280,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     private func generatePaths() {
-        var firstPath = Path(position: CGPoint(x: 320, y: kMinJumpHeight))
+        let path = Path(position: CGPoint.zero)
+        let tx = p_randomPoint(min: Int(path.size.width / 2.0),
+                      max: Int(self.frame.size.width - path.size.width))
+        var firstPath = Path(position: CGPoint(x: tx,
+                                               y: kMinJumpHeight))
         paths.append(firstPath)
         var lastPath = firstPath
         for _ in 0 ... 3 {
@@ -414,8 +422,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         let bodyA = contact.bodyA
         let bodyB = contact.bodyB
-        
-        isLanded = (hotdog.physicsBody?.velocity.dy)! <= 1 && (hotdog.physicsBody?.velocity.dy)! >= 0
+        isLanded = (hotdog.physicsBody?.velocity.dy)! <= 1.0 && (hotdog.physicsBody?.velocity.dy)! >= 0.0
+        if bodyA.categoryBitMask == ContactCategory.sidebounds.rawValue || bodyB.categoryBitMask == ContactCategory.sidebounds.rawValue {
+            isLanded = true
+            print("At ground")
+        }
         if bodyA.categoryBitMask == ContactCategory.leftbound.rawValue || bodyB.categoryBitMask == ContactCategory.leftbound.rawValue {
             hotdog.xScale *= hotdog.xScale > 0 ? 1 : -1
             hotdog.removeAction(forKey: "moveLeft")
@@ -494,7 +505,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
             isLanded = false
-            
+
             // Start moving background
             if hotdog.position.y > self.frame.size.height / 2.0 && background.speed == 0 {
                 // move the background up
