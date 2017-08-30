@@ -92,8 +92,6 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
         }
         interstitial = createInterstitial()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(pauseButtonDidPressed), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(pauseButtonDidPressed), name: Notification.Name.UIApplicationWillResignActive, object: nil)
     }
     
@@ -464,7 +462,6 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     deinit {
         SKPaymentQueue.default().remove(self)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.UIApplicationWillResignActive, object: nil)
-        NotificationCenter.default.removeObserver(self, name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
     }
 }
 
