@@ -337,6 +337,8 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     }
     
     func request(_ request: SKRequest, didFailWithError error: Error) {
+        CLSLogv("Request did fail with error", getVaList([error.localizedDescription]))
+
         activityIndicator.stopAnimating()
         hasInternet = false
         gameScene.hasInternet = false
@@ -368,7 +370,6 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
             switch transaction.transactionState {
             case .purchased:
                 queue.finishTransaction(transaction)
-                print("Succeed")
                 gameoverView.removeAdsBtn.isEnabled = false
                 gameoverView.restoreIAPBtn.isEnabled = false
                 Answers.logPurchase(withPrice: 0.99,
