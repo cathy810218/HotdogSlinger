@@ -18,10 +18,12 @@ class MenuViewController: UIViewController {
     }
     
     @IBAction func startButtonPressed(_ sender: Any) {
+        CLSLogv("User hits start button", getVaList([]))
         gameVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GameViewController") as? GameViewController
         self.present(gameVC!, animated: true, completion: nil)
     }
     @IBAction func helpButtonPressed(_ sender: UIButton) {
+        CLSLogv("User hits store button", getVaList([]))
         characterVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CharacterViewController") as? StoreViewController
         self.present(characterVC!, animated: true, completion: nil)
     }

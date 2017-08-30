@@ -308,15 +308,18 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     
     func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
         Answers.logCustomEvent(withName: "interstitial fail to receive ads", customAttributes: nil)
+        CLSLogv("Interstitial did fail to receive ads", getVaList([]))
         resetGame()
     }
     func interstitialWillLeaveApplication(_ ad: GADInterstitial) {
         let id = ad.adUnitID ?? "unknow"
         Flurry.logEvent("Interstitial will leave the app");
         Answers.logCustomEvent(withName: "interstitial will leave app", customAttributes: ["AdUnitID" : id])
+        CLSLogv("User will leave app", getVaList([]))
     }
     
     func interstitialDidFail(toPresentScreen ad: GADInterstitial) {
+        CLSLogv("Interstitial did fail to present screen", getVaList([]))
         resetGame()
     }
     

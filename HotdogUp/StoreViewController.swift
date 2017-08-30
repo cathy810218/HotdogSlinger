@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 import Flurry_iOS_SDK
+import Crashlytics
 
 class StoreViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -34,7 +35,8 @@ class StoreViewController: UIViewController, UICollectionViewDelegate, UICollect
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        CLSLogv("StoreVC did load", getVaList([]))
+
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.contentInset = UIEdgeInsetsMake(0, 70, 0, 70)
@@ -63,7 +65,8 @@ class StoreViewController: UIViewController, UICollectionViewDelegate, UICollect
     }
     
     func updateCellsLayout()  {
-        
+        CLSLogv("updateCellsLayout got called", getVaList([]))
+
         let centerX = collectionView.contentOffset.x + (collectionView.frame.size.width)/2
         
         for cell in collectionView.visibleCells {
@@ -80,6 +83,7 @@ class StoreViewController: UIViewController, UICollectionViewDelegate, UICollect
     }
     
     @IBAction func doneButtonPressed(_ sender: Any) {
+        CLSLogv("User hit done button", getVaList([]))
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -114,5 +118,6 @@ class StoreViewController: UIViewController, UICollectionViewDelegate, UICollect
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         UserDefaults.standard.set(indexPath.item, forKey: "UserDefaultsSelectCharacterKey")
         Flurry.logEvent("Did Select Hotdog from Store View Controller");
+        CLSLogv("User selected hotdog from collection view", getVaList([]))
     }
 }

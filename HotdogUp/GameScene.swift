@@ -10,6 +10,7 @@ import SpriteKit
 import GameplayKit
 import SnapKit
 import AVFoundation
+import Crashlytics
 
 protocol GameSceneDelegate: class {
     func gameSceneGameEnded()
@@ -102,6 +103,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
         super.didMove(to: view)
         highest.fontColor = hasInternet ? UIColor.white : UIColor.red
+        CLSLogv("Game Scene did move to view", getVaList([]))
 
         if !isGameOver {
             self.physicsWorld.contactDelegate = self
@@ -152,6 +154,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     func resetGameScene() {
+        CLSLogv("Reset Game", getVaList([]))
         removeAllChildren()
         paths.removeAll()
         stations.removeAll()
@@ -407,6 +410,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // ====================================================================================================
     
     func gameOver() {
+        CLSLogv("Game is over, game scene delegate called", getVaList([]))
         isGameOver = true // needs to set this first to prevent updating getting called again
         if isSoundEffectOn {
             run(fallingSound)
