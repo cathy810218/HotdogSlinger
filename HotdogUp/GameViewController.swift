@@ -37,6 +37,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
             }
         }
     }
+    var requestIAP: SKProductsRequest?
     var product: SKProduct?
     var productID = "com.hotdogup.removeads"
     
@@ -139,10 +140,12 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     
     //MARK: PauseViewDelegate
     func pauseViewDidPressHomeButton() {
+        CLSLogv("User press Home button", getVaList([]))
         returnToMenu()
     }
     
     func pauseViewDidPressResumeButton() {
+        CLSLogv("User press Resume button", getVaList([]))
         gameScene.speed = CGFloat(UserDefaults.standard.float(forKey: "UserDefaultsResumeSpeedKey"))
         gameScene.gamePaused = false
         gameScene.isReset = false
@@ -234,6 +237,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     }
     
     func gameoverViewDidPressHomeButton() {
+        CLSLogv("User presses Home button from gameover view", getVaList([]))
         returnToMenu()
     }
     
@@ -305,6 +309,8 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     }
     
     func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
+        interstitial = nil
+        print("fail to receive ad")
         Answers.logCustomEvent(withName: "interstitial fail to receive ads", customAttributes: nil)
         CLSLogv("Interstitial did fail to receive ads", getVaList([]))
     }
@@ -322,17 +328,19 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     }
     
     func interstitialDidDismissScreen(_ ad: GADInterstitial) {
+        CLSLogv("Interstitial did dismiss", getVaList([]))
         resetGame()
     }
+    
     
     // ============================
     
     // IAP
     func getPurchaseInfo() {
         if SKPaymentQueue.canMakePayments() {
-            let request = SKProductsRequest(productIdentifiers: NSSet(object: self.productID) as! Set<String>)
-            request.delegate = self
-            request.start()
+            requestIAP = SKProductsRequest(productIdentifiers: NSSet(object: self.productID) as! Set<String>)
+            requestIAP?.delegate = self
+            requestIAP?.start()
         }
     }
     
@@ -354,6 +362,7 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
         if products.count == 0 {
             print("No product found")
         } else {
+            CLSLogv("IAP request did receive", getVaList([]))
             product = products[0]
             gameoverView.removeAdsBtn.isEnabled = !UserDefaults.standard.bool(forKey: "UserDefaultsPurchaseKey")
             gameoverView.restoreIAPBtn.isEnabled = gameoverView.removeAdsBtn.isEnabled
@@ -463,6 +472,9 @@ class GameViewController: UIViewController, GameSceneDelegate, PauseViewDelegate
     deinit {
         SKPaymentQueue.default().remove(self)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.UIApplicationWillResignActive, object: nil)
+        requestIAP?.delegate = nil
+        requestIAP?.cancel()
+        requestIAP = nil
     }
 }
 

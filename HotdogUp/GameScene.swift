@@ -72,11 +72,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     var timer = Timer()
     var timeCounter = kMinJumpHeight
-    var isLanded = true {
-        didSet {
-            print("island: \(isLanded)")
-        }
-    }
+    var isLanded = true
     var paths = [Path]()
     var stations = [Station]()
     var healths = [SKSpriteNode]()
@@ -106,6 +102,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         CLSLogv("Game Scene did move to view", getVaList([]))
 
         if !isGameOver {
+            CLSLogv("Game is not over, so re create the entire scene", getVaList([]))
             self.physicsWorld.contactDelegate = self
             self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -9.8)
             createBackground()
@@ -178,6 +175,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func createBackground() {
+        CLSLogv("Creating Background", getVaList([]))
+
         for i in 0 ... 1 {
             background = SKSpriteNode(texture: SKTexture(imageNamed: "background_second"))
             background.zPosition = -30
@@ -224,7 +223,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func createHotdog() {
+        
+
         hotdog = Hotdog(hotdogType: Hotdog.HotdogType(rawValue: UserDefaults.standard.integer(forKey: "UserDefaultsSelectCharacterKey"))!)
+        
+        CLSLogv("Creating Hotdog: %@", getVaList([hotdog.hotdogType.name]))
+        
         hotdog.zPosition = 30
         hotdog.position = CGPoint(x: self.frame.size.width/2.0, y: hotdog.size.height/2.0)
         hotdog.physicsBody?.categoryBitMask = ContactCategory.hotdog.rawValue
@@ -261,14 +265,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-        for i in 0...2 {
-            if stations[i].position.x >= -10 && !stations[i].isHidden && !stations[i].isShooting {
-                stations[i].shootSauce()
+        if stations.count == 3 {
+            for i in 0...2 {
+                if stations[i].position.x >= -10 && !stations[i].isHidden && !stations[i].isShooting {
+                    stations[i].shootSauce()
+                }
             }
         }
     }
     
     func setupPaths() {
+        CLSLogv("Setting Up Paths", getVaList([]))
         generatePaths()
         for path in paths {
             path.physicsBody?.categoryBitMask = ContactCategory.path.rawValue
@@ -357,9 +364,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func createStation() {
+        CLSLogv("Creating Station", getVaList([]))
         // generates
         for i in 0...2 {
-            let station = Station(stationType: .ketchup)
+            let station = Station()
             let y = Int((self.view?.bounds.height)! / 4.0) * (i + 1)
             station.position = CGPoint(x: i == 1 ? -station.size.width/2.0 : 0, y: CGFloat(y))
             station.tag = i
@@ -501,8 +509,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if !hotdog.hasActions() {
                 hotdog.texture = hotdog.hotdogTexture
             }
-            let diff = CGVector(dx: 0, dy: CGFloat(kMinJumpHeight + 10))
+            let diff = CGVector(dx: 0, dy: CGFloat(kMinJumpHeight + 5))
             if isLanded {
+                CLSLogv("User tap to jump", getVaList([]))
                 hotdog.physicsBody?.applyImpulse(diff)
                 if isSoundEffectOn {
                     run(jumpSound)

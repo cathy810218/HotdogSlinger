@@ -8,6 +8,7 @@
 
 import UIKit
 import SpriteKit
+import Crashlytics
 
 enum StationType: Int {
     case ketchup = 2 //default level 2
@@ -40,14 +41,14 @@ class Station: SKSpriteNode {
     var stationType = StationType.ketchup {
         didSet {
             self.texture = SKTexture(imageNamed: stationType.name)
+            CLSLogv("Station type didSet", getVaList([]))
         }
     }
     var isShooting = false
     
-    init(stationType: StationType) {
+    init() {
         let stationTexture = SKTexture(imageNamed: stationType.name)
         super.init(texture: stationTexture, color: .clear, size: stationTexture.size())
-        self.stationType = stationType
         self.physicsBody = SKPhysicsBody(texture: stationTexture, size: self.size)
         self.zPosition = 40
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -78,6 +79,7 @@ class Station: SKSpriteNode {
     }
     
     func shootSauce() {
+        CLSLogv("shootSauce is called", getVaList([]))
         isShooting = true
         let sauce = Sauce(type: stationType)
         addChild(sauce)

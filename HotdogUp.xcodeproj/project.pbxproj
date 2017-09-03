@@ -20,7 +20,7 @@
 		3D07A2C51ED1B2F000BFCE3A /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07A2C41ED1B2F000BFCE3A /* MenuViewController.swift */; };
 		3D3430D31F349D8A00B71BDC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D8E75341F349BE10019035A /* Assets.xcassets */; };
 		3D42BBDE1F34934D00EA722C /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D42BBDD1F34934D00EA722C /* Keys.swift */; };
-		3D79C3691F43A64200013DAE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D79C3681F43A64200013DAE /* StoreKit.framework */; };
+		3D6C0D931F5C20FB0020705F /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D6C0D921F5C20FB0020705F /* StoreKit.framework */; };
 		3D82D2EA1F4564B300A5C55A /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D82D2E91F4564B300A5C55A /* TutorialView.swift */; };
 		3D84FB631F4D631D00D97C4D /* Sauce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D84FB621F4D631D00D97C4D /* Sauce.swift */; };
 		3D857D791F2F2466001C8E28 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D857D781F2F2466001C8E28 /* Constants.swift */; };
@@ -67,7 +67,7 @@
 		3D07A2B81ED1B1B700BFCE3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D07A2C41ED1B2F000BFCE3A /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		3D42BBDD1F34934D00EA722C /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
-		3D79C3681F43A64200013DAE /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		3D6C0D921F5C20FB0020705F /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		3D82D2E91F4564B300A5C55A /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
 		3D84FB621F4D631D00D97C4D /* Sauce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sauce.swift; sourceTree = "<group>"; };
 		3D857D781F2F2466001C8E28 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -102,7 +102,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				29B28F316E517519474E1A13 /* Pods_HotdogUp.framework in Frameworks */,
-				3D79C3691F43A64200013DAE /* StoreKit.framework in Frameworks */,
+				3D6C0D931F5C20FB0020705F /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,8 +121,8 @@
 		10A315D10CAD015480461E36 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3D6C0D921F5C20FB0020705F /* StoreKit.framework */,
 				3D9D727F1F4EC24500623238 /* Flurry_iOS_SDK.framework */,
-				3D79C3681F43A64200013DAE /* StoreKit.framework */,
 				4EE896DB96496BD0905252E6 /* Pods_HotdogSlinger.framework */,
 				82BBDCA2F9A926A70404BFA5 /* Pods_HotdogSlingerTests.framework */,
 				7A99EF62718219B8EF6FF4B5 /* Pods_HotdogUp.framework */,
@@ -301,6 +301,9 @@
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 0;
 							};
 						};
 					};
@@ -640,7 +643,8 @@
 			baseConfigurationReference = 06471FCEC9D047D778F4ACC9 /* Pods-HotdogUp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 597HR9EHGW;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos/Flurry-iOS-SDK",
@@ -650,6 +654,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cathyoun.HotdogUp;
 				PRODUCT_NAME = HotdogUp;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -661,7 +667,8 @@
 			baseConfigurationReference = E4917E70842A13899FEB1F03 /* Pods-HotdogUp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 597HR9EHGW;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos/Flurry-iOS-SDK",
@@ -671,6 +678,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cathyoun.HotdogUp;
 				PRODUCT_NAME = HotdogUp;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

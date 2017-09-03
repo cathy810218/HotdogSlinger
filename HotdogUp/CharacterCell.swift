@@ -18,7 +18,6 @@ class CharacterCell: UICollectionViewCell {
     override var isSelected: Bool {
         didSet {
             checkmarkImageView.isHidden = !isSelected
-            CLSLogv("Character Cell is selected", getVaList([]))
         }
     }
 }
